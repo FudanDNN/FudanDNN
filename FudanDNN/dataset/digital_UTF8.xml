@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<network>
+<name>network name</name>
+<samples type = "image" iRowSize=5 iColumnSize=5 sampleNum=10 oRowSize=1 oColumnSize=10>
+  <sample>
+    <input>
+      0 1 1 1 0
+      0 1 0 1 0
+      0 1 0 1 0
+      0 1 0 1 0
+      0 1 1 1 0
+    </input>
+    <output>1 0 0 0 0 0 0 0 0 0</output>
+  </sample>
+  <sample>
+    <input>
+      0 0 1 0 0
+      0 0 1 0 0
+      0 0 1 0 0
+      0 0 1 0 0
+      0 0 1 0 0
+    </input>
+    <output>0 1 0 0 0 0 0 0 0 0</output>
+  </sample>
+  <sample>
+    <input>
+      0 1 1 1 0
+      0 0 0 1 0
+      0 1 1 1 0
+      0 1 0 0 0
+      0 1 1 1 0
+    </input>
+    <output>0 0 1 0 0 0 0 0 0 0</output>
+  </sample>
+  <sample>
+    <input>
+      0 1 1 1 0
+      0 0 0 1 0
+      0 1 1 1 0
+      0 0 0 1 0
+      0 1 1 1 0
+    </input>
+    <output>0 0 0 1 0 0 0 0 0 0</output>
+  </sample>
+  <sample>
+    <input>
+      0 1 0 1 0
+      0 1 0 1 0
+      0 1 1 1 0
+      0 0 0 1 0
+      0 0 0 1 0
+   </input>
+    <output>0 0 0 0 1 0 0 0 0 0</output>
+  </sample>
+  <sample>
+    <input>
+      0 1 1 1 0
+      0 1 0 0 0
+      0 1 1 1 0
+      0 0 0 1 0
+      0 1 1 1 0
+    </input>
+    <output>0 0 0 0 0 1 0 0 0 0</output>
+  </sample>
+  <sample>
+    <input>
+      0 1 0 0 0
+      0 1 0 0 0
+      0 1 1 1 0
+      0 1 0 1 0
+      0 1 1 1 0
+    </input>
+    <output>0 0 0 0 0 0 1 0 0 0</output>
+  </sample>
+  <sample>
+    <input>
+      0 1 1 1 0
+      0 0 0 1 0
+      0 0 0 1 0
+      0 0 0 1 0
+      0 0 0 1 0
+    </input>
+    <output>0 0 0 0 0 0 0 1 0 0</output>
+  </sample>
+  <sample>
+    <input>
+      0 1 1 1 0
+      0 1 0 1 0
+      0 1 1 1 0
+      0 1 0 1 0
+      0 1 1 1 0
+    </input>
+    <output>0 0 0 0 0 0 0 0 1 0</output>
+  </sample>
+  <sample>
+    <input>
+      0 1 1 1 0
+      0 1 0 1 0
+      0 1 1 1 0
+      0 0 0 1 0
+      0 0 0 1 0
+    </input>
+    <output>0 0 0 0 0 0 0 0 0 1</output>
+  </sample>
+</samples>
+</network>
