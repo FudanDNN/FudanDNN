@@ -3,11 +3,7 @@
 #include "AbstractMatrix.h"
 #include "AbstractLayer.h"
 #include "Input.h"
-#include <vector>
 
-using namespace std;
-
-#pragma once
 class NetworkNode
 {
 public:

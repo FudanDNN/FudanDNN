@@ -1,9 +1,7 @@
 #pragma once
 #include "utils.h"
 #include "AbstractMatrix.h"
-#include <string>
 
-using namespace std;
 class Sample
 {
 private:

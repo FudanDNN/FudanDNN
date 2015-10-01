@@ -1,13 +1,9 @@
 #pragma once
 #include "utils.h"
 #include "CharacterSample.h"
-#include <string>
-#include "map"
 #include "AbstractMatrix.h"
 #include "XMLDataParser.h"
 #include "Input.h"
-
-using namespace std;
 
 class CharacterInput : public Input
 {

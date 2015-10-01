@@ -1,9 +1,6 @@
 #pragma once
 #include "utils.h"
 #include "AbstractMatrix.h"
-#include "fstream"
-
-using namespace std;
 
 class AbstractLayer
 {

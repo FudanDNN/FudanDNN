@@ -2,9 +2,6 @@
 #include "utils.h"
 #include "Matrix.h"
 #include "AbstractComponent.h"
-#include <vector>
-
-using namespace std;
 
 class MaxPoolingLayer : public AbstractComponent {
 

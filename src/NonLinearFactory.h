@@ -2,7 +2,6 @@
 #include "utils.h"
 #include "NonLinearLayer.h"
 
-using namespace std;
 class NonLinearFactory{
 
 public:

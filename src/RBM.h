@@ -5,8 +5,6 @@
 #include "NetworkFunctions.h"
 #include "NonLinearLayer.h"
 #include "NonLinearFactory.h"
-#include <fstream>
-#include <sstream>
 
 class RBM : public AbstractNetworkLayer
 {

@@ -2,10 +2,8 @@
 #include "utils.h"
 #include "AbstractMatrix.h"
 #include "Sample.h"
-#include <string>
 #include "XMLDataParser.h"
 
-using namespace std;
 class Input{
 public:
 	Input(string xmlFile,int id);

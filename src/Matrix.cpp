@@ -1,4 +1,3 @@
-#include <iostream>
 #include "Matrix.h"
 
 Matrix::Matrix(size_t rowSize, size_t columnSize)

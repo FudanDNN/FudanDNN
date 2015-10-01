@@ -1,9 +1,7 @@
 #pragma once
 #include "utils.h"
-#include <string>
 #include "AbstractLayer.h"
 #include "NetworkNode.h"
-#include "map"
 #include "RBM.h"
 #include "ConvolutionalNetworkLayer.h"
 #include "AutoEncoder.h"
@@ -26,7 +24,6 @@
 #include "ReLU.h"
 #include "SoftShrink.h"
 
-using namespace std;
 typedef pair <size_t, shared_ptr<NetworkNode>> Node_Pair;
 typedef pair <size_t, shared_ptr<Input>> Input_Pair;
 typedef pair <size_t, shared_ptr<XMLDataParser>> Parser_Pair;

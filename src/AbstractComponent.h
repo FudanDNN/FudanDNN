@@ -1,9 +1,7 @@
 #pragma once
 #include "utils.h"
 #include "Matrix.h"
-#include "vector"
 
-using namespace std;
 class AbstractComponent
 {
 public:

@@ -1,6 +1,5 @@
 #include "MaxPoolingLayer.h"
 
-
 MaxPoolingLayer::MaxPoolingLayer(size_t poolingSize, size_t stride, size_t visualRow, size_t visualColumn)
 {
 	this->poolingSize = poolingSize;

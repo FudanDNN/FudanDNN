@@ -4,8 +4,6 @@
 #include "CNN2DComponent.h"
 #include "ComponentNode.h"
 #include "MaxPoolingLayer.h"
-#include "string"
-#include "map"
 #include "NonLinearComponent.h"
 
 using namespace std;

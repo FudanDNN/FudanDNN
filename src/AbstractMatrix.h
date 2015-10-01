@@ -1,8 +1,5 @@
 #pragma once
 #include "utils.h"
-#include "vector"
-
-using namespace std;
 
 struct MaxData
 {

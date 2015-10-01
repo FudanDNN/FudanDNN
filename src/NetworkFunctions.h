@@ -1,6 +1,7 @@
 #pragma once
 #include "utils.h"
-using namespace std;
+
+
 //sigmoid
 double sigmoid(double);
 double sigmoidDerivative(double);

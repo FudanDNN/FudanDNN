@@ -2,8 +2,6 @@
 #include "utils.h"
 #include "AbstractMatrix.h"
 
-using namespace std;
-
 class Matrix : public AbstractMatrix
 {
 

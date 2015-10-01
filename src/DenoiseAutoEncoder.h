@@ -3,12 +3,7 @@
 #include "AutoEncoder.h"
 #include "NonLinearLayer.h"
 #include "NonLinearFactory.h"
-#include <string>
-#include <fstream>
-#include <sstream>
 #include "XMLDataParser.h"
-
-using namespace std;
 
 class DenoiseAutoEncoder : public AutoEncoder
 {

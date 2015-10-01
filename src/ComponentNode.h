@@ -1,11 +1,7 @@
 #pragma once
 #include "utils.h"
-#include <vector>
 #include "AbstractComponent.h"
 
-using namespace std;
-
-#pragma once
 class ComponentNode
 {
 public:

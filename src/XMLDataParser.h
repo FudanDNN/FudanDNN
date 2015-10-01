@@ -1,16 +1,11 @@
 #pragma once
 #include "utils.h"
 #include "Matrix.h"
-#include <iostream>
 #include "tinyxml.h"
 #include "tinystr.h"
-#include <string>
 #include "Sample.h"
 #include "CharacterSample.h"
-#include <vector>
-#include <sstream>
 
-using namespace std;
 class XMLDataParser{
 public:
 	XMLDataParser(string fileName);

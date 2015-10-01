@@ -2,9 +2,6 @@
 #include "utils.h"
 #include "Matrix.h"
 #include "AbstractComponent.h"
-#include <vector>
-
-using namespace std;
 
 class CNN2DComponent : public AbstractComponent {
 protected:

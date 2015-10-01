@@ -1,10 +1,6 @@
 #pragma once
 #include "utils.h"
 #include "AbstractMatrix.h"
-#include <string>
-#include <fstream>
-
-using namespace std;
 
 class Criteria
 {

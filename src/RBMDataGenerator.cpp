@@ -1,5 +1,4 @@
 #include "RBMDataGenerator.h"
-#include <time.h>
 
 void generateCompressableData(string filename)
 {

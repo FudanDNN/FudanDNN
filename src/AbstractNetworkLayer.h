@@ -1,11 +1,7 @@
 #pragma once
 #include "utils.h"
 #include "AbstractLayer.h"
-#include <string>
 
-using namespace std;
-
-#pragma once
 class AbstractNetworkLayer : public AbstractLayer
 {
 public:
