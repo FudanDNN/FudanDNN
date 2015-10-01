@@ -5,8 +5,11 @@ FudanDNN: a detachable neural network framework with easy-to-use GUI
 ------------
 
 Jiangtao Feng
+
 Shangtong Zhang
+
 Siyan Li
+
 Xiaoqing Zheng
 
 2. License
