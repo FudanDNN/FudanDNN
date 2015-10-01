@@ -1,7 +1,5 @@
 #ifndef __FUDANDNN_UTILS_H
 #define __FUDANDNN_UTILS_H
-#ifndef _FUDANDNN_UTILS
-#define _FUDANDNN_UTILS
 
 #include "cstddef"
 #include "cmath"
@@ -30,7 +28,5 @@ using std::ofstream;
 using std::map;
 using std::cerr;
 using std::abs;
-
-#endif
 
 #endif
