@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __FUDANDNN_CRITERIA_H
+#define __FUDANDNN_CRITERIA_H
 #include "utils.h"
 #include "AbstractMatrix.h"
 
@@ -29,3 +30,5 @@ protected:
 	double errorRate = 1;
 	string type;
 };
+
+#endif

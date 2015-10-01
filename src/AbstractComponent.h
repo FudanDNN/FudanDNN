@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __FUDANDNN_ABSTRACTCOMPONENT_H
+#define __FUDANDNN_ABSTRACTCOMPONENT_H
 #include "utils.h"
 #include "Matrix.h"
 
@@ -33,3 +34,4 @@ protected:
 	size_t hiddenColumn = 1;
 
 };
+#endif

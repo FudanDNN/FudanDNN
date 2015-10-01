@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __FUDANDNN_COMPONENTNODE_H
+#define __FUDANDNN_COMPONENTNODE_H
 #include "utils.h"
 #include "AbstractComponent.h"
 
@@ -19,3 +20,4 @@ private:
 	vector<shared_ptr<ComponentNode>> nextNodes;
 	vector<shared_ptr<ComponentNode>> beforeNodes;
 };
+#endif

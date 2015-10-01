@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __FUDANDNN_CNN2DCOMPONENT_H
+#define __FUDANDNN_CNN2DCOMPONENT_H
 #include "utils.h"
 #include "Matrix.h"
 #include "AbstractComponent.h"
@@ -59,3 +60,5 @@ public:
 
 };
 
+
+#endif

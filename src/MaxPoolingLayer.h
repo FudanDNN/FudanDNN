@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __FUDANDNN_MAXPOOLINGLAYER_H
+#define __FUDANDNN_MAXPOOLINGLAYER_H
 #include "utils.h"
 #include "Matrix.h"
 #include "AbstractComponent.h"
@@ -23,3 +24,4 @@ public:
 	void gradient() override;
 
 };
+#endif

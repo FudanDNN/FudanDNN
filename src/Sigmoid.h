@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __FUDANDNN_SIGMOID_H
+#define __FUDANDNN_SIGMOID_H
 #include "utils.h"
 #include "NonLinearLayer.h"
 
@@ -17,3 +18,5 @@ public:
 	void readSelf(string) {};
 };
 
+
+#endif

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __FUDANDNN_CHARACTERSAMPLE_H
+#define __FUDANDNN_CHARACTERSAMPLE_H
 #include "utils.h"
 
 class CharacterSample
@@ -18,3 +19,5 @@ protected:
 	size_t length;
 };
 
+
+#endif

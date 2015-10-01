@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __FUDANDNN_XMLDATAPARSER_H
+#define __FUDANDNN_XMLDATAPARSER_H
 #include "utils.h"
 #include "Matrix.h"
 #include "tinyxml.h"
@@ -31,3 +32,4 @@ private:
 	TiXmlElement *sample;
 	void init();
 };
+#endif

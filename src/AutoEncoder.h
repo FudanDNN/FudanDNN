@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __FUDANDNN_AUTOENCODER_H
+#define __FUDANDNN_AUTOENCODER_H
 #include "utils.h"
 #include "AbstractNetworkLayer.h"
 #include "NonLinearLayer.h"
@@ -37,3 +38,4 @@ protected:
 	ifstream fin;
 	shared_ptr<AbstractMatrix> readDatum();
 };
+#endif

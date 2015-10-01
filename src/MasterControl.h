@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __FUDANDNN_MASTERCONTROL_H
+#define __FUDANDNN_MASTERCONTROL_H
 #include "utils.h"
 #include "AbstractLayer.h"
 #include "NetworkNode.h"
@@ -79,3 +80,4 @@ private:
 	size_t batchSize;
 
 };
+#endif

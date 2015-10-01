@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __FUDANDNN_MSE_H
+#define __FUDANDNN_MSE_H
 #include "utils.h"
 #include "Criteria.h"
 
@@ -13,3 +14,5 @@ public:
 
 };
 
+
+#endif

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __FUDANDNN_ABSTRACTLAYER_H
+#define __FUDANDNN_ABSTRACTLAYER_H
 #include "utils.h"
 #include "AbstractMatrix.h"
 
@@ -56,3 +57,5 @@ protected:
 
 };
 
+
+#endif

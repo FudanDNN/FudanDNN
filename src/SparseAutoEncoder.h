@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __FUDANDNN_SPARSEAUTOENCODER_H
+#define __FUDANDNN_SPARSEAUTOENCODER_H
 #include "utils.h"
 #include "AutoEncoder.h"
 #include "NonLinearLayer.h"
@@ -24,3 +25,4 @@ protected:
 	size_t sparseRate;
 	size_t sparsePercent;
 };
+#endif

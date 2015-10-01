@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __FUDANDNN_INPUT_H
+#define __FUDANDNN_INPUT_H
 #include "utils.h"
 #include "AbstractMatrix.h"
 #include "Sample.h"
@@ -24,3 +25,4 @@ protected:
 	size_t nodeId;
 
 };
+#endif

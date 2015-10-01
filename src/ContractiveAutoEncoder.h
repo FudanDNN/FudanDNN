@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __FUDANDNN_CONTRACTIVEAUTOENCODER_H
+#define __FUDANDNN_CONTRACTIVEAUTOENCODER_H
 #include "utils.h"
 #include "AutoEncoder.h"
 #include "NonLinearLayer.h"
@@ -18,3 +19,4 @@ public:
 protected:
 	size_t jacobiPenalty;
 };
+#endif

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __FUDANDNN_DENOISEAUTOENCODER_H
+#define __FUDANDNN_DENOISEAUTOENCODER_H
 #include "utils.h"
 #include "AutoEncoder.h"
 #include "NonLinearLayer.h"
@@ -20,3 +21,4 @@ private:
 protected:
 	size_t clearRate;
 };
+#endif

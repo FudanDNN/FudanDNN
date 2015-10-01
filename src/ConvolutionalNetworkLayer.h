@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __FUDANDNN_CONVOLUTIONALNETWORKLAYER_H
+#define __FUDANDNN_CONVOLUTIONALNETWORKLAYER_H
 #include "utils.h"
 #include "AbstractNetworkLayer.h"
 #include "CNN2DComponent.h"
@@ -32,3 +33,4 @@ private:
 	map<int, size_t> inDegreeMap;
 	bool sorted = false;
 };
+#endif

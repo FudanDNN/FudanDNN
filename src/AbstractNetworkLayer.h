@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __FUDANDNN_ABSTRACTNETWORKLAYER_H
+#define __FUDANDNN_ABSTRACTNETWORKLAYER_H
 #include "utils.h"
 #include "AbstractLayer.h"
 
@@ -67,3 +68,5 @@ protected:
 
 };
 
+
+#endif

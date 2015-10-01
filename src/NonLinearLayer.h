@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __FUDANDNN_NONLINEARLAYER_H
+#define __FUDANDNN_NONLINEARLAYER_H
 #include "utils.h"
 #include "Matrix.h"
 #include "NetworkFunctions.h"
@@ -12,3 +13,4 @@ public:
 	void readSelf(string);
 	void writeSelf(string);
 };
+#endif

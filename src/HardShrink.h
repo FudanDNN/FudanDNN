@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __FUDANDNN_HARDSHRINK_H
+#define __FUDANDNN_HARDSHRINK_H
 #include "utils.h"
 #include "AbstractLayer.h"
 #include "NonLinearLayer.h"
@@ -19,3 +20,5 @@ public:
 
 };
 
+
+#endif

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __FUDANDNN_LOGSIGMOID_H
+#define __FUDANDNN_LOGSIGMOID_H
 #include "utils.h"
 #include "NonLinearLayer.h"
 
@@ -18,3 +19,5 @@ public:
 
 };
 
+
+#endif

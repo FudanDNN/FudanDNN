@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __FUDANDNN_SAMPLE_H
+#define __FUDANDNN_SAMPLE_H
 #include "utils.h"
 #include "AbstractMatrix.h"
 
@@ -32,3 +33,5 @@ public:
 
 };
 
+
+#endif

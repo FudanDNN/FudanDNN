@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __FUDANDNN_ABSTRACTMATRIX_H
+#define __FUDANDNN_ABSTRACTMATRIX_H
 #include "utils.h"
 
 struct MaxData
@@ -103,3 +104,5 @@ protected:
 
 };
 
+
+#endif

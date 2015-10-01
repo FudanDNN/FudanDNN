@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __FUDANDNN_RBMDATAGENERATOR_H
+#define __FUDANDNN_RBMDATAGENERATOR_H
 #include "utils.h"
 #include "AbstractMatrix.h"
 #include "Matrix.h"
@@ -8,3 +9,5 @@ void generateData(string fout);
 
 void RBMPretrain(string fout);
 
+
+#endif

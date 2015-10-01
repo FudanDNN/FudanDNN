@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __FUDANDNN_HARDTANH_H
+#define __FUDANDNN_HARDTANH_H
 #include "utils.h"
 #include "NonLinearLayer.h"
 
@@ -18,3 +19,5 @@ public:
 
 };
 
+
+#endif

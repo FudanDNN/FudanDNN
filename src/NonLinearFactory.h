@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __FUDANDNN_NONLINEARFACTORY_H
+#define __FUDANDNN_NONLINEARFACTORY_H
 #include "utils.h"
 #include "NonLinearLayer.h"
 
@@ -17,3 +18,5 @@ public:
 		SOFTSHRINK,
 	};
 };
+
+#endif

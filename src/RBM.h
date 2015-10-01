@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __FUDANDNN_RBM_H
+#define __FUDANDNN_RBM_H
 #include "utils.h"
 #include "Matrix.h"
 #include "AbstractNetworkLayer.h"
@@ -50,3 +51,5 @@ protected:
 	shared_ptr<AbstractMatrix> readDatum(ifstream& fin);
 
 };
+
+#endif

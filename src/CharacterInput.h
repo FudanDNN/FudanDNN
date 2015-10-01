@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __FUDANDNN_CHARACTERINPUT_H
+#define __FUDANDNN_CHARACTERINPUT_H
 #include "utils.h"
 #include "CharacterSample.h"
 #include "AbstractMatrix.h"
@@ -18,3 +19,5 @@ private:
 	size_t dimension;
 };
 
+
+#endif

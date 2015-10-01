@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __FUDANDNN_TYPE_H
+#define __FUDANDNN_TYPE_H
 #include "utils.h"
 
 class Type{
@@ -36,3 +37,4 @@ public:
 		SOFTSHRINK,
 	};
 };
+#endif

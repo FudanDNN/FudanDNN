@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __FUDANDNN_SOFTSHRINK_H
+#define __FUDANDNN_SOFTSHRINK_H
 #include "utils.h"
 #include "NonLinearLayer.h"
 
@@ -16,3 +17,5 @@ public:
 
 };
 
+
+#endif

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __FUDANDNN_NETWORKFUNCTIONS_H
+#define __FUDANDNN_NETWORKFUNCTIONS_H
 #include "utils.h"
 
 
@@ -27,3 +28,4 @@ double pReLUDerivative(double);
 double random(double);
 double max(double a, double b);
 double min(double a, double b);
+#endif

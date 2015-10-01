@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __FUDANDNN_NETWORKNODE_H
+#define __FUDANDNN_NETWORKNODE_H
 #include "utils.h"
 #include "AbstractMatrix.h"
 #include "AbstractLayer.h"
@@ -24,3 +25,4 @@ private:
 	vector<shared_ptr<NetworkNode>> nextNodes;
 	vector<shared_ptr<NetworkNode>> beforeNodes;
 };
+#endif

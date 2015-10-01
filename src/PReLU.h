@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __FUDANDNN_PRELU_H
+#define __FUDANDNN_PRELU_H
 #include "utils.h"
 #include "NonLinearLayer.h"
 
@@ -17,3 +18,5 @@ public:
 	void readSelf(string) {};
 };
 
+
+#endif

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __FUDANDNN_MATRIX_H
+#define __FUDANDNN_MATRIX_H
 #include "utils.h"
 #include "AbstractMatrix.h"
 
@@ -60,3 +61,5 @@ private:
 	void initialize() override;
 
 };
+
+#endif

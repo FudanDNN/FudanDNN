@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __FUDANDNN_LINEARLAYER_H
+#define __FUDANDNN_LINEARLAYER_H
 #include "utils.h"
 #include "Matrix.h"
 #include "AbstractNetworkLayer.h"
@@ -18,3 +19,4 @@ public:
 	void readSelf(string) override;
 	
 };
+#endif
