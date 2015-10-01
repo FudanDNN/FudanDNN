@@ -1,0 +1,6 @@
+1. 	Do NOT use '#pragma once'
+	Use macro guard instead
+2. 	Do NOT use 'using namespace std;'
+	Add 'std::' to specific type name when you use it, or add it to utils.h
+3.	Include 'utils.h' in every header file you write
+	Most std types have been included in utils.h
