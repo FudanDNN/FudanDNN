@@ -53,14 +53,14 @@ void ConvolutionalNetworkLayer::calculate(){
 		topoSort();
 	}
 
-	shared_ptr<AbstractMatrix> v = this->visualValue;
+	//shared_ptr<AbstractMatrix> v = this->visualValue;
 	//前向计算
 	for (shared_ptr<ComponentNode> node : nodes)
 	{
 		int id = node->getId();
 
 		shared_ptr<AbstractComponent> component = node->getComponent();
-
+		//cout << "1----" << &component->getHiddenValue() << "----" << &node << "----" << &nodes << endl;
 		vector<shared_ptr<AbstractMatrix>> vValue;
 		for (shared_ptr<ComponentNode> pred : node->getBeforeNode())
 		{
@@ -72,7 +72,7 @@ void ConvolutionalNetworkLayer::calculate(){
 
 		if (node->getBeforeNode().size() == 0)
 		{
-			vValue.push_back(v);
+			vValue.push_back(visualValue);
 		}
 
 		component->setVisualValue(vValue);
@@ -81,8 +81,10 @@ void ConvolutionalNetworkLayer::calculate(){
 	}
 	//将最后一层所有的hiddenValue合并为一个matix
 	vector<shared_ptr<AbstractMatrix>> hValue;
-	v = shared_ptr<AbstractMatrix>(new Matrix(0, 1));
+	shared_ptr<AbstractMatrix> v = shared_ptr<AbstractMatrix>(new Matrix(0, 1));
+	v->initializeValue(0, 0);
 	for (shared_ptr<ComponentNode> node : nodes){
+		//cout << "2----" << &(node->getComponent()->getHiddenValue()) << "----" << &node << "----" << &nodes << endl;
 		if (node->getNextNode().size() == 0){
 			vector<shared_ptr<AbstractMatrix>> temp = node->getComponent()->getHiddenValue();
 			for (shared_ptr<AbstractMatrix> tempMatrix : temp){
@@ -91,6 +93,9 @@ void ConvolutionalNetworkLayer::calculate(){
 		}
 	}
 	this->hiddenValue = v;
+	//cout << "---" << endl;
+	//visualValue->print();
+	//cout << "---" << endl;
 	//hiddenValue->print();
 	this->hiddenUnit = hiddenValue->getRowSize();
 }
@@ -183,6 +188,18 @@ size_t ConvolutionalNetworkLayer::addMaxPoolingToCNN(size_t poolingSize,
 	shared_ptr<MaxPoolingLayer> max(new MaxPoolingLayer(poolingSize, stride, visualRow, visualColumn));
 	//实例化networknode
 	shared_ptr<ComponentNode> node(new ComponentNode(currentId, max));
+	//插入至idMap
+	idMap.insert(Component_Pair(currentId, node));
+	currentId++;
+	//把实例加入vector中
+	nodes.push_back(node);
+	return node->getId();
+}
+
+size_t ConvolutionalNetworkLayer::addNonLinearToCNN(int visualRow, int visualColumn, int num, size_t type){
+	shared_ptr<NonLinearComponent> nonLinear(new NonLinearComponent(visualRow,visualColumn, num, type));
+	//实例化networknode
+	shared_ptr<ComponentNode> node(new ComponentNode(currentId, nonLinear));
 	//插入至idMap
 	idMap.insert(Component_Pair(currentId, node));
 	currentId++;

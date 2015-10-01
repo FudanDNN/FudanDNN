@@ -40,7 +40,7 @@ void Matrix::initialize()
 	{
 		matrix[i] = new double[columnSize];
 	}
-
+	this->initializeValue(0, 0);
 }
 
 void Matrix::initializeBinaryValue(double p)
@@ -277,7 +277,7 @@ shared_ptr<AbstractMatrix> Matrix::submatrixExpand(int top, int bottom, int left
 
 }
 
-shared_ptr<AbstractMatrix> Matrix::merge(shared_ptr<AbstractMatrix> right_top, shared_ptr<AbstractMatrix> left_bottom, 
+shared_ptr<AbstractMatrix> Matrix::merge(shared_ptr<AbstractMatrix> right_top, shared_ptr<AbstractMatrix> left_bottom,
 	shared_ptr<AbstractMatrix> right_bottom)
 {
 
@@ -335,7 +335,7 @@ shared_ptr<AbstractMatrix> Matrix::mergeRow(shared_ptr<AbstractMatrix> bottom)
 		return nullptr;
 	}
 
-	return merge(shared_ptr<AbstractMatrix>(new Matrix(rowSize, 0)), bottom, 
+	return merge(shared_ptr<AbstractMatrix>(new Matrix(rowSize, 0)), bottom,
 		shared_ptr<AbstractMatrix>(new Matrix(bottom->getRowSize(), 0)));
 
 }
@@ -348,7 +348,7 @@ shared_ptr<AbstractMatrix> Matrix::mergeColumn(shared_ptr<AbstractMatrix> right)
 		return nullptr;
 	}
 
-	return merge(right, shared_ptr<AbstractMatrix>(new Matrix(0, columnSize)), 
+	return merge(right, shared_ptr<AbstractMatrix>(new Matrix(0, columnSize)),
 		shared_ptr<AbstractMatrix>(new Matrix(0, right->getRowSize())));
 
 }
@@ -637,7 +637,7 @@ shared_ptr<AbstractMatrix> Matrix::multipleLeft(shared_ptr<AbstractMatrix> m)
 
 shared_ptr<AbstractMatrix>Matrix::multipleRight(shared_ptr<AbstractMatrix>m)
 {
-    shared_ptr<AbstractMatrix> tmp = m->multipleLeft(shared_ptr<AbstractMatrix>(getSharedPtr()));
+	shared_ptr<AbstractMatrix> tmp = m->multipleLeft(shared_ptr<AbstractMatrix>(getSharedPtr()));
 	return tmp;
 }
 
@@ -789,7 +789,7 @@ shared_ptr<AbstractMatrix> Matrix::add_inplace(shared_ptr<AbstractMatrix> m)
 }
 
 shared_ptr<AbstractMatrix> Matrix::add_inplace(int i, int j, double value) {
-	
+
 	if (!bounded(i, j))
 	{
 		cerr << "add(int i, int j, double value) out of bound!" << endl;

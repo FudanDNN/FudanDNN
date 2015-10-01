@@ -59,3 +59,27 @@ void Criteria::writeSelf(string filename)
 
 	fout.close();
 }
+int Criteria::getPredictType(){
+	int maxIndex = 0;
+	double maxValue = -99;
+	for (int i = 0; i < predictValue->getRowSize(); i++){
+		double temp = predictValue->getValue(i, 0);
+		if (temp >= maxValue){
+			maxValue = temp;
+			maxIndex = i;
+		}
+	}
+	return maxIndex;
+}
+int Criteria::getExpectedType(){
+	int maxIndex = 0;
+	double maxValue = -99;
+	for (int i = 0; i < expectedValue->getRowSize(); i++){
+		double temp = expectedValue->getValue(i, 0);
+		if (temp >= maxValue){
+			maxValue = temp;
+			maxIndex = i;
+		}
+	}
+	return maxIndex;
+}

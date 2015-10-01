@@ -4,6 +4,7 @@
 #include "MaxPoolingLayer.h"
 #include <string>
 #include <hash_map>
+#include "NonLinearComponent.h"
 
 using namespace std;
 typedef pair <int, shared_ptr<ComponentNode>> Component_Pair;
@@ -21,6 +22,7 @@ public:
 		size_t num, size_t visualRow, size_t visualColumn, size_t scheme);
 	size_t addMaxPoolingToCNN(size_t poolingSize, size_t stride,
 		size_t visualRow, size_t visualColumn);
+	size_t addNonLinearToCNN(int visualRow,int visualColumn,int num, size_t type);
 	size_t addEdgeInCNN(size_t inId, size_t outId);
 	void topoSort();
 private:

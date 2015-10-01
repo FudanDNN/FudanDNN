@@ -29,6 +29,8 @@ public:
 	virtual string getType() { return nullptr; };
 	//»ñÈ¡´íÎóÂÊ
 	double getErrorRate();
+	int getPredictType();
+	int getExpectedType();
 	void readSelf(string);
 	void writeSelf(string);
 

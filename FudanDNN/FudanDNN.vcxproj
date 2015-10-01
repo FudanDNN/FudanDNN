@@ -27,6 +27,7 @@
     <ClInclude Include="HardShrink.h" />
     <ClInclude Include="HardTanH.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="NonLinearComponent.h" />
     <ClInclude Include="LogSigmoid.h" />
     <ClInclude Include="LinearLayer.h" />
     <ClInclude Include="MasterControl.h" />
@@ -70,6 +71,7 @@
     <ClCompile Include="HardShrink.cpp" />
     <ClCompile Include="HardTanH.cpp" />
     <ClCompile Include="Input.cpp" />
+    <ClCompile Include="NonLinearComponent.cpp" />
     <ClCompile Include="LinearLayer.cpp" />
     <ClCompile Include="LogSigmoid.cpp" />
     <ClCompile Include="MasterControl.cpp" />
