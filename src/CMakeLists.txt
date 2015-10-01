@@ -28,6 +28,7 @@ set (SRC_LIST
 	MaxPoolingLayer.cpp
 	NetworkFunction.cpp
 	NetworkNode.cpp
+	NonLinearComponent.cpp
 	NonLinearFactory.cpp
 	NonLinearLayer.cpp
 	PReLU.cpp
