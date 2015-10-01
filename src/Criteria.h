@@ -10,25 +10,18 @@ class Criteria
 {
 public:
 	Criteria();
-
-	// calculate error
 	virtual double computeError() { return 0; };
-	
-	// backward propagation 
 	virtual void gradient() {};
-
-	// get # of visual units
 	size_t getVisualUnit();
-
 	void setPredictValue(shared_ptr<AbstractMatrix>);
 	shared_ptr<AbstractMatrix> getPredictValue();
 	void setExpectedValue(shared_ptr<AbstractMatrix>);
 	shared_ptr<AbstractMatrix> getExpectedValue();
-
-	// get error of visual layer
 	shared_ptr<AbstractMatrix> getPredictGradient();
 	virtual string getType() { return nullptr; };
 	double getErrorRate();
+	int getPredictType();
+	int getExpectedType();
 	void readSelf(string);
 	void writeSelf(string);
 

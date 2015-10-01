@@ -1,6 +1,6 @@
 #include "LinearLayer.h"
 
-LinearLayer::LinearLayer(size_t visualUnit, size_t hiddenUnit,size_t initScheme)
+LinearLayer::LinearLayer(size_t visualUnit, size_t hiddenUnit, size_t initScheme)
 {
 	this->visualUnit = visualUnit;
 	this->hiddenUnit = hiddenUnit;
@@ -21,8 +21,8 @@ void LinearLayer::calculate()
 void LinearLayer::gradient()
 {
 	visualGradient = hiddenGradient->transpose()->multipleRight(this->weight)->transpose();
-	weightGradient = weightGradient->add(visualValue->transpose()->multipleLeft(hiddenGradient));
-	biasGradient = biasGradient->add(hiddenGradient);
+	weightGradient->add_inplace(visualValue->transpose()->multipleLeft(hiddenGradient));
+	biasGradient->add_inplace(hiddenGradient);
 	hiddenGradient->initializeValue(0, 0);
 
 }

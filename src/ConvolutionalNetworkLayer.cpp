@@ -31,8 +31,6 @@ void ConvolutionalNetworkLayer::compute(){
 		component->setVisualValue(vValue);
 		component->calculate();
 	}
-
-	// build a new matrix with all hidden values in the last layer
 	vector<shared_ptr<AbstractMatrix>> hValue;
 	v = shared_ptr<AbstractMatrix>(new Matrix(0, 1));
 	for (shared_ptr<ComponentNode> node : nodes){
@@ -53,13 +51,13 @@ void ConvolutionalNetworkLayer::calculate(){
 		topoSort();
 	}
 
-	shared_ptr<AbstractMatrix> v = this->visualValue;
+	//shared_ptr<AbstractMatrix> v = this->visualValue;
 	for (shared_ptr<ComponentNode> node : nodes)
 	{
 		int id = node->getId();
 
 		shared_ptr<AbstractComponent> component = node->getComponent();
-
+		//cout << "1----" << &component->getHiddenValue() << "----" << &node << "----" << &nodes << endl;
 		vector<shared_ptr<AbstractMatrix>> vValue;
 		for (shared_ptr<ComponentNode> pred : node->getBeforeNode())
 		{
@@ -71,16 +69,19 @@ void ConvolutionalNetworkLayer::calculate(){
 
 		if (node->getBeforeNode().size() == 0)
 		{
-			vValue.push_back(v);
+			vValue.push_back(visualValue);
 		}
 
 		component->setVisualValue(vValue);
 		component->calculate();
 
 	}
+
 	vector<shared_ptr<AbstractMatrix>> hValue;
-	v = shared_ptr<AbstractMatrix>(new Matrix(0, 1));
+	shared_ptr<AbstractMatrix> v = shared_ptr<AbstractMatrix>(new Matrix(0, 1));
+	v->initializeValue(0, 0);
 	for (shared_ptr<ComponentNode> node : nodes){
+		//cout << "2----" << &(node->getComponent()->getHiddenValue()) << "----" << &node << "----" << &nodes << endl;
 		if (node->getNextNode().size() == 0){
 			vector<shared_ptr<AbstractMatrix>> temp = node->getComponent()->getHiddenValue();
 			for (shared_ptr<AbstractMatrix> tempMatrix : temp){
@@ -89,6 +90,9 @@ void ConvolutionalNetworkLayer::calculate(){
 		}
 	}
 	this->hiddenValue = v;
+	//cout << "---" << endl;
+	//visualValue->print();
+	//cout << "---" << endl;
 	//hiddenValue->print();
 	this->hiddenUnit = hiddenValue->getRowSize();
 }
@@ -112,13 +116,10 @@ void ConvolutionalNetworkLayer::gradient(){
 
 	size_t hiddenUnitNum = this->hiddenUnit;
 	size_t index = hiddenUnitNum;
-
-	// set hidden gradient of each section
 	for (int j = nodes.size() - 1; j >= 0; j--){
 		shared_ptr<ComponentNode> node = nodes[j];
 		shared_ptr<AbstractComponent> component = node->getComponent();
 
-		// distribute gradient
 		if (node->getNextNode().size() == 0){
 			size_t vectorSize = component->getHiddenValue().size();
 			size_t mRow = component->getHiddenValue()[0]->getRowSize();
@@ -137,7 +138,6 @@ void ConvolutionalNetworkLayer::gradient(){
 			index -= vectorSize*square;
 		}
 
-		// backward propagation for gradient
 		vector<shared_ptr<AbstractMatrix>> vGradient = component->getVisualGradient();
 		size_t predIndex = 0;
 		for (shared_ptr<ComponentNode> pred : node->getBeforeNode())
@@ -154,7 +154,6 @@ void ConvolutionalNetworkLayer::gradient(){
 			predComponent->gradient();
 			predIndex += predSize;
 		}
-
 		if (node->getBeforeNode().size() == 0){
 			this->visualGradient = component->getVisualGradient()[0];
 		}
@@ -177,6 +176,15 @@ size_t ConvolutionalNetworkLayer::addMaxPoolingToCNN(size_t poolingSize,
 	size_t stride, size_t visualRow, size_t visualColumn){
 	shared_ptr<MaxPoolingLayer> max(new MaxPoolingLayer(poolingSize, stride, visualRow, visualColumn));
 	shared_ptr<ComponentNode> node(new ComponentNode(currentId, max));
+	idMap.insert(Component_Pair(currentId, node));
+	currentId++;
+	nodes.push_back(node);
+	return node->getId();
+}
+
+size_t ConvolutionalNetworkLayer::addNonLinearToCNN(int visualRow, int visualColumn, int num, size_t type){
+	shared_ptr<NonLinearComponent> nonLinear(new NonLinearComponent(visualRow,visualColumn, num, type));
+	shared_ptr<ComponentNode> node(new ComponentNode(currentId, nonLinear));
 	idMap.insert(Component_Pair(currentId, node));
 	currentId++;
 	nodes.push_back(node);

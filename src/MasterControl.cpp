@@ -152,6 +152,12 @@ size_t MasterControl::addMaxPoolingComponentToCNN(size_t poolingSize, size_t str
 	return cnn->addMaxPoolingToCNN(poolingSize, stride, visualRow, visualColumn);
 }
 
+size_t MasterControl::addNonLinearToCNN(int visualRow, int visualColumn, size_t num, size_t type, size_t cnnId){
+	shared_ptr<NetworkNode> node = idMap.find(cnnId)->second;
+	shared_ptr<ConvolutionalNetworkLayer> cnn = dynamic_pointer_cast<ConvolutionalNetworkLayer>(node->getLayer());
+	return cnn->addNonLinearToCNN(visualRow,visualColumn, num, type);
+}
+
 size_t MasterControl::addEdgeInCNN(size_t inId, size_t outId, size_t cnnId){
 	shared_ptr<NetworkNode> node = idMap.find(cnnId)->second;
 	shared_ptr<ConvolutionalNetworkLayer> cnn = dynamic_pointer_cast<ConvolutionalNetworkLayer>(node->getLayer());
@@ -180,6 +186,7 @@ void MasterControl::run()
 	size_t sampleNum = inputs[0]->getSampleNum();
 	double error = 0;
 	double norm2 = 0;
+	int correctNum = 0;
 	while (times < trainingTimes)
 	{
 		times++;
@@ -253,14 +260,18 @@ void MasterControl::run()
 		criteria->setPredictValue(lastLayer->getHiddenValue());
 		double singleError=criteria->computeError();
 		criteria->gradient();
+		if (criteria->getPredictType() == criteria->getExpectedType()){
+			correctNum++;
+		}
 		//criteria->getPredictValue()->print();
 		error += singleError;
-		cout << "error:" << singleError << endl;
+		//cout << "error:" << singleError << endl;
 		norm2 += criteria->getPredictGradient()->norm2();
 		if (times%sampleNum == 0){
-			cout << "times: " << times << "   error: " << error <<"   "<< norm2 << endl;
+			cout << "times: " << times << "   error: " << error << "   correctNum:" << correctNum << endl;
 			error = 0;
 			norm2 = 0;
+			correctNum = 0;
 		}
 		//criteria->getPredictGradient()->print();
 		//criteria->getPredictGradient()->print();
@@ -313,7 +324,6 @@ void MasterControl::run()
 void MasterControl::preTraining()
 {
 	for (shared_ptr<Input> input : inputs){
-		// first layer of pretraining
 		shared_ptr<NetworkNode> node = idMap.find(input->getNodeId())->second;
 		shared_ptr<AbstractLayer> layer = node->getLayer();
 		shared_ptr<RBM> rbm = dynamic_pointer_cast<RBM>(layer);
@@ -353,7 +363,6 @@ void MasterControl::preTraining()
 		else{
 			continue;
 		}
-		// other layers of pretaining
 		vector<shared_ptr<NetworkNode>> nextNodes;
 		while ((nextNodes = node->getNextNode()).size() != 0){
 			shared_ptr<NetworkNode> nextNode = nextNodes[0];
@@ -640,27 +649,33 @@ int main(){
 	MasterControl *master = new MasterControl();
 	size_t cnnId = master->addCNN();
 	//size_t kernelSize, size_t stride,size_t featureMapNum, size_t num, size_t visualRow, size_t visualColumn, size_t scheme
-	size_t id1 = master->addCNN2DComponentToCNN(7, 1, 4, 1, 28, 28, 0, cnnId);
+	size_t id1 = master->addCNN2DComponentToCNN(1, 1, 6, 1, 28, 28, 0, cnnId);
+	size_t nonLinear1 = master->addNonLinearToCNN(28,28,6,0, cnnId);
+	size_t pooling1 = master->addMaxPoolingComponentToCNN(2, 2, 28, 28, cnnId);
 
-	size_t pooling1 = master->addMaxPoolingComponentToCNN(2, 2, 22, 22, cnnId);
+	size_t id2 = master->addCNN2DComponentToCNN(5, 1, 16, 6, 14, 14, 0, cnnId);
+	size_t nonLinear2 = master->addNonLinearToCNN(10,10,16,0, cnnId);
+	size_t pooling2 = master->addMaxPoolingComponentToCNN(2, 2, 10, 10, cnnId);
 
-	size_t id2 = master->addCNN2DComponentToCNN(6, 1, 8, 4, 11, 11, 0, cnnId);
+	size_t id3 = master->addCNN2DComponentToCNN(5, 1, 120, 16, 5, 5, 0, cnnId);
+	size_t nonLinear3 = master->addNonLinearToCNN(1,1,120,0, cnnId);
 
-	size_t pooling2 = master->addMaxPoolingComponentToCNN(2, 2, 6, 6, cnnId);
+	size_t cnnEdge1 = master->addEdgeInCNN(id1, nonLinear1, cnnId);
+	size_t cnnEdge2 = master->addEdgeInCNN(nonLinear1,pooling1,cnnId);
+	size_t cnnEdge3 = master->addEdgeInCNN(pooling1, id2, cnnId);
 
-	size_t id3 = master->addCNN2DComponentToCNN(3, 1, 16, 8, 3, 3, 0, cnnId);
+	size_t cnnEdge4 = master->addEdgeInCNN(id2, nonLinear2, cnnId);
+	size_t cnnEdge5 = master->addEdgeInCNN(nonLinear2,pooling2,cnnId);
+	size_t cnnEdge6 = master->addEdgeInCNN(pooling2, id3, cnnId);
 
-	size_t cnnEdge1 = master->addEdgeInCNN(id1, pooling1, cnnId);
-	size_t cnnEdge2 = master->addEdgeInCNN(pooling1, id2, cnnId);
-	size_t cnnEdge3 = master->addEdgeInCNN(id2, pooling2, cnnId);
-	size_t cnnEdge4 = master->addEdgeInCNN(pooling2, id3, cnnId);
+	size_t cnnEdge7 = master->addEdgeInCNN(id3, nonLinear3, cnnId);
 
 	size_t inputId = master->addInput("dataset/temp.xml");
 	master->addInputEdge(inputId, cnnId);
 
-	size_t layer1 = master->addLINEAR(16, 100, 0);
-	size_t non1 = master->addNONLINEAR(100, 0);
-	size_t layer2 = master->addLINEAR(100, 10, 0);
+	size_t layer1 = master->addLINEAR(120, 84, 0);
+	size_t non1 = master->addNONLINEAR(84, 0);
+	size_t layer2 = master->addLINEAR(84, 10, 0);
 	size_t non2 = master->addNONLINEAR(10, 0);
 
 	master->addEdge(cnnId, layer1);

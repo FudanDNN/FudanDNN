@@ -63,8 +63,8 @@ protected:
 	shared_ptr<AbstractMatrix> biasGradient;
 	shared_ptr<AbstractMatrix> dropout;
 	double regularizationRate = 0;
-	double weightLearningRate = 0.8;
-	double biasLearningRate = 0.8;
+	double weightLearningRate = 0.05;
+	double biasLearningRate = 0.05;
 	double dropoutRate = 0.5;
 
 	void initialization(int initScheme);

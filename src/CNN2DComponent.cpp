@@ -71,7 +71,7 @@ void CNN2DComponent::calculate()
 }
 
 void CNN2DComponent::compute() {
-	hiddenValue.clear();
+	this->hiddenValue.clear();
 	for (size_t f = 0; f < featureMapNum; f++)
 	{
 		shared_ptr<AbstractMatrix> fm(new Matrix(visualRow - kernelSize + 1, visualColumn - kernelSize + 1));
@@ -87,8 +87,11 @@ void CNN2DComponent::compute() {
 			}
 			fm->add_inplace(bias[f]->getValue(0, 0));
 		}
-		hiddenValue.push_back(fm);
+		this->hiddenValue.push_back(fm);
 	}
+	/*for (int i = 0; i < hiddenValue.size(); i++){
+		hiddenValue[i]->print();
+	}*/
 }
 
 void CNN2DComponent::gradient(){
