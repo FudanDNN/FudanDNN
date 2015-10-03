@@ -49,6 +49,10 @@ void CNN2DComponent::initialization(size_t scheme)
 		m->initializeValue(0, 0);
 		convKernelsGradient.push_back(m);
 
+		m = shared_ptr<AbstractMatrix>(new Matrix(kernelSize, kernelSize));
+		m->initializeValue(0, 0);
+		convKernelMomentum.push_back(m);
+
 		m = shared_ptr<AbstractMatrix>(new Matrix(kernelSize, 1));
 		m->initializeValue(lowerBound, upperBound);
 		bias.push_back(m);
@@ -56,6 +60,10 @@ void CNN2DComponent::initialization(size_t scheme)
 		m = shared_ptr<AbstractMatrix>(new Matrix(kernelSize, 1));
 		m->initializeValue(0, 0);
 		biasGradient.push_back(m);
+
+		m = shared_ptr<AbstractMatrix>(new Matrix(kernelSize, 1));
+		m->initializeValue(0, 0);
+		biasMomentum.push_back(m);
 
 	}
 
@@ -116,11 +124,14 @@ void CNN2DComponent::gradient(){
 
 void CNN2DComponent::update() 
 {
-	for (int i = 0; i < featureMapNum; i++){
-		convKernels[i] = convKernels[i]->add(convKernelsGradient[i]->multiple(kernelLearningRate));
-		bias[i] = bias[i]->add(biasGradient[i]->multiple(biasLearningRate));
+	for (int i = 0; i < featureMapNum; i++)
+	{
+		convKernelMomentum[i]->multiple_inplace(momentumRate)->add_inplace(convKernelsGradient[i]->multiple_inplace(1 - momentumRate));
+		convKernels[i]->add_inplace(convKernelMomentum[i]->multiple_inplace(kernelLearningRate));
 		convKernelsGradient[i]->initializeValue(0, 0);
-		biasGradient[i]->initializeValue(0, 0);
+		biasMomentum[i]->multiple_inplace(momentumRate)->add_inplace(biasGradient[i]->multiple_inplace(1 - momentumRate));
+		bias[i]->add_inplace(biasMomentum[i]->multiple(biasLearningRate));
+		bias[i]->initializeValue(0, 0);
 	}
 }
 

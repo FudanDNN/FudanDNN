@@ -4,8 +4,10 @@
 void AbstractNetworkLayer::update()
 {
 
-	weight = weight->add(weightGradient->multiple(weightLearningRate));
-	bias = bias->add(biasGradient->multiple(biasLearningRate));
+	weightMomentum->multiple_inplace(momentumRate)->add_inplace(weightGradient->multiple_inplace(1 - momentumRate));
+	weight->add_inplace(weightMomentum->multiple(weightLearningRate));
+	biasMomentum->multiple_inplace(momentumRate)->add_inplace(biasGradient->multiple_inplace(1 - momentumRate));
+	bias->add_inplace(biasMomentum->multiple(biasLearningRate));
 
 	weightGradient->initializeValue(0, 0);
 	biasGradient->initializeValue(0, 0);
@@ -114,6 +116,12 @@ void AbstractNetworkLayer::initialization(int init_scheme)
 
 	weightGradient->initializeValue(0, 0);
 	biasGradient->initializeValue(0, 0);
+
+	weightMomentum = shared_ptr<AbstractMatrix>(new Matrix(hiddenUnit, visualUnit));
+	biasMomentum = shared_ptr<AbstractMatrix>(new Matrix(hiddenUnit, 1));
+
+	weightMomentum->initializeValue(0, 0);
+	biasMomentum->initializeValue(0, 0);
 
 }
 string AbstractNetworkLayer::getNetworkName(){

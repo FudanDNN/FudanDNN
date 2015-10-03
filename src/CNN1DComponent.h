@@ -19,6 +19,7 @@ protected:
 	double regularizationRate;
 	double kernelLearningRate;
 	double biasLearningRate;
+	double momentumRate = 0.9;
 
 	// conv kernel 
 	vector<shared_ptr<AbstractMatrix>> convKernels;
@@ -26,11 +27,17 @@ protected:
 	// gradient of conv kernel 
 	vector<shared_ptr<AbstractMatrix>> convKernelsGradient;
 
+	// momentum of conv kernel
+	vector<shared_ptr<AbstractMatrix>> convKernelMomentum;
+
 	// bias
 	vector<shared_ptr<AbstractMatrix>> bias;
 
 	// gradient of bias
 	vector<shared_ptr<AbstractMatrix>> biasGradient;
+
+	// momentum of bias
+	vector<shared_ptr<AbstractMatrix>> biasMomentum;
 
 	// hidden value
 	vector<shared_ptr<AbstractMatrix>> hiddenValue;

@@ -58,11 +58,14 @@ protected:
 	shared_ptr<AbstractMatrix> weightGradient;
 	shared_ptr<AbstractMatrix> bias;
 	shared_ptr<AbstractMatrix> biasGradient;
+	shared_ptr<AbstractMatrix> weightMomentum;
+	shared_ptr<AbstractMatrix> biasMomentum;
 	shared_ptr<AbstractMatrix> dropout;
 	double regularizationRate = 0;
 	double weightLearningRate = 0.05;
 	double biasLearningRate = 0.05;
 	double dropoutRate = 0.5;
+	double momentumRate = 0.9;
 
 	void initialization(int initScheme);
 
