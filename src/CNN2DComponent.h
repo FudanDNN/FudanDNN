@@ -19,7 +19,7 @@ protected:
 	double regularizationRate = 0;
 	double kernelLearningRate = 0.05;
 	double biasLearningRate = 0.1;
-	double momentumRate = 0.5;
+	double momentumRate = 0.9;
 
 	// conv kernel 
 	vector<shared_ptr<AbstractMatrix>> convKernels;

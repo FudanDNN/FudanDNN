@@ -93,8 +93,8 @@ void CNN2DComponent::compute() {
 						visualValue[v]->convolve(i, i + kernelSize, j, j + kernelSize, convKernels[f]));
 				}
 			}
-			fm->add_inplace(bias[f]->getValue(0, 0));
 		}
+		fm->add_inplace(bias[f]->getValue(0, 0));
 		this->hiddenValue.push_back(fm);
 	}
 	/*for (int i = 0; i < hiddenValue.size(); i++){
@@ -118,9 +118,14 @@ void CNN2DComponent::gradient(){
 					convKernelsGradient[f]->add_inplace(visualValue[v]->submatrix(i, i + kernelSize, j, j + kernelSize)->multiple_inplace(gradient));
 				}
 			}
-			biasGradient[f]->add_inplace(hiddenGradient[f]->sum());
 		}
 	}
+
+	for (size_t f = 0; f < featureMapNum; f++)
+	{
+		biasGradient[f]->add_inplace(hiddenGradient[f]->sum());
+	}
+
 }
 
 void CNN2DComponent::update() 
@@ -128,11 +133,11 @@ void CNN2DComponent::update()
 	for (int i = 0; i < featureMapNum; i++)
 	{
 		convKernelMomentum[i]->multiple_inplace(momentumRate)->add_inplace(convKernelsGradient[i]->multiple_inplace(1 - momentumRate));
-		convKernels[i]->add_inplace(convKernelMomentum[i]->multiple_inplace(kernelLearningRate));
+		convKernels[i]->add_inplace(convKernelMomentum[i]->multiple(kernelLearningRate));
 		convKernelsGradient[i]->initializeValue(0, 0);
 		biasMomentum[i]->multiple_inplace(momentumRate)->add_inplace(biasGradient[i]->multiple_inplace(1 - momentumRate));
 		bias[i]->add_inplace(biasMomentum[i]->multiple(biasLearningRate));
-		bias[i]->initializeValue(0, 0);
+		biasGradient[i]->initializeValue(0, 0);
 	}
 }
 
