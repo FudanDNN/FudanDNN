@@ -60,7 +60,7 @@ void MaxPoolingLayer::gradient()
 			{
 				size_t maxPosI = maxPostionI[index]->getValue(i / stride, j / stride);
 				size_t maxPosJ = maxPostionJ[index]->getValue(i / stride, j / stride);
-				visualGradient[index]->add(maxPosI, maxPosJ, hiddenGradient[index]->getValue(i / stride, j / stride));
+				visualGradient[index]->add_inplace(maxPosI, maxPosJ, hiddenGradient[index]->getValue(i / stride, j / stride));
 			}
 		}
 	}
