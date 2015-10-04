@@ -151,15 +151,15 @@ void ConvolutionalNetworkLayer::gradient(){
 			for (int i = 0; i < predSize; i++){
 				predGradient.push_back(vGradient[predIndex + i]);
 			}
-			for (int x = 0; x < predGradient.size(); x++){
+			/*for (int x = 0; x < predGradient.size(); x++){
 				predGradient[x]->print();
-			}
+			}*/
 			predComponent->setHiddenGradient(predGradient);
 			predComponent->gradient();
-			cout << predComponent->getNum() << endl;
+			/*cout << predComponent->getNum() << endl;
 			for (int x = 0; x < predComponent->getVisualGradient().size(); x++){
 				predComponent->getVisualGradient()[x]->print();
-			}
+			}*/
 			predIndex += predSize;
 		}
 		if (node->getBeforeNode().size() == 0){
@@ -169,7 +169,7 @@ void ConvolutionalNetworkLayer::gradient(){
 			this->visualGradient = component->getVisualGradient()[0];
 		}
 	}
-	//visualGradient->print();
+	visualGradient->print();
 	this->hiddenGradient->initializeValue(0, 0);
 }
 
