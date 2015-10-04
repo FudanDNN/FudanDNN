@@ -106,16 +106,17 @@ void CNN1DComponent::gradient(){
 
 	for (size_t v = 0; v < num; v++)
 	{
+		visualGradient[v]->initializeValue(0, 0);
 		for (size_t f = 0; f < featureMapNum; f++)
 		{
 			for (size_t i = 0; i < visualRow; i += stride)
 			{
 				double gradient = hiddenGradient[f]->getValue(i / stride, num);
-				visualGradient[v]->add(i, i + kernelSize - 1, 0, 0,
+				visualGradient[v]->add_inplace(i, i + kernelSize - 1, 0, 0,
 					convKernels[f]->multiple(gradient));
-				convKernelsGradient[f]->add(visualValue[v]->submatrix(i, i + kernelSize - 1, 0, 0)->multiple(gradient));
+				convKernelsGradient[f]->add_inplace(visualValue[v]->submatrix(i, i + kernelSize - 1, 0, 0)->multiple(gradient));
 			}
-			biasGradient[f]->add(hiddenGradient[f]);
+			biasGradient[f]->add_inplace(hiddenGradient[f]);
 		}
 	}
 
