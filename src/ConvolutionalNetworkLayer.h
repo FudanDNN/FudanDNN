@@ -22,7 +22,7 @@ public:
 	size_t addCNN2DComponentToCNN(size_t kernelSize, size_t stride, size_t featureMap_Num,
 		size_t num, size_t visualRow, size_t visualColumn, size_t scheme);
 	size_t addMaxPoolingToCNN(size_t poolingSize, size_t stride,
-		size_t visualRow, size_t visualColumn);
+		size_t visualRow, size_t visualColumn, size_t num);
 	size_t addNonLinearToCNN(int visualRow,int visualColumn,int num, size_t type);
 	size_t addEdgeInCNN(size_t inId, size_t outId);
 	void topoSort();

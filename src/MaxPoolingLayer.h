@@ -18,7 +18,7 @@ protected:
 	size_t poolingSize;
 
 public:
-	MaxPoolingLayer(size_t poolingSize, size_t stride, size_t visualRow, size_t visualColumn);
+	MaxPoolingLayer(size_t poolingSize, size_t stride, size_t visualRow, size_t visualColumn, size_t num);
 	void compute() override;
 	void calculate() override;
 	void gradient() override;

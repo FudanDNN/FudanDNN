@@ -8,9 +8,12 @@ NonLinearComponent::NonLinearComponent(int visualRow,int visualColumn,int num,in
 	this->hiddenColumn = visualColumn;
 }
 void NonLinearComponent::gradient(){
+	visualGradient.clear();
+	//cout << visualGradient.size() << endl;
 	for (int i = 0; i < hiddenGradient.size(); i++){
 		visualGradient.push_back(hiddenGradient[i]->map(sigmoidDerivative));
 	}
+	//cout << visualGradient.size() << endl;
 	this->hiddenGradient.clear();
 }
 void NonLinearComponent::compute(){
@@ -21,12 +24,15 @@ void NonLinearComponent::compute(){
 }
 void NonLinearComponent::calculate(){
 	hiddenValue.clear();
+	/*for (int i = 0; i < visualValue.size(); i++){
+		visualValue[i]->print();
+	}*/
 	for (int i = 0; i < visualValue.size(); i++){
 		hiddenValue.push_back(visualValue[i]->map(sigmoid));
 	}
 }
 void NonLinearComponent::update(){
-
+	visualGradient.clear();
 }
 void NonLinearComponent::regularize(){
 

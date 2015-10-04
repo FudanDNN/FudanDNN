@@ -50,7 +50,7 @@ public:
 	size_t addCNN2DComponentToCNN(size_t kernelSize, size_t stride, size_t featureMap_Num,
 		size_t num, size_t visualRow, size_t visualColumn, size_t scheme, size_t cnnId);
 	size_t addMaxPoolingComponentToCNN(size_t poolingSize, size_t stride, size_t visualRow,
-		size_t visualColumn, size_t cnnId);
+		size_t visualColumn, size_t num, size_t cnnId);
 	size_t addNonLinearToCNN(int visualRow, int visualColumn, size_t num, size_t type, size_t cnnId);
 	size_t addEdgeInCNN(size_t inId, size_t outId, size_t cnnId);
 	size_t addInputEdge(size_t inputID, size_t outID);

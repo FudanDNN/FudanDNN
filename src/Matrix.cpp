@@ -696,7 +696,7 @@ shared_ptr<AbstractMatrix>Matrix::v2mByColomn(size_t size)
 	{
 		for (size_t j = 0; j < columnSize; j++)
 		{
-			m->setValue(i, j, m->getValue(j * rowSize + i, 0));
+			m->setValue(i, j, this->getValue(j * rowSize + i, 0));
 		}
 	}
 	return m;

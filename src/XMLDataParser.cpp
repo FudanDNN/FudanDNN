@@ -39,7 +39,6 @@ shared_ptr<CharacterSample> XMLDataParser::getNextCharacterSample(){
 	for (size_t i = 0; i < iRowSize; i++){
 		vector<string> point = split(inputStr, " ");
 		for (size_t j = 0; j < iColumnSize; j++){
-
 			// column and row are invert in files 
 			input[j]=point[j];
 		}
@@ -142,8 +141,6 @@ size_t XMLDataParser::getSampleNum(){
 }
 void XMLDataParser::init(){
 	TiXmlElement *root = (doc->RootElement());
-	TiXmlElement *name = (root->FirstChildElement("name"));
-	this->networkName = name->GetText();
 	TiXmlElement *samples = (root->FirstChildElement("samples"));
 	TiXmlAttribute *typeAttribute = (samples->FirstAttribute());
 	this->type = typeAttribute->Value();

@@ -146,10 +146,10 @@ size_t MasterControl::addCNN2DComponentToCNN(size_t kernelSize, size_t stride, s
 }
 
 size_t MasterControl::addMaxPoolingComponentToCNN(size_t poolingSize, size_t stride,
-	size_t visualRow, size_t visualColumn, size_t cnnId){
+	size_t visualRow, size_t visualColumn, size_t num, size_t cnnId){
 	shared_ptr<NetworkNode> node = idMap.find(cnnId)->second;
 	shared_ptr<ConvolutionalNetworkLayer> cnn = dynamic_pointer_cast<ConvolutionalNetworkLayer>(node->getLayer());
-	return cnn->addMaxPoolingToCNN(poolingSize, stride, visualRow, visualColumn);
+	return cnn->addMaxPoolingToCNN(poolingSize, stride, visualRow, visualColumn,num);
 }
 
 size_t MasterControl::addNonLinearToCNN(int visualRow, int visualColumn, size_t num, size_t type, size_t cnnId){
@@ -649,16 +649,16 @@ int main(){
 	MasterControl *master = new MasterControl();
 	size_t cnnId = master->addCNN();
 	//size_t kernelSize, size_t stride,size_t featureMapNum, size_t num, size_t visualRow, size_t visualColumn, size_t scheme
-	size_t id1 = master->addCNN2DComponentToCNN(1, 1, 6, 1, 28, 28, 0, cnnId);
-	size_t nonLinear1 = master->addNonLinearToCNN(28,28,6,0, cnnId);
-	size_t pooling1 = master->addMaxPoolingComponentToCNN(2, 2, 28, 28, cnnId);
+	size_t id1 = master->addCNN2DComponentToCNN(1, 1, 6, 1, 28, 28, 1, cnnId);
+	size_t nonLinear1 = master->addNonLinearToCNN(28,28,6,1, cnnId);
+	size_t pooling1 = master->addMaxPoolingComponentToCNN(2, 2, 28, 28, 6, cnnId);
 
-	size_t id2 = master->addCNN2DComponentToCNN(5, 1, 16, 6, 14, 14, 0, cnnId);
-	size_t nonLinear2 = master->addNonLinearToCNN(10,10,16,0, cnnId);
-	size_t pooling2 = master->addMaxPoolingComponentToCNN(2, 2, 10, 10, cnnId);
+	size_t id2 = master->addCNN2DComponentToCNN(5, 1, 16, 6, 14, 14, 1, cnnId);
+	size_t nonLinear2 = master->addNonLinearToCNN(10,10,16,1, cnnId);
+	size_t pooling2 = master->addMaxPoolingComponentToCNN(2, 2, 10, 10, 16, cnnId);
 
-	size_t id3 = master->addCNN2DComponentToCNN(5, 1, 120, 16, 5, 5, 0, cnnId);
-	size_t nonLinear3 = master->addNonLinearToCNN(1,1,120,0, cnnId);
+	size_t id3 = master->addCNN2DComponentToCNN(5, 1, 120, 16, 5, 5, 1, cnnId);
+	size_t nonLinear3 = master->addNonLinearToCNN(1,1,120,1, cnnId);
 
 	size_t cnnEdge1 = master->addEdgeInCNN(id1, nonLinear1, cnnId);
 	size_t cnnEdge2 = master->addEdgeInCNN(nonLinear1,pooling1,cnnId);
@@ -670,7 +670,7 @@ int main(){
 
 	size_t cnnEdge7 = master->addEdgeInCNN(id3, nonLinear3, cnnId);
 
-	size_t inputId = master->addInput("dataset/temp.xml");
+	size_t inputId = master->addInput("dataset/norm.xml");
 	master->addInputEdge(inputId, cnnId);
 
 	size_t layer1 = master->addLINEAR(120, 84, 0);
@@ -684,7 +684,7 @@ int main(){
 	master->addEdge(layer2, non2);
 
 	master->setCriteria(0, 10);
-	master->setTrainingTimes(10000);
+	master->setTrainingTimes(100000);
 	master->setBatchSize(1);
 	master->run();
 	while (1);
