@@ -106,6 +106,7 @@ void CNN2DComponent::gradient(){
 
 	for (size_t v = 0; v < num; v++)
 	{
+		visualGradient[v]->initializeValue(0, 0);
 		for (size_t f = 0; f < featureMapNum; f++)
 		{
 			for (size_t i = 0; i < visualRow - kernelSize + 1; i += stride)

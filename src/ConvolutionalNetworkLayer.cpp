@@ -125,7 +125,7 @@ void ConvolutionalNetworkLayer::gradient(){
 			size_t mColumn = component->getHiddenValue()[0]->getColumnSize();
 			size_t square = mRow*mColumn;
 
-			shared_ptr<AbstractMatrix> gradientMatrix = hiddenGradient->submatrix(index-square*vectorSize,index,0,1);
+			shared_ptr<AbstractMatrix> gradientMatrix = hiddenGradient->submatrix(index - square*vectorSize, index, 0, 1);
 			vector<shared_ptr<AbstractMatrix>> gradient;
 
 			for (size_t i = 0; i < vectorSize; i++){
@@ -139,7 +139,7 @@ void ConvolutionalNetworkLayer::gradient(){
 		//cout << component->getVisualGradient().size() << j <<" "<<nodes.size() << endl;
 		vector<shared_ptr<AbstractMatrix>> vGradient = component->getVisualGradient();
 		/*for (int x = 0; x < vGradient.size(); x++){
-			vGradient[x]->print();
+		vGradient[x]->print();
 		}*/
 		size_t predIndex = 0;
 		for (shared_ptr<ComponentNode> pred : node->getBeforeNode())
@@ -152,19 +152,19 @@ void ConvolutionalNetworkLayer::gradient(){
 				predGradient.push_back(vGradient[predIndex + i]);
 			}
 			/*for (int x = 0; x < predGradient.size(); x++){
-				predGradient[x]->print();
+			predGradient[x]->print();
 			}*/
 			predComponent->setHiddenGradient(predGradient);
 			predComponent->gradient();
-			/*cout << predComponent->getNum() << endl;
-			for (int x = 0; x < predComponent->getVisualGradient().size(); x++){
-				predComponent->getVisualGradient()[x]->print();
+			//cout << predComponent->getNum() << endl;
+			/*for (int x = 0; x < predComponent->getVisualGradient().size(); x++){
+			predComponent->getVisualGradient()[x]->print();
 			}*/
 			predIndex += predSize;
 		}
 		if (node->getBeforeNode().size() == 0){
 			/*for (int x = 0; x < component->getVisualGradient().size(); x++){
-				component->getVisualGradient()[x]->print();
+			component->getVisualGradient()[x]->print();
 			}*/
 			this->visualGradient = component->getVisualGradient()[0];
 		}
@@ -175,7 +175,7 @@ void ConvolutionalNetworkLayer::gradient(){
 
 size_t ConvolutionalNetworkLayer::addCNN2DComponentToCNN(size_t kernelSize, size_t stride,
 	size_t featureMap_Num, size_t num, size_t visualRow, size_t visualColumn, size_t scheme){
-	shared_ptr<CNN2DComponent> max (new CNN2DComponent(kernelSize, stride, featureMap_Num, num,
+	shared_ptr<CNN2DComponent> max(new CNN2DComponent(kernelSize, stride, featureMap_Num, num,
 		visualRow, visualColumn, scheme));
 	shared_ptr<ComponentNode> node(new ComponentNode(currentId, max));
 	idMap.insert(Component_Pair(currentId, node));
@@ -186,7 +186,7 @@ size_t ConvolutionalNetworkLayer::addCNN2DComponentToCNN(size_t kernelSize, size
 
 size_t ConvolutionalNetworkLayer::addMaxPoolingToCNN(size_t poolingSize,
 	size_t stride, size_t visualRow, size_t visualColumn, size_t num){
-	shared_ptr<MaxPoolingLayer> max(new MaxPoolingLayer(poolingSize, stride, visualRow, visualColumn,num));
+	shared_ptr<MaxPoolingLayer> max(new MaxPoolingLayer(poolingSize, stride, visualRow, visualColumn, num));
 	shared_ptr<ComponentNode> node(new ComponentNode(currentId, max));
 	idMap.insert(Component_Pair(currentId, node));
 	currentId++;
@@ -195,7 +195,7 @@ size_t ConvolutionalNetworkLayer::addMaxPoolingToCNN(size_t poolingSize,
 }
 
 size_t ConvolutionalNetworkLayer::addNonLinearToCNN(int visualRow, int visualColumn, int num, size_t type){
-	shared_ptr<NonLinearComponent> nonLinear(new NonLinearComponent(visualRow,visualColumn, num, type));
+	shared_ptr<NonLinearComponent> nonLinear(new NonLinearComponent(visualRow, visualColumn, num, type));
 	shared_ptr<ComponentNode> node(new ComponentNode(currentId, nonLinear));
 	idMap.insert(Component_Pair(currentId, node));
 	currentId++;
