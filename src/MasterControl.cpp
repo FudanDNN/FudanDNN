@@ -670,7 +670,7 @@ int main(){
 
 	size_t cnnEdge7 = master->addEdgeInCNN(id3, nonLinear3, cnnId);
 
-	size_t inputId = master->addInput("dataset/norm.xml");
+	size_t inputId = master->addInput("dataset/temp.xml");
 	master->addInputEdge(inputId, cnnId);
 
 	size_t layer1 = master->addLINEAR(120, 84, 0);
@@ -689,3 +689,34 @@ int main(){
 	master->run();
 	while (1);
 }
+/*int main(){
+	MasterControl *master = new MasterControl();
+	size_t cnnId = master->addCNN();
+	//size_t kernelSize, size_t stride,size_t featureMapNum, size_t num, size_t visualRow, size_t visualColumn, size_t scheme
+	size_t id1 = master->addCNN2DComponentToCNN(4, 1, 10, 1, 5, 5, 1, cnnId);
+	size_t nonLinear1 = master->addNonLinearToCNN(2, 2, 10, 1, cnnId);
+	size_t pooling1 = master->addMaxPoolingComponentToCNN(2, 2, 2, 2, 10, cnnId);
+
+	size_t cnnEdge1 = master->addEdgeInCNN(id1, nonLinear1, cnnId);
+	size_t cnnEdge2 = master->addEdgeInCNN(nonLinear1, pooling1, cnnId);
+
+
+	size_t inputId = master->addInput("dataset/digital.xml");
+	master->addInputEdge(inputId, cnnId);
+
+	size_t layer1 = master->addLINEAR(10, 20, 0);
+	size_t non1 = master->addNONLINEAR(20, 0);
+	size_t layer2 = master->addLINEAR(20, 10, 0);
+	size_t non2 = master->addNONLINEAR(10, 0);
+
+	master->addEdge(cnnId, layer1);
+	master->addEdge(layer1, non1);
+	master->addEdge(non1, layer2);
+	master->addEdge(layer2, non2);
+
+	master->setCriteria(0, 10);
+	master->setTrainingTimes(100000);
+	master->setBatchSize(1);
+	master->run();
+	while (1);
+}*/

@@ -64,7 +64,9 @@ public:
 	void setKernelLearningRate(double kernelLearningRate);
 	double getBiasLearningRate();
 	void setBiasLearningRate(double biasLearningRate);
-
+	void writeSelf(string);
+	void readSelf(string);
+	string getComponentName() { return "CNN2D"; };
 };
 
 

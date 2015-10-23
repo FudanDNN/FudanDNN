@@ -26,6 +26,8 @@ public:
 	size_t addNonLinearToCNN(int visualRow,int visualColumn,int num, size_t type);
 	size_t addEdgeInCNN(size_t inId, size_t outId);
 	void topoSort();
+	void writeSelf(string);
+	void readSelf(string);
 private:
 	vector<shared_ptr<ComponentNode>> nodes;
 	int currentId;

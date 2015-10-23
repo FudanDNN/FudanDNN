@@ -37,3 +37,19 @@ void NonLinearComponent::update(){
 void NonLinearComponent::regularize(){
 
 }
+
+void NonLinearComponent::writeSelf(string filename){
+
+}
+
+void NonLinearComponent::readSelf(string filename){
+
+	ofstream fout(filename, ios::out);
+
+	fout << visualRow;
+	fout << visualColumn;
+	fout << num;
+	fout << type;
+
+	fout.close();
+}

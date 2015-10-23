@@ -177,3 +177,10 @@ void CNN1DComponent::setBiasLearningRate(double biasLearningRate)
 {
 	this->biasLearningRate = biasLearningRate;
 }
+void CNN1DComponent::writeSelf(string filename){
+
+}
+
+void CNN1DComponent::readSelf(string filename){
+
+}

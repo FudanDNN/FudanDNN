@@ -64,5 +64,13 @@ void MaxPoolingLayer::gradient()
 			}
 		}
 	}
+	this->hiddenGradient.clear();
+}
+
+void MaxPoolingLayer::writeSelf(string filename){
+
+}
+
+void MaxPoolingLayer::readSelf(string filename){
 
 }

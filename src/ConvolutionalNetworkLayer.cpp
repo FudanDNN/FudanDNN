@@ -138,9 +138,6 @@ void ConvolutionalNetworkLayer::gradient(){
 		}
 		//cout << component->getVisualGradient().size() << j <<" "<<nodes.size() << endl;
 		vector<shared_ptr<AbstractMatrix>> vGradient = component->getVisualGradient();
-		/*for (int x = 0; x < vGradient.size(); x++){
-		vGradient[x]->print();
-		}*/
 		size_t predIndex = 0;
 		for (shared_ptr<ComponentNode> pred : node->getBeforeNode())
 		{
@@ -169,7 +166,7 @@ void ConvolutionalNetworkLayer::gradient(){
 			this->visualGradient = component->getVisualGradient()[0];
 		}
 	}
-	visualGradient->print();
+	//visualGradient->print();
 	this->hiddenGradient->initializeValue(0, 0);
 }
 
@@ -256,4 +253,12 @@ void ConvolutionalNetworkLayer::topoSort(){
 }
 string ConvolutionalNetworkLayer::getNetworkName(){
 	return "ContractiveNetworkLayer";
+}
+
+void ConvolutionalNetworkLayer::writeSelf(string filename){
+
+}
+
+void ConvolutionalNetworkLayer::readSelf(string filename){
+
 }

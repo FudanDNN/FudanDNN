@@ -12,6 +12,9 @@ public:
 	void calculate();
 	void update();
 	void regularize();
+	void writeSelf(string);
+	void readSelf(string);
+	string getComponentName() { return "NonLinear"; };
 protected:
 	int type;
 };

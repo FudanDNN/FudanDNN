@@ -22,6 +22,9 @@ public:
 	void compute() override;
 	void calculate() override;
 	void gradient() override;
+	void writeSelf(string);
+	void readSelf(string);
+	string getComponentName() { return "MaxPooling"; };
 
 };
 #endif

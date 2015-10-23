@@ -125,7 +125,7 @@ void CNN2DComponent::gradient(){
 	{
 		biasGradient[f]->add_inplace(hiddenGradient[f]->sum());
 	}
-
+	this->hiddenGradient.clear();
 }
 
 void CNN2DComponent::update() 
@@ -178,5 +178,13 @@ double CNN2DComponent::getBiasLearningRate()
 void CNN2DComponent::setBiasLearningRate(double biasLearningRate)
 {
 	this->biasLearningRate = biasLearningRate;
+}
+
+void CNN2DComponent::writeSelf(string filename){
+
+}
+
+void CNN2DComponent::readSelf(string filename){
+
 }
 

@@ -20,6 +20,9 @@ public:
 	virtual void update() {};
 	virtual void regularize() {};
 	virtual ~AbstractComponent() {};
+	virtual void writeSelf(string) {};
+	virtual void readSelf(string) {};
+	virtual string getComponentName() { return nullptr; };
 
 protected:
 	vector<shared_ptr<AbstractMatrix>> visualValue;
