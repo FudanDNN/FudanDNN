@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<network>
+<samples type = "image" iRowSize=1 iColumnSize=13 sampleNum=1 oRowSize=1 oColumnSize=30>
+<sample>
+<input>5.1950192 1.9865356 1.7544738 1.2407122 1.165934 0.65422063 0.8017003 0.80051357 0.68774417 0.42084694 0.34394354 0.47581435 0.52417076 
+</input>
+<output>1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </output>
+</sample>
+</samples>
+</network>
