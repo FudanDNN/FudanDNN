@@ -342,6 +342,7 @@ void MasterControl::predict(string fileName){
 }
 void MasterControl::run()
 {
+	workingThread->emitMessage("start training...\n");
 	init();
 	topoSort();
 	//preTraining();
@@ -432,7 +433,7 @@ void MasterControl::run()
 		//cout << "error:" << singleError << endl;
 		norm2 += this->criteria->getPredictGradient()->norm2();
 		if (times%sampleNum == 0){
-            sprintf(outputBuffer, "times: %d error: %lf correctNum:%d\n", times, error, correctNum);
+            sprintf(outputBuffer, "times: %d correctRate: %lf error: %lf\n", times/sampleNum, ((double)correctNum)/sampleNum,error);
             workingThread->emitMessage(outputBuffer);
             //cout << "times: " << times << "   error: " << error << "   correctNum:" << correctNum << endl;
             error = 0;
@@ -483,7 +484,7 @@ void MasterControl::run()
 		}
 
 	}
-
+	workingThread->emitMessage("exit training...\n");
 
 }
 

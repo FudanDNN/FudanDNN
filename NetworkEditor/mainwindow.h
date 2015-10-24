@@ -27,7 +27,7 @@ public slots:
 	void saveFileAction();
 	void openFileAction();
 	void onItemSelected(QGraphicsItem *);
-    void doAlert();
+    void doAlert(QString msg);
     void onItemUnSelected(QGraphicsItem *);
 private slots:
     void startTraining();

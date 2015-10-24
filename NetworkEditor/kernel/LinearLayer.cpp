@@ -19,7 +19,7 @@ void LinearLayer::calculate()
 	/*cout << "weight" << endl;
 	weight->print();*/
 	hiddenValue = visualValue->multipleLeft(weight)->add(bias);
-	hiddenValue->print();
+	//hiddenValue->print();
 }
 
 void LinearLayer::gradient()

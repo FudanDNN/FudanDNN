@@ -35,7 +35,7 @@ MainWindow::~MainWindow()
 }
 void MainWindow::createWorkingThread(){
     workingThread = new TrainJob();
-    connect(workingThread, SIGNAL(alert()), this, SLOT(doAlert()));
+    connect(workingThread, SIGNAL(alert(QString )), this, SLOT(doAlert(QString)));
     connect(workingThread, SIGNAL(finished()), this, SLOT(joinWorkingThread()));
 }
 QToolButton * MainWindow::createUnitBtn(QString const & title){
@@ -342,9 +342,9 @@ HyperParameterWidget* MainWindow::createHyperParameterWidget(HyperParameterContr
 }
 
 /* slots for working thread*/
-void MainWindow::doAlert(){
+void MainWindow::doAlert(QString msg){
     
-    this->ui->networkOutputText->setText(this->ui->networkOutputText->toPlainText() + workingThread->getMessage());
+    this->ui->networkOutputText->setText(this->ui->networkOutputText->toPlainText() +msg);
     ui->networkOutputText->moveCursor(QTextCursor::End);
 }
 void MainWindow::joinWorkingThread(){
