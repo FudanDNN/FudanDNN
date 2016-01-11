@@ -21,11 +21,15 @@ public:
 	//get network name
 	virtual string getNetworkName() { return nullptr; };
 
+	virtual void writeSelf(string) {};
+	virtual void readSelf(string) {};
+	virtual ~Layer() {};
+
 	//update error
 	void setVisualValue(shared_ptr<AbstractMatrix> visualValue);
 
 	//set hidden layer error
-	void setHiddenGradient(shared_ptr<AbstractMatrix> hiddenGradient);
+	void addHiddenGradient(shared_ptr<AbstractMatrix> hiddenGradient);
 
 	//get value of visable layer
 	shared_ptr<AbstractMatrix> getVisualValue();
@@ -40,12 +44,12 @@ public:
 	shared_ptr<AbstractMatrix> getHiddenGradient();
 
 	size_t getVisualRow();
-
 	size_t getVisualColumn();
 
 	size_t getHiddenRow();
-
 	size_t getHiddenColumn();
+
+	void setNetworkName(string networkName);
 
 	// rate for regularize
 	double getRegularizationRate();
@@ -67,10 +71,6 @@ public:
 	double getMomentumRate();
 	void setMomentumRate(double momentumRate);
 
-	void setNetworkName(string networkName);
-	virtual void writeSelf(string) {};
-	virtual void readSelf(string) {};
-	virtual ~Layer() {};
 
 protected:
 	shared_ptr<AbstractMatrix> visualValue;
