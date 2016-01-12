@@ -1,7 +1,6 @@
 #ifndef __FUDANDNN_UTILS_H
 #define __FUDANDNN_UTILS_H
 
-
 #include "cstddef"
 #include "cmath"
 #include "stdlib.h"
@@ -13,9 +12,8 @@
 #include "sstream"
 #include "iostream"
 #include "time.h"
-//#include "Constant.h"
 #include "map"
-#include "cblas.h"
+#include "openblas/cblas.h"
 
 using std::vector;
 using std::fstream;
