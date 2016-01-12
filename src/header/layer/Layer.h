@@ -16,7 +16,7 @@ public:
 	virtual void gradient() {};
 
 	//update paramater
-	virtual void uodate() {};
+	virtual void update() {};
 
 	//get network name
 	virtual string getNetworkName() { return nullptr; };
