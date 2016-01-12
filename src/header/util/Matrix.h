@@ -2,7 +2,7 @@
 #define __FUDANDNN_MATRIX_H
 
 #include "utils.h"
-#include <cblas.h>
+#include "../../include/cblas.h"
 #include <math.h>
 
 class Matrix
