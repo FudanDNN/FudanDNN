@@ -9,6 +9,6 @@ size_t Task::getId(){
 	return this->id;
 }
 
-void Task::setGradient(shared_ptr<AbstractMatrix> gradient){
+void Task::setGradient(shared_ptr<Matrix> gradient){
 	this->gradient = gradient;
 }

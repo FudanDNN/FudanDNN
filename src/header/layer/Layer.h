@@ -1,7 +1,7 @@
 #ifndef __FUDANDNN_LAYER_H
 #define __FUDANDNN_LAYER_H
 #include "../util/utils.h"
-#include "../util/AbstractMatrix.h"
+#include "../util/Matrix.h"
 
 class Layer
 {
@@ -16,7 +16,7 @@ public:
 	virtual void gradient() {};
 
 	//update paramater
-	virtual void uodate() {};
+	virtual void update() {};
 
 	//get network name
 	virtual string getNetworkName() { return nullptr; };
@@ -26,22 +26,22 @@ public:
 	virtual ~Layer() {};
 
 	//update error
-	void setVisualValue(shared_ptr<AbstractMatrix> visualValue);
+	void setVisualValue(shared_ptr<Matrix> visualValue);
 
 	//set hidden layer error
-	void addHiddenGradient(shared_ptr<AbstractMatrix> hiddenGradient);
+	void addHiddenGradient(shared_ptr<Matrix> hiddenGradient);
 
 	//get value of visable layer
-	shared_ptr<AbstractMatrix> getVisualValue();
+	shared_ptr<Matrix> getVisualValue();
 
 	//get value of hidden layer
-	shared_ptr<AbstractMatrix> getHiddenValue();
+	shared_ptr<Matrix> getHiddenValue();
 
 	//get error of visable layer
-	shared_ptr<AbstractMatrix> getVisualGradient();
+	shared_ptr<Matrix> getVisualGradient();
 
 	//get error of hidden layer
-	shared_ptr<AbstractMatrix> getHiddenGradient();
+	shared_ptr<Matrix> getHiddenGradient();
 
 	size_t getVisualRow();
 	size_t getVisualColumn();
@@ -73,10 +73,10 @@ public:
 
 
 protected:
-	shared_ptr<AbstractMatrix> visualValue;
-	shared_ptr<AbstractMatrix> hiddenValue;
-	shared_ptr<AbstractMatrix> visualGradient;
-	shared_ptr<AbstractMatrix> hiddenGradient;
+	shared_ptr<Matrix> visualValue;
+	shared_ptr<Matrix> hiddenValue;
+	shared_ptr<Matrix> visualGradient;
+	shared_ptr<Matrix> hiddenGradient;
 	size_t visualRow;
 	size_t visualColumn;
 	size_t hiddenRow;
