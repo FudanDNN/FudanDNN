@@ -1,4 +1,4 @@
-#include"../header/util/XMLTask.h"
+#include"util/XMLTask.h"
 
 XMLTask::XMLTask(string file, int id) :Task(file,id){
 	parser = shared_ptr<XMLDataParser>(new XMLDataParser(file));

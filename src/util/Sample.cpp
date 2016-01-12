@@ -1,4 +1,4 @@
-#include "../header/util/Sample.h"
+#include "util/Sample.h"
 
 Sample::Sample(shared_ptr<Matrix> input, shared_ptr<Matrix> output, string type,
 	size_t iRowSize, size_t iColumnSize, size_t oRowSize, size_t oColumnSize){

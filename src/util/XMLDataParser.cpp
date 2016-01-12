@@ -1,4 +1,4 @@
-#include "../header/util/XMLDataParser.h"
+#include "util/XMLDataParser.h"
 XMLDataParser::XMLDataParser(string fileName){
 	this->fileName = fileName;
 	cout << fileName << endl;
@@ -21,6 +21,7 @@ bool XMLDataParser::isEnd(){
 
 
 shared_ptr<Sample> XMLDataParser::getNextSample(){
+	/*
 	if (this->sampleIndex >= sampleNum){
 		this->sampleIndex = 0;
 		TiXmlElement *root = (doc->RootElement());
@@ -44,7 +45,7 @@ shared_ptr<Sample> XMLDataParser::getNextSample(){
 			n = atof(point[j + i*iColumnSize].c_str());
 			//cout << "input:" << n << endl;
 			// column and row are invert in files 
-			input->setValue(j, i, n);
+			input->setValues(j, i, n);
 		}
 		point.clear();
 	}
@@ -67,6 +68,8 @@ shared_ptr<Sample> XMLDataParser::getNextSample(){
 	this->sampleIndex++;
 
 	return trainingSample;
+	*/
+	return nullptr;
 }
 vector<string> XMLDataParser::split(string str, string pattern)
 {

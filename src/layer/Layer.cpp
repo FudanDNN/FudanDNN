@@ -1,5 +1,5 @@
-#include "../header/layer/Layer.h"
-#include "../header/util/Matrix.h"
+#include "layer/Layer.h"
+#include "util/Matrix.h"
 
 
 //update error
@@ -10,7 +10,7 @@ void Layer::setVisualValue(shared_ptr<Matrix> visualValue)
 
 //add hidden layer gradient
 void Layer::addHiddenGradient(shared_ptr<Matrix> hiddenGradient)
-{
+{/*
 	if (this->hiddenGradient == nullptr) {
 		this->hiddenGradient = shared_ptr<Matrix>(new Matrix(hiddenRow, hiddenColumn));
 		this->hiddenGradient->initializeValue(0, 0);
@@ -19,7 +19,7 @@ void Layer::addHiddenGradient(shared_ptr<Matrix> hiddenGradient)
 	else{
 		shared_ptr<Matrix> releaseHidden = this->hiddenGradient;
 		this->hiddenGradient = this->hiddenGradient->add(hiddenGradient);
-	}
+	}*/
 }
 
 shared_ptr<Matrix> Layer::getVisualValue()
