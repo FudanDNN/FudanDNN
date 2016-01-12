@@ -1,7 +1,7 @@
 #ifndef __FUDANDNN_INPUT_H
 #define __FUDANDNN_INPUT_H
 #include "utils.h"
-#include "AbstractMatrix.h"
+#include "Matrix.h"
 #include "Sample.h"
 
 class Task{
@@ -12,13 +12,13 @@ public:
 	virtual size_t getSampleNum(){ return 0; };
 	virtual bool isEnd(){ return false; };
 	size_t getId();
-	void setGradient(shared_ptr<AbstractMatrix> gradient);
+	void setGradient(shared_ptr<Matrix> gradient);
 
 protected:
 	string file;
 	size_t id;
 	shared_ptr<Sample> currentSample;
-	shared_ptr<AbstractMatrix> gradient;
+	shared_ptr<Matrix> gradient;
 
 };
 #endif

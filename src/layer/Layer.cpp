@@ -3,41 +3,41 @@
 
 
 //update error
-void Layer::setVisualValue(shared_ptr<AbstractMatrix> visualValue)
+void Layer::setVisualValue(shared_ptr<Matrix> visualValue)
 {
 	this->visualValue = visualValue;
 }
 
 //add hidden layer gradient
-void Layer::addHiddenGradient(shared_ptr<AbstractMatrix> hiddenGradient)
+void Layer::addHiddenGradient(shared_ptr<Matrix> hiddenGradient)
 {
 	if (this->hiddenGradient == nullptr) {
-		this->hiddenGradient = shared_ptr<AbstractMatrix>(new Matrix(hiddenRow, hiddenColumn));
+		this->hiddenGradient = shared_ptr<Matrix>(new Matrix(hiddenRow, hiddenColumn));
 		this->hiddenGradient->initializeValue(0, 0);
 		this->hiddenGradient = this->hiddenGradient->add(hiddenGradient);
 	}
 	else{
-		shared_ptr<AbstractMatrix> releaseHidden = this->hiddenGradient;
+		shared_ptr<Matrix> releaseHidden = this->hiddenGradient;
 		this->hiddenGradient = this->hiddenGradient->add(hiddenGradient);
 	}
 }
 
-shared_ptr<AbstractMatrix> Layer::getVisualValue()
+shared_ptr<Matrix> Layer::getVisualValue()
 {
 	return visualValue;
 }
 
-shared_ptr<AbstractMatrix> Layer::getHiddenValue()
+shared_ptr<Matrix> Layer::getHiddenValue()
 {
 	return hiddenValue;
 }
 
-shared_ptr<AbstractMatrix> Layer::getVisualGradient()
+shared_ptr<Matrix> Layer::getVisualGradient()
 {
 	return visualGradient;
 }
 
-shared_ptr<AbstractMatrix> Layer::getHiddenGradient()
+shared_ptr<Matrix> Layer::getHiddenGradient()
 {
 	return hiddenGradient;
 }

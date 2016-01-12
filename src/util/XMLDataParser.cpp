@@ -33,8 +33,8 @@ shared_ptr<Sample> XMLDataParser::getNextSample(){
 	string inputStr = inputElement->GetText();
 	string outputStr = outputElement->GetText();
 	shared_ptr<Sample> trainingSample;
-	shared_ptr<AbstractMatrix> input(new Matrix(iRowSize, iColumnSize));
-	shared_ptr<AbstractMatrix> output(new Matrix(oRowSize, oColumnSize));
+	shared_ptr<Matrix> input(new Matrix(iRowSize, iColumnSize));
+	shared_ptr<Matrix> output(new Matrix(oRowSize, oColumnSize));
 
 	//cout << "input:" << inputStr << endl;
 	for (size_t i = 0; i < iRowSize; i++){

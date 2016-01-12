@@ -1,6 +1,6 @@
 #include "../header/util/Sample.h"
 
-Sample::Sample(shared_ptr<AbstractMatrix> input, shared_ptr<AbstractMatrix> output, string type,
+Sample::Sample(shared_ptr<Matrix> input, shared_ptr<Matrix> output, string type,
 	size_t iRowSize, size_t iColumnSize, size_t oRowSize, size_t oColumnSize){
 	this->input = input;
 	this->output = output;
@@ -11,11 +11,11 @@ Sample::Sample(shared_ptr<AbstractMatrix> input, shared_ptr<AbstractMatrix> outp
 	this->oColumnSize = oColumnSize;
 }
 
-void Sample::setInput(shared_ptr<AbstractMatrix> input){
+void Sample::setInput(shared_ptr<Matrix> input){
 	this->input = input;
 }
 
-void Sample::setOutput(shared_ptr<AbstractMatrix> output){
+void Sample::setOutput(shared_ptr<Matrix> output){
 	this->output = output;
 }
 
@@ -39,11 +39,11 @@ void Sample::setOColumnSize(size_t oColumnSize){
 	this->oColumnSize = oColumnSize;
 }
 
-shared_ptr<AbstractMatrix> Sample::getInput(){
+shared_ptr<Matrix> Sample::getInput(){
 	return this->input;
 }
 
-shared_ptr<AbstractMatrix> Sample::getOutput(){
+shared_ptr<Matrix> Sample::getOutput(){
 	return this->output;
 }
 
