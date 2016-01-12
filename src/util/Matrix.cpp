@@ -21,7 +21,7 @@ inline shared_ptr<Matrix> MatrixPool::allocMatrix(size_t rowSize, size_t columnS
 	pool.push_back(newMatrix);
 	return newMatrix;
 }
-inline shared_ptr<Matrix> MatrixPool::allocMatrixUnClean(size_t rowSize, size_t columnSize){
+inline shared_ptr<Matrix> MatrixPool::allocMatrixUnclean(size_t rowSize, size_t columnSize){
 	for (int i = pool.size() - 1; i >= 0; i--){
 		if (pool[i].use_count() == 1 && pool[i]->getRowSize() == rowSize && pool[i]->getColumnSize() == columnSize){
 			//cout << "in" << endl;
@@ -89,10 +89,27 @@ void Matrix::setValues(double value)
 	memset(data, value, sizeof(double) * size);
 }
 
+void Matrix::mul_i(double a)
+{
+	cblas_dscal(size, a, data, 1);
+}
+
+shared_ptr<Matrix> Matrix::mul(double a)
+{
+	shared_ptr<Matrix> result = clone();
+	cblas_dscal(size, a, result->data, 1);
+	return result;
+}
+
+shared_ptr<Matrix> Matrix::axpy_i(double a, shared_ptr<Matrix> x)
+{
+	cblas_daxpy(size, a, x->data, 1, data, 1);
+}
+
 shared_ptr<Matrix> Matrix::clone()
 {
 
-	shared_ptr<Matrix> result = MatrixPool::getInstance()->allocMatrix(rowSize, columnSize);
+	shared_ptr<Matrix> result = MatrixPool::getInstance()->allocMatrixUnclean(rowSize, columnSize);
 	cblas_dcopy(size, this->data, 1, result->data, 1);
 
 	return result;
