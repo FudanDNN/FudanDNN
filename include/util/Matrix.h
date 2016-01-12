@@ -17,6 +17,7 @@ public:
 	int getRowSize();
 	int getColumnSize();
 	void setValues(double value);
+	void add(Matrix m);
 	shared_ptr<Matrix> clone();
 	void print();
 
