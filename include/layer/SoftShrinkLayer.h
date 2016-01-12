@@ -1,6 +1,6 @@
 #ifndef __FUDANDNN_HARDTANH_H
 #define __FUDANDNN_HARDTANH_H
-#include "../util/utils.h"
+#include "util/utils.h"
 #include "Layer.h"
 
 class SoftShrinkLayer : public Layer

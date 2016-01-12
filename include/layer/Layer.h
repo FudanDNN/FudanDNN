@@ -1,7 +1,7 @@
 #ifndef __FUDANDNN_LAYER_H
 #define __FUDANDNN_LAYER_H
-#include "../util/utils.h"
-#include "../util/Matrix.h"
+#include "util/utils.h"
+#include "util/Matrix.h"
 
 class Layer
 {
