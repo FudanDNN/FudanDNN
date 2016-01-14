@@ -42,9 +42,10 @@ void SigmoidLayer::gradient()
 	for (size_t f = 0; f < featureMap; f++)
 	for (size_t i = 0; i < visualRow; i++)
 	for (size_t j = 0; j < visualColumn; j++)
-		visualGradient[f]->setValue(i, j, instance->getDerivate(visualGradient[f]->getValue(i, j)));
+		visualGradient[f]->setValue(i, j, instance->getDerivate(visualValue[f]->getValue(i, j), visualGradient[f]->getValue(i, j)));
 }
 
-void writeSelf(string) override;
-void readSelf(string) override;
-size_t getSize();
+size_t SigmoidLayer::getSize()
+{
+	return this->visualColumn;
+}

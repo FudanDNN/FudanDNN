@@ -5,7 +5,8 @@ inline shared_ptr<Sigmoid> Sigmoid::getInstance()
 {
 	return instance == nullptr ? (instance = shared_ptr<Sigmoid>(new Sigmoid())) : instance;
 }
-inline void Sigmoid::setParameters(double lb, double ub, double prec, double incline)
+
+inline void Sigmoid::setParameters(double lb, double ub, double prec, double ic)
 {
 	if (instance != nullptr)
 		return;
@@ -13,6 +14,7 @@ inline void Sigmoid::setParameters(double lb, double ub, double prec, double inc
 	upperbound = ub;
 	precision = prec;
 	scale = 1 / prec;
+	incline = ic;
 	int x = lowerbound;
 	while (x < upperbound)
 	{
