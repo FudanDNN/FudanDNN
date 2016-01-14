@@ -133,15 +133,10 @@ void Matrix::print()
 	}
 	
 }	
-
+/*
 	int
 		main(int argc, char** argv)
 	{
-		/*shared_ptr<MatrixPool> mp = MatrixPool::getInstance();
-		shared_ptr<Matrix> A = mp->allocMatrix(3, 3);
-		A->initializeRandom(-1, 1);
-		A->print();
-		while (1);*/
 
 		// Armadillo documentation is available at:
 		// http://arma.sourceforge.net/docs.html
@@ -285,3 +280,4 @@ void Matrix::print()
 		system("pause");
 		return 0;
 	}
+	*/
