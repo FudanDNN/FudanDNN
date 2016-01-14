@@ -1,5 +1,5 @@
-#ifndef __FUDANDNN_HARDTANH_H
-#define __FUDANDNN_HARDTANH_H
+#ifndef __FUDANDNN_SIGMOID_LAYER_H
+#define __FUDANDNN_SIGMOID_LAYER_H
 #include "util/utils.h"
 #include "NonlinearLayer.h"
 

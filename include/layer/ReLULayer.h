@@ -1,5 +1,5 @@
-#ifndef __FUDANDNN_HARDSHRINK_H
-#define __FUDANDNN_HARDSHRINK_H
+#ifndef __FUDANDNN_RELU_LAYER_H
+#define __FUDANDNN_RELU_LAYER_H
 
 #include "util/utils.h"
 #include "NonlinearLayer.h"
