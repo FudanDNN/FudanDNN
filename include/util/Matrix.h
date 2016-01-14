@@ -23,18 +23,31 @@ public:
 	double getValue(int i, int j);
 	void setValue(int i, int j, int val);
 	void setValues(double value);
+	//inside matrix
 	bool inrange(int i, int j);
 	//element-wise multiplication
 	void mulewi(shared_ptr<Matrix>);
+	//in-place addition
 	void addi(shared_ptr<Matrix>);
+	//addition
 	shared_ptr<Matrix> add(shared_ptr<Matrix>);
+	//in-place subtraction
 	void subi(shared_ptr<Matrix>);
+	//subtraction
 	shared_ptr<Matrix> sub(shared_ptr<Matrix>);
-	void muli(shared_ptr<Matrix>);
-	shared_ptr<Matrix> mul(shared_ptr<Matrix>);
+	//in-place right multiplication (this = this * x)
+	void mulri(shared_ptr<Matrix>);
+	//left multiplicatioin (return this * x)
+	shared_ptr<Matrix> mull(shared_ptr<Matrix>);
+	//right multiplicatioin (return x * this)
+	shared_ptr<Matrix> mulr(shared_ptr<Matrix>);
+	//in-place transposition (this = this')
 	void trans_i();
+	//transposition ( return this')
 	shared_ptr<Matrix> trans();
+	//narrow convolution
 	shared_ptr<Matrix> narrowConv(shared_ptr<Matrix>, int);
+	//wide convolution
 	shared_ptr<Matrix> wideConv(shared_ptr<Matrix>, int);
 	shared_ptr<Matrix> clone();
 	void print();

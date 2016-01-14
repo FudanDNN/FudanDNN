@@ -119,12 +119,20 @@ shared_ptr<Matrix> Matrix::sub(shared_ptr<Matrix> m)
 	return result;
 }
 
-void Matrix::muli(shared_ptr<Matrix> m)
+void Matrix::mulri(shared_ptr<Matrix> m)
 {
 	*matrix *= *(m->matrix);
 }
 
-shared_ptr<Matrix> Matrix::mul(shared_ptr<Matrix> m)
+shared_ptr<Matrix> Matrix::mull(shared_ptr<Matrix> m)
+{
+	shared_ptr<Matrix> result = MatrixPool::getInstance()->allocMatrixUnclean(rowSize, columnSize);
+	*result->matrix = *(m->matrix) * *matrix;
+	return result;
+
+}
+
+shared_ptr<Matrix> Matrix::mulr(shared_ptr<Matrix> m)
 {
 	shared_ptr<Matrix> result = MatrixPool::getInstance()->allocMatrixUnclean(rowSize, columnSize);
 	*result->matrix = *matrix * *(m->matrix);
