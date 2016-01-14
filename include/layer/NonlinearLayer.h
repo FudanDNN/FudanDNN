@@ -11,5 +11,6 @@ public:
 	virtual string getNetworkName() { return nullptr; };
 	virtual void readSelf(string);
 	virtual void writeSelf(string);
+
 };
 #endif

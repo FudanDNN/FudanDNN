@@ -16,7 +16,7 @@ public:
 	//back propagation
 	virtual void gradient() {};
 
-	//update paramater
+	//update parameter
 	virtual void update() {};
 
 	//get network name
@@ -32,13 +32,13 @@ public:
 	//set hidden layer error
 	void addHiddenGradient(vector<shared_ptr<Matrix>> hiddenGradient);
 
-	//get value of visable layer
+	//get value of visible layer
 	vector<shared_ptr<Matrix>> getVisualValue();
 
 	//get value of hidden layer
 	vector<shared_ptr<Matrix>> getHiddenValue();
 
-	//get error of visable layer
+	//get error of visible layer
 	vector<shared_ptr<Matrix>> getVisualGradient();
 
 	//get error of hidden layer

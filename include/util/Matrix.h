@@ -22,7 +22,8 @@ public:
 	int getColumnSize();
 	void setValues(double value);
 	bool inrange(int i, int j);
-	void operator %= (Matrix);
+	//element-wise multiplication
+	void muliew(shared_ptr<Matrix>);
 	void operator += (Matrix);
 	shared_ptr<Matrix> operator + (Matrix);
 	void operator *= (Matrix);
@@ -33,12 +34,11 @@ public:
 	shared_ptr<Matrix> trans();
 	shared_ptr<Matrix> narrowConv(shared_ptr<Matrix>, int);
 	shared_ptr<Matrix> wideConv(shared_ptr<Matrix>, int);
-	void map(double function(double));
 	shared_ptr<Matrix> clone();
 	void print();
 
 protected:
-	mat matrix;
+	mat *matrix;
 	int rowSize;
 	int columnSize;
 	int size;

@@ -50,8 +50,8 @@ void Matrix::initializeRandom(double lowerBound, double upperBound)
 {
 
 	double interval = upperBound - lowerBound;
-	matrix.randu();
-	matrix.transform([interval, lowerBound](double x) { return interval * x + lowerBound; });
+	matrix->randu();
+	matrix->transform([interval, lowerBound](double x) { return interval * x + lowerBound; });
 
 }
 
@@ -72,7 +72,7 @@ int Matrix::getColumnSize()
 
 void Matrix::setValues(double value)
 {
-	matrix.fill(value);
+	matrix->fill(value);
 }
 
 bool Matrix::inrange(int i, int j)
@@ -80,7 +80,12 @@ bool Matrix::inrange(int i, int j)
 	return (i >= 0) && (i < rowSize) && (j >= 0) && (j < columnSize);
 }
 
-void Matrix::operator%=(Matrix m) 
+void Matrix::muliew(shared_ptr<Matrix> m)
+{
+	matrix
+}
+
+void Matrix::operator%=(Matrix m)
 {
 	matrix *= m.matrix;
 }
@@ -176,21 +181,14 @@ shared_ptr<Matrix> Matrix::trans()
 	return result;
 }
 
-void Matrix::map(double function(double))
-{
-	matrix.transform(function);
-}
-
 int main()
 {
 
 	shared_ptr<MatrixPool> mp = MatrixPool::getInstance();
 	shared_ptr<Matrix> A = mp->allocMatrixUnclean(3, 3);
 	A->initializeRandom(-10, 10);
-	A->map(round);
 	shared_ptr<Matrix> B = mp->allocMatrixUnclean(3, 3);
 	B->initializeRandom(-10, 10); 
-	B->map(round);
 	cout << "A" << endl;
 	A->print();
 	cout << "B" << endl;
