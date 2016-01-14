@@ -11,6 +11,7 @@ void Layer::setVisualValue(vector<shared_ptr<Matrix>> visualValue)
 //add hidden layer gradient
 void Layer::addHiddenGradient(vector<shared_ptr<Matrix>> hiddenGradient)
 {
+	/*
 	if (this->hiddenGradient.size() == 0){
 		this->hiddenGradient = hiddenGradient;
 	}
@@ -23,6 +24,8 @@ void Layer::addHiddenGradient(vector<shared_ptr<Matrix>> hiddenGradient)
 		}
 		this->hiddenGradient = temp;
 	}
+	*/
+	
 }
 
 vector<shared_ptr<Matrix>> Layer::getVisualValue()
