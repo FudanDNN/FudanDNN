@@ -75,7 +75,7 @@ void Matrix::setValues(double value)
 	matrix.fill(value);
 }
 
-void Matrix::operator*=(Matrix m) 
+void Matrix::operator%=(Matrix m) 
 {
 	matrix *= m.matrix;
 }
@@ -92,18 +92,62 @@ shared_ptr<Matrix> Matrix::operator + (Matrix m)
 	return result;
 }
 
+void Matrix::operator -= (Matrix m)
+{
+	matrix -= m.matrix;
+}
+
+shared_ptr<Matrix> Matrix::operator - (Matrix m)
+{
+	shared_ptr<Matrix> result = MatrixPool::getInstance()->allocMatrixUnclean(rowSize, columnSize);
+	result->matrix = matrix - m.matrix;
+	return result;	
+}
+
+void Matrix::operator *= (Matrix m)
+{
+	matrix *= m.matrix;
+}
+
+shared_ptr<Matrix> Matrix::operator * (Matrix m)
+{
+	shared_ptr<Matrix> result = MatrixPool::getInstance()->allocMatrixUnclean(rowSize, columnSize);
+	result->matrix = matrix * m.matrix;
+	return result;
+}
+
+void Matrix::trans_i()
+{
+	inplace_trans(matrix);
+}
+
+shared_ptr<Matrix> Matrix::trans()
+{
+	shared_ptr<Matrix> result = MatrixPool::getInstance()->allocMatrixUnclean(rowSize, columnSize);
+	result->matrix = matrix.t();
+	return result;
+}
+
+void Matrix::map(double function(double))
+{
+	matrix.transform(function);
+}
+
 int main()
 {
 
 	shared_ptr<MatrixPool> mp = MatrixPool::getInstance();
 	shared_ptr<Matrix> A = mp->allocMatrixUnclean(3, 3);
-	A->initializeRandom(-1, 1);
+	A->initializeRandom(-10, 10);
+	A->map(round);
 	shared_ptr<Matrix> B = mp->allocMatrixUnclean(3, 3);
-	B->initializeRandom(-1, 1);
+	B->initializeRandom(-10, 10); 
+	B->map(round);
 	cout << "A" << endl;
 	A->print();
 	cout << "B" << endl;
 	B->print();
+	/*
 	cout << "A + B" << endl;
 	(*A + *B)->print();
 	cout << "A += B" << endl;
@@ -112,6 +156,9 @@ int main()
 	cout << "A *= B" << endl;
 	*A *= *B;
 	A->print();
+	*/
+	cout << "A * B" << endl;
+	(*A * *B)->print();
 	system("pause");
 
 }
