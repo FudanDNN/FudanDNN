@@ -1,9 +1,6 @@
 #include "util/Matrix.h"
 #include <iostream>
-#include <armadillo/armadillo>
 
-using namespace std;
-using namespace arma;
 shared_ptr<MatrixPool> MatrixPool::instance;
 MatrixPool::MatrixPool() 
 {
@@ -42,34 +39,19 @@ Matrix::Matrix(int rowSize, int columnSize)
 	this->rowSize = rowSize;
 	this->columnSize = columnSize;
 	this->size = rowSize * columnSize;
-	this->data = new double[size];
-	this->matrix = new double *[rowSize];
-	this->initialize();
+	this->matrix = mat(rowSize, columnSize);
 }
 
 Matrix::~Matrix()
 {
 }
 
-void Matrix::initialize()
-{
-	double *pointer = data;
-	for (size_t i = 0; i < rowSize; i++)
-	{
-		matrix[i] = pointer;
-		pointer += columnSize;
-	}
-}
-
 void Matrix::initializeRandom(double lowerBound, double upperBound)
 {
 
-	initialize();
-	double range = upperBound - lowerBound;
-	for (size_t i = 0; i < size; i++)
-	{
-		data[i] = ((double)rand()) / RAND_MAX * range + lowerBound;
-	}
+	double interval = upperBound - lowerBound;
+	matrix.randu();
+	matrix.transform([interval, lowerBound](double x) { return interval * x + lowerBound; });
 
 }
 
@@ -90,14 +72,51 @@ int Matrix::getColumnSize()
 
 void Matrix::setValues(double value)
 {
-	memset(data, value, sizeof(double) * size);
+	matrix.fill(value);
 }
 
-void Matrix::mul_i(double a)
+void Matrix::operator*=(Matrix m) 
 {
-	cblas_dscal(size, a, data, 1);
+	matrix *= m.matrix;
 }
 
+void Matrix::operator += (Matrix m)
+{
+	matrix += m.matrix;
+}
+
+shared_ptr<Matrix> Matrix::operator + (Matrix m)
+{
+	shared_ptr<Matrix> result = MatrixPool::getInstance()->allocMatrixUnclean(rowSize, columnSize);
+	result->matrix = matrix + m.matrix;
+	return result;
+}
+
+int main()
+{
+
+	shared_ptr<MatrixPool> mp = MatrixPool::getInstance();
+	shared_ptr<Matrix> A = mp->allocMatrixUnclean(3, 3);
+	A->initializeRandom(-1, 1);
+	shared_ptr<Matrix> B = mp->allocMatrixUnclean(3, 3);
+	B->initializeRandom(-1, 1);
+	cout << "A" << endl;
+	A->print();
+	cout << "B" << endl;
+	B->print();
+	cout << "A + B" << endl;
+	(*A + *B)->print();
+	cout << "A += B" << endl;
+	*A += *B;
+	A->print();
+	cout << "A *= B" << endl;
+	*A *= *B;
+	A->print();
+	system("pause");
+
+}
+
+/*
 shared_ptr<Matrix> Matrix::mul(double a)
 {
 	shared_ptr<Matrix> result = clone();
@@ -119,6 +138,7 @@ shared_ptr<Matrix> Matrix::clone()
 	return result;
 
 }
+	*/
 
 void Matrix::print()
 {
@@ -127,12 +147,13 @@ void Matrix::print()
 	{
 		for (size_t j = 0; j < columnSize; j++)
 		{
-			cout << "\t" << matrix[i][j];
+			cout << "\t" << matrix(i, j);
 		}
 		cout << "\n";
 	}
 	
 }	
+
 /*
 	int
 		main(int argc, char** argv)

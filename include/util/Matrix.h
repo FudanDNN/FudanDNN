@@ -4,6 +4,10 @@
 #include "utils.h"
 #include "openblas/cblas.h"
 #include <math.h>
+#include <armadillo/armadillo>
+
+using namespace std;
+using namespace arma;
 
 class Matrix
 {
@@ -17,10 +21,11 @@ public:
 	int getRowSize();
 	int getColumnSize();
 	void setValues(double value);
-	void mul_i(double a);
+	void operator *= (Matrix);
+	void operator += (Matrix);
+	shared_ptr<Matrix> operator + (Matrix);
 	shared_ptr<Matrix> mul(double a);
 	void axpy_i(double a, shared_ptr<Matrix> x);
-	void add(shared_ptr<Matrix> m);
 	shared_ptr<Matrix> clone();
 	void print();
 
