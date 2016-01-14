@@ -101,7 +101,7 @@ shared_ptr<Matrix> Matrix::mul(double a)
 	return result;
 }
 
-shared_ptr<Matrix> Matrix::axpy_i(double a, shared_ptr<Matrix> x)
+void Matrix::axpy_i(double a, shared_ptr<Matrix> x)
 {
 	cblas_daxpy(size, a, x->data, 1, data, 1);
 }
@@ -137,5 +137,6 @@ int main()
 	shared_ptr<Matrix> A = mp->allocMatrix(3, 3);
 	A->initializeRandom(-1, 1);
 	A->print();
+	while (1);
 
 }

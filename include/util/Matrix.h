@@ -19,7 +19,7 @@ public:
 	void setValues(double value);
 	void mul_i(double a);
 	shared_ptr<Matrix> mul(double a);
-	shared_ptr<Matrix> axpy_i(double a, shared_ptr<Matrix> x);
+	void axpy_i(double a, shared_ptr<Matrix> x);
 	void add(shared_ptr<Matrix> m);
 	shared_ptr<Matrix> clone();
 	void print();
