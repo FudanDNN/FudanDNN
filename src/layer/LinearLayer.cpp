@@ -7,6 +7,12 @@ LinearLayer::LinearLayer(size_t visualUnit, size_t hiddenUnit, size_t initScheme
 	this->hiddenColumn = 1;
 	this->hiddenRow = hiddenRow;
 	this->solver = solver;
+	this->initScheme = initScheme;
+	this->initialization(initScheme);
+}
+
+void LinearLayer::init()
+{
 	this->initialization(initScheme);
 }
 

@@ -1,7 +1,7 @@
-#ifndef __FUDANDNN_SLOVER_H
+#ifndef __FUDANDNN_SOLVER_H
 #define __FUDANDNN_SOLVER_H
-#include "util/utils.h"
 #include "util/Matrix.h"
+
 class Solver{
 public:
 	Solver(double regularizationRate, double weightLearningRate, double biasLearningRate, double momentumRate);

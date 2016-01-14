@@ -1,12 +1,12 @@
 #ifndef __FUDANDNN_XMLTASK_H
 #define __FUDANDNN_XMLTASK_H
 
-#include "Task.h"
+#include "Input.h"
 #include "XMLDataParser.h"
 
-class XMLTask : public Task{
+class XMLInput : public Input{
 public:
-	XMLTask(string file, int id);
+	XMLInput(string file, int id);
 	shared_ptr<Sample> getNextSample();
 	size_t getSampleNum();
 	bool isEnd();

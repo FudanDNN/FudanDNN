@@ -55,10 +55,10 @@ public:
 	// rate for dropout
 	double getDropoutRate();
 	void setDropoutRate(double dropoutRate);
+	virtual void init(){};
 
 
 protected:
-	virtual void initialization(int initScheme){};
 	vector<shared_ptr<Matrix>> visualValue;
 	vector<shared_ptr<Matrix>> hiddenValue;
 	vector<shared_ptr<Matrix>> visualGradient;

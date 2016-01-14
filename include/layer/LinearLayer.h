@@ -17,10 +17,13 @@ public:
 
 	void writeSelf(string) override;
 	void readSelf(string) override;
+	void init() override;
+	void initialization(int initScheme);
+
 protected:
-	void initialization(int initScheme) override;
 	void initGradient();
 	bool initialized = false;
+	size_t initScheme;
 	shared_ptr<Matrix> weight;
 	shared_ptr<Matrix> weightGradient;
 	shared_ptr<Matrix> bias;

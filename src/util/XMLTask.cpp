@@ -1,18 +1,18 @@
-#include "util/XMLTask.h"
+#include "util/XMLInput.h"
 
-XMLTask::XMLTask(string file, int id) :Task(file,id){
+XMLInput::XMLInput(string file, int id) :Input(file,id){
 	parser = shared_ptr<XMLDataParser>(new XMLDataParser(file));
 }
 
-shared_ptr<Sample> XMLTask::getNextSample(){
+shared_ptr<Sample> XMLInput::getNextSample(){
 	return parser->getNextSample();
 }
 
 
-size_t XMLTask::getSampleNum(){
+size_t XMLInput::getSampleNum(){
 	return parser->getSampleNum();
 }
 
-bool XMLTask::isEnd(){
+bool XMLInput::isEnd(){
 	return parser->isEnd();
 }

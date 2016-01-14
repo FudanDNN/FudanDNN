@@ -4,9 +4,9 @@
 #include "Matrix.h"
 #include "Sample.h"
 
-class Task{
+class Input{
 public:
-	Task(string file, int id);
+	Input(string file, int id);
 	virtual shared_ptr<Sample> getNextSample(){ return nullptr; };
 	virtual void update(){};
 	virtual size_t getSampleNum(){ return 0; };

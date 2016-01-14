@@ -1,5 +1,5 @@
-#ifndef __FUDANDNN_NONLINEARFACTORY_H
-#define __FUDANDNN_NONLINEARFACTORY_H
+#ifndef __FUDANDNN_SOLVERFACTORY_H
+#define __FUDANDNN_SOLVERFACTORY_H
 #include "util/utils.h"
 #include "Solver.h"
 
