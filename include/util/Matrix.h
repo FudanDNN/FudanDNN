@@ -25,8 +25,7 @@ public:
 	void print();
 
 protected:
-	double *data;
-	double **matrix;
+	mat matrix;
 	int rowSize;
 	int columnSize;
 	int size;
