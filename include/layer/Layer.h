@@ -2,6 +2,7 @@
 #define __FUDANDNN_LAYER_H
 #include "util/utils.h"
 #include "util/Matrix.h"
+#include "Solver.h"
 
 class Layer
 {
@@ -26,22 +27,22 @@ public:
 	virtual ~Layer() {};
 
 	//update error
-	void setVisualValue(shared_ptr<Matrix> visualValue);
+	void setVisualValue(vector<shared_ptr<Matrix>> visualValue);
 
 	//set hidden layer error
-	void addHiddenGradient(shared_ptr<Matrix> hiddenGradient);
+	void addHiddenGradient(vector<shared_ptr<Matrix>> hiddenGradient);
 
 	//get value of visable layer
-	shared_ptr<Matrix> getVisualValue();
+	vector<shared_ptr<Matrix>> getVisualValue();
 
 	//get value of hidden layer
-	shared_ptr<Matrix> getHiddenValue();
+	vector<shared_ptr<Matrix>> getHiddenValue();
 
 	//get error of visable layer
-	shared_ptr<Matrix> getVisualGradient();
+	vector<shared_ptr<Matrix>> getVisualGradient();
 
 	//get error of hidden layer
-	shared_ptr<Matrix> getHiddenGradient();
+	vector<shared_ptr<Matrix>> getHiddenGradient();
 
 	size_t getVisualRow();
 	size_t getVisualColumn();
@@ -51,42 +52,23 @@ public:
 
 	void setNetworkName(string networkName);
 
-	// rate for regularize
-	double getRegularizationRate();
-	void setRegularizationRate(double regularizationRate);
-
-	// learning rate for weight
-	double getWeightLearningRate();
-	void setWeightLearningRate(double weightLearningRate);
-
-	// learning rate for bias
-	double getBiasLearningRate();
-	void setBiasLearningRate(double biasLearningRate);
-
 	// rate for dropout
 	double getDropoutRate();
 	void setDropoutRate(double dropoutRate);
 
-	// rate for momentum
-	double getMomentumRate();
-	void setMomentumRate(double momentumRate);
-
 
 protected:
-	shared_ptr<Matrix> visualValue;
-	shared_ptr<Matrix> hiddenValue;
-	shared_ptr<Matrix> visualGradient;
-	shared_ptr<Matrix> hiddenGradient;
+	vector<shared_ptr<Matrix>> visualValue;
+	vector<shared_ptr<Matrix>> hiddenValue;
+	vector<shared_ptr<Matrix>> visualGradient;
+	vector<shared_ptr<Matrix>> hiddenGradient;
+	shared_ptr<Solver> solver;
 	size_t visualRow;
 	size_t visualColumn;
 	size_t hiddenRow;
 	size_t hiddenColumn;
 	string networkname;
-	double regularizationRate = 0;
-	double weightLearningRate = 0.05;
-	double biasLearningRate = 0.05;
 	double dropoutRate = 0.5;
-	double momentumRate = 0.9;
 
 };
 

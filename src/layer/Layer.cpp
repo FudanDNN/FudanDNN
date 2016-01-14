@@ -3,41 +3,44 @@
 
 
 //update error
-void Layer::setVisualValue(shared_ptr<Matrix> visualValue)
+void Layer::setVisualValue(vector<shared_ptr<Matrix>> visualValue)
 {
 	this->visualValue = visualValue;
 }
 
 //add hidden layer gradient
-void Layer::addHiddenGradient(shared_ptr<Matrix> hiddenGradient)
-{/*
-	if (this->hiddenGradient == nullptr) {
-		this->hiddenGradient = shared_ptr<Matrix>(new Matrix(hiddenRow, hiddenColumn));
-		this->hiddenGradient->initializeValue(0, 0);
-		this->hiddenGradient = this->hiddenGradient->add(hiddenGradient);
+void Layer::addHiddenGradient(vector<shared_ptr<Matrix>> hiddenGradient)
+{
+	if (this->hiddenGradient.size() == 0){
+		this->hiddenGradient = hiddenGradient;
 	}
 	else{
-		shared_ptr<Matrix> releaseHidden = this->hiddenGradient;
-		this->hiddenGradient = this->hiddenGradient->add(hiddenGradient);
-	}*/
+		vector<shared_ptr<Matrix>> temp;
+		size_t i = 0;
+		for (shared_ptr<Matrix> matrix : hiddenGradient){
+			temp.push_back(this->hiddenGradient[i]->add(matrix));
+			i++;
+		}
+		this->hiddenGradient = temp;
+	}
 }
 
-shared_ptr<Matrix> Layer::getVisualValue()
+vector<shared_ptr<Matrix>> Layer::getVisualValue()
 {
 	return visualValue;
 }
 
-shared_ptr<Matrix> Layer::getHiddenValue()
+vector<shared_ptr<Matrix>> Layer::getHiddenValue()
 {
 	return hiddenValue;
 }
 
-shared_ptr<Matrix> Layer::getVisualGradient()
+vector<shared_ptr<Matrix>> Layer::getVisualGradient()
 {
 	return visualGradient;
 }
 
-shared_ptr<Matrix> Layer::getHiddenGradient()
+vector<shared_ptr<Matrix>> Layer::getHiddenGradient()
 {
 	return hiddenGradient;
 }
@@ -67,36 +70,6 @@ void Layer::setNetworkName(string networkName)
 	this->networkname = networkName;
 };
 
-// rate for regularize
-double Layer::getRegularizationRate()
-{
-	return this->regularizationRate;
-};
-void Layer::setRegularizationRate(double regularizationRate)
-{
-	this->regularizationRate = regularizationRate;
-};
-
-// learning rate for weight
-double Layer::getWeightLearningRate()
-{
-	return this->weightLearningRate;
-};
-void Layer::setWeightLearningRate(double weightLearningRate)
-{
-	this->weightLearningRate = weightLearningRate;
-};
-
-// learning rate for bias
-double Layer::getBiasLearningRate()
-{
-	return this->biasLearningRate;
-};
-void Layer::setBiasLearningRate(double biasLearningRate)
-{
-	this->biasLearningRate = biasLearningRate;
-};
-
 // rate for dropout
 double Layer::getDropoutRate()
 {
@@ -107,12 +80,3 @@ void Layer::setDropoutRate(double dropoutRate)
 	this->dropoutRate = dropoutRate;
 };
 
-// rate for momentum
-double Layer::getMomentumRate()
-{
-	return this->momentumRate;
-};
-void Layer::setMomentumRate(double momentumRate)
-{
-	this->momentumRate = momentumRate;
-};
