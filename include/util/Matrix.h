@@ -25,13 +25,13 @@ public:
 	void setValues(double value);
 	bool inrange(int i, int j);
 	//element-wise multiplication
-	void muliew(shared_ptr<Matrix>);
-	void operator += (Matrix);
-	shared_ptr<Matrix> operator + (Matrix);
-	void operator *= (Matrix);
-	void operator -= (Matrix);
-	shared_ptr<Matrix> operator - (Matrix);
-	shared_ptr<Matrix> operator * (Matrix);
+	void mulewi(shared_ptr<Matrix>);
+	void addi(shared_ptr<Matrix>);
+	shared_ptr<Matrix> add(shared_ptr<Matrix>);
+	void subi(shared_ptr<Matrix>);
+	shared_ptr<Matrix> sub(shared_ptr<Matrix>);
+	void muli(shared_ptr<Matrix>);
+	shared_ptr<Matrix> mul(shared_ptr<Matrix>);
 	void trans_i();
 	shared_ptr<Matrix> trans();
 	shared_ptr<Matrix> narrowConv(shared_ptr<Matrix>, int);

@@ -90,49 +90,44 @@ bool Matrix::inrange(int i, int j)
 	return (i >= 0) && (i < rowSize) && (j >= 0) && (j < columnSize);
 }
 
-void Matrix::muliew(shared_ptr<Matrix> m)
+void Matrix::mulewi(shared_ptr<Matrix> m)
 {
-	matrix
+	*matrix += *(m->matrix);
 }
 
-void Matrix::operator%=(Matrix m)
+void Matrix::addi(shared_ptr<Matrix> m)
 {
-	matrix *= m.matrix;
+	*matrix += *(m->matrix);
 }
 
-void Matrix::operator += (Matrix m)
-{
-	matrix += m.matrix;
-}
-
-shared_ptr<Matrix> Matrix::operator + (Matrix m)
+shared_ptr<Matrix> Matrix::add(shared_ptr<Matrix> m)
 {
 	shared_ptr<Matrix> result = MatrixPool::getInstance()->allocMatrixUnclean(rowSize, columnSize);
-	result->matrix = matrix + m.matrix;
+	*result->matrix = *matrix + *(m->matrix);
 	return result;
 }
 
-void Matrix::operator -= (Matrix m)
+void Matrix::subi(shared_ptr<Matrix> m)
 {
-	matrix -= m.matrix;
+	*matrix -= *(m->matrix);
 }
 
-shared_ptr<Matrix> Matrix::operator - (Matrix m)
+shared_ptr<Matrix> Matrix::sub(shared_ptr<Matrix> m)
 {
 	shared_ptr<Matrix> result = MatrixPool::getInstance()->allocMatrixUnclean(rowSize, columnSize);
-	result->matrix = matrix - m.matrix;
-	return result;	
+	*result->matrix = *matrix - *(m->matrix);
+	return result;
 }
 
-void Matrix::operator *= (Matrix m)
+void Matrix::muli(shared_ptr<Matrix> m)
 {
-	matrix *= m.matrix;
+	*matrix *= *(m->matrix);
 }
 
-shared_ptr<Matrix> Matrix::operator * (Matrix m)
+shared_ptr<Matrix> Matrix::mul(shared_ptr<Matrix> m)
 {
 	shared_ptr<Matrix> result = MatrixPool::getInstance()->allocMatrixUnclean(rowSize, columnSize);
-	result->matrix = matrix * m.matrix;
+	*result->matrix = *matrix * *(m->matrix);
 	return result;
 }
 
@@ -150,9 +145,9 @@ shared_ptr<Matrix> Matrix::narrowConv(shared_ptr<Matrix> kernel, int stride)
 		for (int ki = kernel->rowSize - 1; ki >= 0; ki--, ii++)
 		for (int kj = kernel->columnSize; kj >= 0; kj--, jj++)
 		{
-			val += matrix(ii, jj) * kernel->matrix(ki, kj);
+			val += (*matrix)(ii, jj) * (*kernel->matrix)(ki, kj);
 		}
-		result->matrix(ii, jj) = val;
+		(*(result->matrix))(ii, jj) = val;
 	}
 	return result;
 }
@@ -172,22 +167,22 @@ shared_ptr<Matrix> Matrix::wideConv(shared_ptr<Matrix> kernel, int stride)
 		for (int kj = kernel->columnSize; kj >= 0; kj--, jj++)
 		{
 			if (!inrange(ii, jj)) continue;
-			val += matrix(ii, jj) * kernel->matrix(ki, kj);
+			val += (*matrix)(ii, jj) * (*kernel->matrix)(ki, kj);
 		}
-		result->matrix(ii, jj) = val;
+		(*(result->matrix))(ii, jj) = val;
 	}
 	return result;
 }
 
 void Matrix::trans_i()
 {
-	inplace_trans(matrix);
+	inplace_trans(*matrix);
 }
 
 shared_ptr<Matrix> Matrix::trans()
 {
 	shared_ptr<Matrix> result = MatrixPool::getInstance()->allocMatrixUnclean(rowSize, columnSize);
-	result->matrix = matrix.t();
+	*(result->matrix) = matrix->t();
 	return result;
 }
 
@@ -203,18 +198,6 @@ int main()
 	A->print();
 	cout << "B" << endl;
 	B->print();
-	/*
-	cout << "A + B" << endl;
-	(*A + *B)->print();
-	cout << "A += B" << endl;
-	*A += *B;
-	A->print();
-	cout << "A *= B" << endl;
-	*A *= *B;
-	A->print();
-	*/
-	cout << "A * B" << endl;
-	(*A * *B)->print();
 	system("pause");
 
 }
@@ -250,7 +233,7 @@ void Matrix::print()
 	{
 		for (size_t j = 0; j < columnSize; j++)
 		{
-			cout << "\t" << matrix(i, j);
+			cout << "\t" << (*matrix)(i, j);
 		}
 		cout << "\n";
 	}
