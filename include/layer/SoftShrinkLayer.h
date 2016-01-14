@@ -1,9 +1,9 @@
 #ifndef __FUDANDNN_HARDTANH_H
 #define __FUDANDNN_HARDTANH_H
 #include "util/utils.h"
-#include "Layer.h"
+#include "NonlinearLayer.h"
 
-class SoftShrinkLayer : public Layer
+class SoftShrinkLayer : public NonlinearLayer
 {
 
 public:

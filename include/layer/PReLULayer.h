@@ -1,9 +1,9 @@
 #ifndef __FUDANDNN_HARDSHRINK_H
 #define __FUDANDNN_HARDSHRINK_H
 #include "util/utils.h"
-#include "Layer.h"
+#include "NonlinearLayer.h"
 
-class PReLULayer : public Layer
+class PReLULayer : public NonlinearLayer
 {
 
 public:
