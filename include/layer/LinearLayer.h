@@ -19,5 +19,13 @@ public:
 	void readSelf(string) override;
 protected:
 	void initialization(int initScheme) override;
+	void initGradient();
+	bool initialized = false;
+	shared_ptr<Matrix> weight;
+	shared_ptr<Matrix> weightGradient;
+	shared_ptr<Matrix> bias;
+	shared_ptr<Matrix> biasGradient;
+	shared_ptr<Matrix> weightMomentum;
+	shared_ptr<Matrix> biasMomentum;
 };
 #endif
