@@ -58,6 +58,7 @@ public:
 
 
 protected:
+	virtual void initialization(int initScheme){};
 	vector<shared_ptr<Matrix>> visualValue;
 	vector<shared_ptr<Matrix>> hiddenValue;
 	vector<shared_ptr<Matrix>> visualGradient;

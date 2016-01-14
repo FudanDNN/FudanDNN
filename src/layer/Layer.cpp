@@ -75,8 +75,10 @@ double Layer::getDropoutRate()
 {
 	return this->dropoutRate;
 };
+
 void Layer::setDropoutRate(double dropoutRate)
 {
 	this->dropoutRate = dropoutRate;
 };
+
 
