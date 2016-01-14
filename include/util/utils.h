@@ -14,6 +14,7 @@
 #include "time.h"
 #include "map"
 #include "openblas/cblas.h"
+#include "Constant.h"
 
 using std::vector;
 using std::fstream;
