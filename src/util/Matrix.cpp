@@ -75,6 +75,11 @@ void Matrix::setValues(double value)
 	matrix.fill(value);
 }
 
+bool Matrix::inrange(int i, int j)
+{
+	return (i >= 0) && (i < rowSize) && (j >= 0) && (j < columnSize);
+}
+
 void Matrix::operator%=(Matrix m) 
 {
 	matrix *= m.matrix;
@@ -113,6 +118,49 @@ shared_ptr<Matrix> Matrix::operator * (Matrix m)
 {
 	shared_ptr<Matrix> result = MatrixPool::getInstance()->allocMatrixUnclean(rowSize, columnSize);
 	result->matrix = matrix * m.matrix;
+	return result;
+}
+
+shared_ptr<Matrix> Matrix::narrowConv(shared_ptr<Matrix> kernel, int stride)
+{
+	int rowSize = (this->rowSize - kernel->rowSize) / stride + 1;
+	int columnSize = (this->columnSize - kernel->columnSize) / stride + 1;
+	shared_ptr<Matrix> result = MatrixPool::getInstance()->allocMatrixUnclean(rowSize, columnSize);
+	for (int i = 0; i < rowSize; i++)
+	for (int j = 0; j < columnSize; j++)
+	{
+		int ii = i * stride;
+		int jj = j * stride;
+		double val = 0;
+		for (int ki = kernel->rowSize - 1; ki >= 0; ki--, ii++)
+		for (int kj = kernel->columnSize; kj >= 0; kj--, jj++)
+		{
+			val += matrix(ii, jj) * kernel->matrix(ki, kj);
+		}
+		result->matrix(ii, jj) = val;
+	}
+	return result;
+}
+
+shared_ptr<Matrix> Matrix::wideConv(shared_ptr<Matrix> kernel, int stride)
+{
+	int rowSize = (this->rowSize + kernel->rowSize) / stride + 1;
+	int columnSize = (this->columnSize + kernel->columnSize) / stride + 1;
+	shared_ptr<Matrix> result = MatrixPool::getInstance()->allocMatrixUnclean(rowSize, columnSize);
+	for (int i = 0; i < rowSize; i++)
+	for (int j = 0; j < columnSize; j++)
+	{
+		int ii = i * stride - stride + 1;
+		int jj = j * stride - stride + 1;
+		double val = 0;
+		for (int ki = kernel->rowSize - 1; ki >= 0; ki--, ii++)
+		for (int kj = kernel->columnSize; kj >= 0; kj--, jj++)
+		{
+			if (!inrange(ii, jj)) continue;
+			val += matrix(ii, jj) * kernel->matrix(ki, kj);
+		}
+		result->matrix(ii, jj) = val;
+	}
 	return result;
 }
 
