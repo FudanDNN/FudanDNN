@@ -64,6 +64,7 @@ protected:
 	vector<shared_ptr<Matrix>> visualGradient;
 	vector<shared_ptr<Matrix>> hiddenGradient;
 	shared_ptr<Solver> solver;
+	size_t featureMap;
 	size_t visualRow;
 	size_t visualColumn;
 	size_t hiddenRow;

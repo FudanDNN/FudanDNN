@@ -9,7 +9,7 @@ class SigmoidLayer : public NonlinearLayer
 {
 
 public:
-	SigmoidLayer(size_t rowSize, size_t columnSize);
+	SigmoidLayer(size_t rowSize, size_t columnSize, size_t featureMap);
 	SigmoidLayer(size_t size);
 	string getNetworkName() override;
 	void compute() override;
@@ -21,7 +21,6 @@ public:
 
 protected:
 	shared_ptr<Sigmoid> instance = Sigmoid::getInstance();
-	shared_ptr<Matrix> visual
 
 };
 

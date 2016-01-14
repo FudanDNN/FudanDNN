@@ -39,7 +39,7 @@ Matrix::Matrix(int rowSize, int columnSize)
 	this->rowSize = rowSize;
 	this->columnSize = columnSize;
 	this->size = rowSize * columnSize;
-	this->matrix = mat(rowSize, columnSize);
+	this->matrix = &mat(rowSize, columnSize);
 }
 
 Matrix::~Matrix()
@@ -68,6 +68,16 @@ int Matrix::getRowSize()
 int Matrix::getColumnSize()
 {
 	return columnSize;
+}
+
+double Matrix::getValue(int i, int j)
+{
+	return (*matrix)(i, j);
+}
+
+void Matrix::setValue(int i, int j, int val)
+{
+	(*matrix)(i, j) = val;
 }
 
 void Matrix::setValues(double value)

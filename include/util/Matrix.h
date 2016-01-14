@@ -20,6 +20,8 @@ public:
 	int getSize();
 	int getRowSize();
 	int getColumnSize();
+	double getValue(int i, int j);
+	void setValue(int i, int j, int val);
 	void setValues(double value);
 	bool inrange(int i, int j);
 	//element-wise multiplication
