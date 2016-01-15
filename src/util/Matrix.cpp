@@ -194,6 +194,24 @@ shared_ptr<Matrix> Matrix::trans()
 	return result;
 }
 
+shared_ptr<Matrix> Matrix::submatrix(int top, int bottom, int left, int right)
+{
+	if (!(inrange(top, left) && inrange(right - 1, bottom - 1)))
+		return nullptr;
+	int row = bottom - top;
+	int column = right - left;
+	shared_ptr<MatrixPool> instance = MatrixPool::getInstance();
+	shared_ptr<Matrix> result = instance->allocMatrixUnclean(row, column);
+	(*(result->matrix)) = matrix->submat(top, bottom - 1, left, right - 1);
+	return result;
+}
+
+shared_ptr<Matrix> Matrix::mergeRow(shared_ptr<Matrix> m)
+{
+	shared_ptr<Matrix> result = this->clone();
+	result->matrix->insert_cols(m->columnSize, m->matrix);
+}
+
 int main()
 {
 
@@ -223,16 +241,17 @@ void Matrix::axpy_i(double a, shared_ptr<Matrix> x)
 	cblas_daxpy(size, a, x->data, 1, data, 1);
 }
 
+*/
 shared_ptr<Matrix> Matrix::clone()
 {
 
-	shared_ptr<Matrix> result = MatrixPool::getInstance()->allocMatrixUnclean(rowSize, columnSize);
-	cblas_dcopy(size, this->data, 1, result->data, 1);
+	shared_ptr<MatrixPool> instance = MatrixPool::getInstance();
+	shared_ptr<Matrix> result = instance->allocMatrixUnclean(rowSize, columnSize);
+	*(result->matrix) = matrix->submat(0, rowSize - 1, 0, columnSize - 1);
 
 	return result;
 
 }
-	*/
 
 void Matrix::print()
 {

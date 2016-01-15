@@ -49,6 +49,10 @@ public:
 	shared_ptr<Matrix> narrowConv(shared_ptr<Matrix>, int);
 	//wide convolution
 	shared_ptr<Matrix> wideConv(shared_ptr<Matrix>, int);
+	//submatrix [ (top, left), (bottom, right) )
+	shared_ptr<Matrix> submatrix(int top, int bottom, int left, int right);
+	//merge two matrix by row
+	shared_ptr<Matrix> mergeRow(shared_ptr<Matrix>);
 	shared_ptr<Matrix> clone();
 	void print();
 
