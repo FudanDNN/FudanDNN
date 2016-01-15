@@ -5,23 +5,18 @@
 //update error
 void Layer::setVisualValue(vector<shared_ptr<Matrix>> visualValue)
 {
-	this->visualValue = visualValue;
+	for (size_t i = 0; i < visualSize; i++)
+	{
+		this->visualValue[i] = visualValue[i];
+	}
 }
 
 //add hidden layer gradient
 void Layer::addHiddenGradient(vector<shared_ptr<Matrix>> hiddenGradient)
 {
-	if (this->hiddenGradient.size() == 0){
-		this->hiddenGradient = hiddenGradient;
-	}
-	else{
-		vector<shared_ptr<Matrix>> temp;
-		size_t i = 0;
-		for (shared_ptr<Matrix> matrix : hiddenGradient){
-			temp.push_back(this->hiddenGradient[i]->add(matrix));
-			i++;
-		}
-		this->hiddenGradient = temp;
+	for (size_t i = 0; i < hiddenSize; i++)
+	{
+		this->hiddenGradient[i]->addi(hiddenGradient[i]);
 	}
 	
 }
