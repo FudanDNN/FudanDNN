@@ -208,6 +208,7 @@ shared_ptr<Matrix> Matrix::submatrix(int top, int bottom, int left, int right)
 
 shared_ptr<Matrix> Matrix::mergeRow(shared_ptr<Matrix> m)
 {
+	/*
 	size_t row = rowSize + m->rowSize;
 	shared_ptr<MatrixPool> instance = MatrixPool::getInstance();
 	shared_ptr<Matrix> result = instance->allocMatrixUnclean(row, columnSize);
@@ -221,6 +222,12 @@ shared_ptr<Matrix> Matrix::mergeRow(shared_ptr<Matrix> m)
 	{
 		result->setValue(ii, j, (*(m->matrix))(i, j));
 	}
+	return result;
+	*/
+	size_t row = rowSize + m->rowSize;
+	shared_ptr<MatrixPool> instance = MatrixPool::getInstance();
+	shared_ptr<Matrix> result = instance->allocMatrixUnclean(row, columnSize);
+	(*(result->matrix)) = arma::join_cols(*matrix, *(m->matrix));
 	return result;
 }
 
