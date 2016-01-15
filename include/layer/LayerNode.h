@@ -4,6 +4,7 @@
 #include "util\Matrix.h"
 #include "layer\Layer.h"
 #include "util\Input.h"
+#include "InputCell.h"
 
 class LayerNode
 {
@@ -17,14 +18,15 @@ public:
 	vector<shared_ptr<LayerNode>> getPrevNode();
 	shared_ptr<Layer> getLayer();
 	void clearEdges();
-	void setInput(shared_ptr<Input> input);
-	shared_ptr<Input> getInput();
+	void setInputCell(shared_ptr<InputCell> inputCell);
+	shared_ptr<InputCell> getInputCell();
 
 private:
 	int id;
 	shared_ptr<Layer> layer;
 	vector<shared_ptr<LayerNode>> nextNodes;
 	vector<shared_ptr<LayerNode>> prevNodes;
-	shared_ptr<Input> input;
+	shared_ptr<InputCell> inputCell;
 };
+
 #endif

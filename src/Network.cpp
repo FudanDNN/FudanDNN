@@ -4,9 +4,9 @@ size_t Network::addLinearLayer(size_t visualUnit, size_t hiddenUnit, size_t init
 	double regularizationRate, double weightLearningRate, double biasLearningRate, double momentumRate,double dropoutRate)
 {
 	shared_ptr<LinearLayer> linearLayer;
-	linearLayer = shared_ptr<LinearLayer>(new LinearLayer(visualUnit, hiddenUnit, init_scheme,
-		solverFactory->createSolver(solver_type, regularizationRate,
-		weightLearningRate, biasLearningRate, momentumRate)));
+	shared_ptr<Solver> solver = solverFactory->createSolver(solver_type, regularizationRate,
+		weightLearningRate, biasLearningRate, momentumRate);
+	linearLayer = shared_ptr<LinearLayer>(new LinearLayer(visualUnit, hiddenUnit, init_scheme,solver));
 	shared_ptr<LayerNode> node(new LayerNode(currentId, linearLayer));
 	idMap.insert(Node_Pair(currentId, node));
 	currentId++;
@@ -121,23 +121,14 @@ void Network::trainingForward()
 			}
 		}
 
-		if (node->getInput() != nullptr)
+		if (node->getInputCell() != nullptr)
 		{
-			if (node->getInput()->isEnd())
-			{
-
-				for (shared_ptr<LayerNode> node : nodes)
-				{
-					shared_ptr<Layer> layer = node->getLayer();
-				}
-
-			}
-			shared_ptr<Sample> sample = node->getInput()->getNextSample();
+			shared_ptr<Matrix> input = node->getInputCell()->getInputMat();
 			if (visualValue.size() == 0){
-				visualValue.push_back(sample->getInput());
+				visualValue.push_back(input);
 			}
 			else{
-				visualValue[0] = visualValue[0]->mergeRow(sample->getInput());
+				visualValue[0] = visualValue[0]->mergeRow(input);
 			}
 		}
 		layer->setVisualValue(visualValue);
@@ -181,33 +172,34 @@ void Network::backward()
 			preLength += currLength;
 		}
 
-		if (node->getInput() != nullptr)
-		{
-			currLength = layer->getVisualGradient()[0]->getRowSize();
-			node->getInput()->setGradient(layer->getVisualGradient()[0]);
-		}
+
 
 	}
 }
 
-size_t Network::addInput(shared_ptr<Input> input)
+size_t Network::addInput(size_t inputId)
 {
-	inputMap.insert(Input_Pair(currentInputId, input));
-	currentInputId++;
-	inputs.push_back(input);
-	return currentInputId - 1;
+	shared_ptr<InputCell> cell(new InputCell(inputId));
+	inputCells.push_back(cell);
+	cellMap.insert(Cell_Pair(inputId, cell));
+	return inputId;
 }
 
 size_t Network::addInputEdge(size_t inputId, size_t layerId)
 {
 	shared_ptr<LayerNode> outNode = idMap.find(layerId)->second;
-	outNode->setInput(inputMap.find(inputId)->second);
+	outNode->setInputCell(cellMap.find(inputId)->second);
 	return 0;
 }
 
 shared_ptr<Matrix> Network::getGradientForInput(size_t inputId)
 {
-	return inputGradientMap.find(inputId)->second;
+	return cellMap.find(inputId)->second->getGradientMat();
+}
+
+void Network::setInputMat(size_t inputId, shared_ptr<Matrix> inputMat)
+{
+	cellMap.find(inputId)->second->setInputMat(inputMat);
 }
 
 vector<shared_ptr<Matrix>> Network::getFinalValue()

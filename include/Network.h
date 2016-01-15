@@ -11,8 +11,9 @@
 
 typedef pair <size_t, shared_ptr<LayerNode>> Node_Pair;
 typedef pair <size_t, size_t> InDegree_Pair;
-typedef pair <size_t, shared_ptr<Input>> Input_Pair;
 typedef pair <size_t, shared_ptr<Matrix>> Matrix_Pair;
+typedef pair <size_t, shared_ptr<InputCell>> Cell_Pair;
+typedef pair <size_t, shared_ptr<Input>> Input_Pair;
 
 class Network{
 public:
@@ -38,10 +39,11 @@ public:
 	void backward();
 	void update();
 
-	size_t addInput(shared_ptr<Input> input);
+	size_t addInput(size_t inputId);
 	size_t addInputEdge(size_t inputId, size_t layerId);
 
 	shared_ptr<Matrix> getGradientForInput(size_t inputId);
+	void setInputMat(size_t inputId, shared_ptr<Matrix> inputMat);
 
 	vector<shared_ptr<Matrix>> getFinalValue();
 	void setFinalGradient(vector<shared_ptr<Matrix>> finalGradient);
@@ -55,7 +57,6 @@ protected:
 	//whether the network is inited;
 	bool initialized;
 
-	size_t currentInputId = 0;
 
 	//store all the layer nodes
 	vector<shared_ptr<LayerNode>> nodes;
@@ -71,13 +72,10 @@ protected:
 	vector<shared_ptr<Matrix>> finalValue; 
 	//gradient for the network entrance
 	vector<shared_ptr<Matrix>> finalGradient;
-
-	//inputs for the whole network
-	vector<shared_ptr<Input>> inputs;
-	//map id to input
-	map<size_t, shared_ptr<Input>> inputMap;
-	//gradient for inputs
-	map<size_t, shared_ptr<Matrix>> inputGradientMap;
+	//cell for input
+	vector<shared_ptr<InputCell>> inputCells;
+	//map id to cell
+	map<size_t, shared_ptr<InputCell>> cellMap;
 };
 
 #endif

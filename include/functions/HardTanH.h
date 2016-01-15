@@ -2,8 +2,9 @@
 #define __FUDANDNN_HARDTANH_H
 
 #include "util/utils.h"
+#include "Function.h"
 
-class HardTanH
+class HardTanH : public Function
 {
 public:
 	HardTanH(); 

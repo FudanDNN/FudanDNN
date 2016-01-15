@@ -2,8 +2,9 @@
 #define __FUDANDNN_TANH_H
 
 #include "util/utils.h"
+#include "Function.h"
 
-class TanH
+class TanH : public Function
 {
 public:
 	TanH();

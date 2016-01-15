@@ -2,8 +2,9 @@
 #define __FUDANDNN_RELU_H
 
 #include "util/utils.h"
+#include "Function.h"
 
-class ReLU
+class ReLU : public Function
 {
 public:
 	ReLU();

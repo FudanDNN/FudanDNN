@@ -34,12 +34,12 @@ void LayerNode::clearEdges(){
 	this->prevNodes.clear();
 }
 
-void LayerNode::setInput(shared_ptr<Input> input)
+void LayerNode::setInputCell(shared_ptr<InputCell> inputCell)
 {
-	this->input = input;
+	this->inputCell = inputCell;
 }
 
-shared_ptr<Input> LayerNode::getInput()
+shared_ptr<InputCell> LayerNode::getInputCell()
 {
-	return this->input;
+	return this->inputCell;
 }

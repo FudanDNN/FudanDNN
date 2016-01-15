@@ -4,10 +4,10 @@
 class Function
 {
 public:
-	Function();
-	~Function();
-	virtual double getValue(double);
-	virtual double getDerivate(double);
+	Function(){};
+	~Function(){};
+	virtual double getValue(double){ return -1; };
+	virtual double getDerivate(double){ return -1; };
 
 };
 

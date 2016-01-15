@@ -41,20 +41,21 @@ size_t Model::addInput(size_t type, string fileName)
 	inputMap.insert(Input_Pair(currentInputId, input));
 	currentInputId++;
 	this->inputs.push_back(input);
+
 	return currentInputId - 1;
 }
 
-size_t Model::linkInputToNetwork(size_t inputId)
+size_t Model::linkInputToNetwork(size_t inputId,size_t layerId)
 {
 
 	shared_ptr<Input> input = this->inputMap.find(inputId)->second;
-	size_t idInNetwork = this->network->addInput(input);
-	input->setIdInNetwork(idInNetwork);
+	network->addInput(input->getId());
+	network->addInputEdge(inputId, layerId);
 
 	return 0;
 }
 
-size_t Model::setCriteria(size_t type, size_t unit)
+void Model::setCriteria(size_t type, size_t unit)
 {
 	switch (type)
 	{
@@ -68,10 +69,16 @@ void Model::run()
 	network->topoSort();
 	network->init();
 	for (int i = 0; i < trainingTimes; i++){
+		shared_ptr<Matrix> output;
+		for (shared_ptr<Input> input : inputs){
+			shared_ptr<Sample> sample = input->getNextSample();
+			output = sample->getOutput();
+			network->setInputMat(input->getId(), sample->getInput());
+		}
 		network->trainingForward();
 		criteria->setPredictValue(network->getFinalValue()[0]);
 
-		this->criteria->setExpectedValue();
+		this->criteria->setExpectedValue(output);
 
 		this->criteria->gradient();
 

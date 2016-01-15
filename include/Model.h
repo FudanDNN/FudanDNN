@@ -18,8 +18,11 @@ public:
 	void removeNodeInNetwork(size_t id);
 
 	size_t addInput(size_t type,string fileName);
-	size_t linkInputToNetwork(size_t inputId);
-	size_t setCriteria(size_t type,size_t unit);
+
+	size_t linkInputToNetwork(size_t inputId,size_t layerId);
+
+	void setInputMatForNetwork();
+	void setCriteria(size_t type,size_t unit);
 
 	void run();
 

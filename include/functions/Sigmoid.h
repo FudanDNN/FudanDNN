@@ -2,8 +2,9 @@
 #define __FUDANDNN_SIGMOID_H
 
 #include "util/utils.h"
+#include "Function.h"
 
-class Sigmoid
+class Sigmoid : public Function
 {
 public:
 	Sigmoid();

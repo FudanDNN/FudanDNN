@@ -17,6 +17,11 @@ ConvolutionLayer::ConvolutionLayer(size_t rowSize, size_t columnSize, size_t kro
 	this->initialization(initScheme);
 }
 
+ConvolutionLayer::~ConvolutionLayer()
+{
+
+}
+
 void ConvolutionLayer::init()
 {
 	this->initialization(initScheme);
