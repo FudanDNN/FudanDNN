@@ -6,15 +6,14 @@
 class ReLU
 {
 public:
-	static double getValue(double);
-	static double getDerivate(double);
-	static shared_ptr<ReLU> getInstance();
-	static void setParameters(double);
+	ReLU();
+	ReLU(double);
+	double getValue(double);
+	double getDerivate(double);
+	void setParameters(double);
 
 private:
-	ReLU();
-	static shared_ptr<ReLU> instance;
-	static double incline;
+	double incline;
 
 };
 

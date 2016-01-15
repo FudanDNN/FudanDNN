@@ -6,18 +6,17 @@
 class HardTanH
 {
 public:
-	static double getValue(double);
-	static double getDerivate(double);
-	static shared_ptr<HardTanH> getInstance();
-	static void setParameters(double, double);
+	HardTanH(); 
+	HardTanH(double slp, double ic);
+	double getValue(double);
+	double getDerivate(double);
+	void setParameters(double, double);
 
 private:
-	HardTanH();
-	static shared_ptr<HardTanH> instance;
-	static double lowerbound;
-	static double upperbound;
-	static double slope;
-	static double incline;
+	double lowerbound;
+	double upperbound;
+	double slope;
+	double incline;
 
 
 };

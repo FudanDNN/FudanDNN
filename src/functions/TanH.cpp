@@ -1,15 +1,16 @@
 #include "functions/TanH.h"
 
-
-inline shared_ptr<TanH> TanH::getInstance()
+TanH::TanH()
 {
-	return instance == nullptr ? (instance = shared_ptr<TanH>(new TanH())) : instance;
 }
 
-inline void TanH::setParameters(double s, double lb, double ub, double prec, double ic)
+TanH::TanH(double s, double lb, double ub, double prec, double ic)
 {
-	if (instance != nullptr)
-		return;
+	setParameters(s, lb, ub, prec, ic);
+}
+
+void TanH::setParameters(double s, double lb, double ub, double prec, double ic)
+{
 	scale = s;
 	lowerbound = lb;
 	upperbound = ub;
@@ -25,7 +26,7 @@ inline void TanH::setParameters(double s, double lb, double ub, double prec, dou
 
 }
 
-inline double TanH::getValue(double x)
+double TanH::getValue(double x)
 {
 	if (x <= lowerbound)
 		return 0;
@@ -35,7 +36,7 @@ inline double TanH::getValue(double x)
 		return map[(int)((x - lowerbound) * mfactor)];
 }
 
-inline double TanH::getDerivate(double x, double y)
+double TanH::getDerivate(double x, double y)
 {
 	if (x <= lowerbound || x >= upperbound)
 		return incline;

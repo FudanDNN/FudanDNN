@@ -1,12 +1,15 @@
 #include "functions/HardTanH.h"
 
-
-inline shared_ptr<HardTanH> HardTanH::getInstance()
+HardTanH::HardTanH()
 {
-	return instance == nullptr ? (instance = shared_ptr<HardTanH>(new HardTanH())) : instance;
 }
 
-inline void HardTanH::setParameters(double slp, double ic)
+HardTanH::HardTanH(double slp, double ic)
+{
+	setParameters(slp, ic);
+}
+
+void HardTanH::setParameters(double slp, double ic)
 {
 	slope = slp;
 	incline = ic;
@@ -14,7 +17,7 @@ inline void HardTanH::setParameters(double slp, double ic)
 	upperbound = -lowerbound;
 }
 
-inline double HardTanH::getValue(double x)
+double HardTanH::getValue(double x)
 {
 	if (x < lowerbound)
 		return -1;
@@ -24,7 +27,7 @@ inline double HardTanH::getValue(double x)
 		return x * slope;
 }
 
-inline double HardTanH::getDerivate(double x)
+double HardTanH::getDerivate(double x)
 {
 	if (x < lowerbound || x > upperbound)
 		return incline;

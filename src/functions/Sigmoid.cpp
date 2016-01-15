@@ -1,15 +1,16 @@
 #include "functions/Sigmoid.h"
 
-
-inline shared_ptr<Sigmoid> Sigmoid::getInstance()
+Sigmoid::Sigmoid()
 {
-	return instance == nullptr ? (instance = shared_ptr<Sigmoid>(new Sigmoid())) : instance;
 }
 
-inline void Sigmoid::setParameters(double s, double lb, double ub, double prec, double ic)
+Sigmoid::Sigmoid(double s, double lb, double ub, double prec, double ic)
 {
-	if (instance != nullptr)
-		return;
+	setParameters(s, lb, ub, prec, ic);
+}
+
+void Sigmoid::setParameters(double s, double lb, double ub, double prec, double ic)
+{
 	scale = 1 / s;
 	lowerbound = lb;
 	upperbound = ub;
@@ -25,7 +26,7 @@ inline void Sigmoid::setParameters(double s, double lb, double ub, double prec, 
 
 }
 
-inline double Sigmoid::getValue(double x)
+double Sigmoid::getValue(double x)
 {
 	if (x <= lowerbound)
 		return 0;
@@ -35,7 +36,7 @@ inline double Sigmoid::getValue(double x)
 		return map[(int)((x - lowerbound) * mfactor)];
 }
 
-inline double Sigmoid::getDerivate(double x, double y)
+double Sigmoid::getDerivate(double x, double y)
 {
 	if (x <= lowerbound || x >= upperbound)
 		return incline;
