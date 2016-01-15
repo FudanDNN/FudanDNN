@@ -208,8 +208,20 @@ shared_ptr<Matrix> Matrix::submatrix(int top, int bottom, int left, int right)
 
 shared_ptr<Matrix> Matrix::mergeRow(shared_ptr<Matrix> m)
 {
-	shared_ptr<Matrix> result = this->clone();
-	result->matrix->insert_cols(m->columnSize, m->matrix);
+	size_t row = rowSize + m->rowSize;
+	shared_ptr<MatrixPool> instance = MatrixPool::getInstance();
+	shared_ptr<Matrix> result = instance->allocMatrixUnclean();
+	for (size_t i = 0; i < rowSize; i++)
+	for (size_t j = 0; j < columnSize; j++)
+	{
+		result->setValue(i, j, (*matrix)(i, j));
+	}
+	for (size_t i = 0, ii = rowSize; i < m->rowSize; i++, ii++)
+	for (size_t j = 0; j < columnSize; j++)
+	{
+		result->setValue(ii, j, (*(m->matrix))(i, j));
+	}
+	return result;
 }
 
 int main()
