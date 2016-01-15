@@ -18,3 +18,11 @@ const enum initializationScheme
 	RANDOM_SQRT,	//[-1/sqrt(visual), 1/sqrt(visual))
 	RANDOM_NORM1	//[-1/visual, 1/visual)
 };
+const enum INPUT
+{
+	XMLINPUT,
+};
+const enum CRITERIA
+{
+	MSE,
+};
