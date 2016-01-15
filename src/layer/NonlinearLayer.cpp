@@ -1,17 +1,24 @@
 #include "layer/NonlinearLayer.h"
 
-NonlinearLayer::NonlinearLayer(shared_ptr<Function> function, string name, size_t rowSize, size_t columnSize, size_t featureMap)
+NonlinearLayer::NonlinearLayer(shared_ptr<Function> function, size_t type, size_t rowSize, size_t columnSize, size_t featureMap)
 {
 	this->fun = function;
-	this->name = name;
+	this->type = type;
 	this->visualRow = this->hiddenRow = rowSize;
 	this->visualColumn = this->hiddenColumn = columnSize;
 	this->visualSize = this->hiddenSize = featureMap;
 }
+NonlinearLayer::NonlinearLayer(shared_ptr<Function> function, size_t type, size_t rowSize):
+NonlinearLayer(function, type,rowSize,1,1)
+{
 
+}
 string NonlinearLayer::getNetworkName()
 {
-	return name;
+	switch (type){
+	case SIGMOID:
+		return "sigmoid";
+	}
 }
 
 void NonlinearLayer::readSelf(string)

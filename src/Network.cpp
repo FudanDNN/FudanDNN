@@ -14,12 +14,11 @@ size_t Network::addLinearLayer(size_t visualUnit, size_t hiddenUnit, size_t init
 	return node->getId();
 }
 
-size_t Network::addNonlinearLayer(size_t visualUnit, size_t type)
+size_t Network::addNonlinearLayer(size_t visualUnit, size_t type, double s, double lb, double ub, double prec, double ic)
 {
-	shared_ptr<NonlinearLayer> nonlinearLayer;
-	shared_ptr<NonlinearFactory> factory(new NonlinearFactory());
-	nonlinearLayer = factory->createNonlinear(type, visualUnit);
-	shared_ptr<LayerNode> node(new LayerNode(currentId, nonlinearLayer));
+	shared_ptr<Function> function = this->functionFactory->createFunction(type, s, lb, ub, prec, ic);
+	shared_ptr<NonlinearLayer> nonlinear(new NonlinearLayer(function, type, visualUnit));
+	shared_ptr<LayerNode> node(new LayerNode(currentId, nonlinear));
 	idMap.insert(Node_Pair(currentId, node));
 	currentId++;
 	nodes.push_back(node);
@@ -56,6 +55,7 @@ void Network::init()
 		if (networkLayer != nullptr)
 			networkLayer->init();
 	}
+	initialized = true;
 }
 
 void Network::topoSort()
@@ -104,3 +104,125 @@ void Network::topoSort()
 	sorted = true;
 }
 
+void Network::trainingForward()
+{
+	for (shared_ptr<LayerNode> node : nodes)
+	{
+		size_t id = node->getId();
+		shared_ptr<Layer> layer = node->getLayer();
+		vector<shared_ptr<Matrix>> visualValue;
+		for (shared_ptr<LayerNode> pred : node->getPrevNode())
+		{
+			if (visualValue.size() == 0){
+				visualValue = pred->getLayer()->getHiddenValue();
+			}
+			else{
+				visualValue[0] = visualValue[0]->mergeRow(pred->getLayer()->getHiddenValue()[0]);
+			}
+		}
+
+		if (node->getInput() != nullptr)
+		{
+			if (node->getInput()->isEnd())
+			{
+
+				for (shared_ptr<LayerNode> node : nodes)
+				{
+					shared_ptr<Layer> layer = node->getLayer();
+				}
+
+			}
+			shared_ptr<Sample> sample = node->getInput()->getNextSample();
+			if (visualValue.size() == 0){
+				visualValue.push_back(sample->getInput());
+			}
+			else{
+				visualValue[0] = visualValue[0]->mergeRow(sample->getInput());
+			}
+		}
+		layer->setVisualValue(visualValue);
+		layer->calculate();
+
+	}
+
+	shared_ptr<Layer> lastLayer = nodes.at(nodes.size() - 1)->getLayer();
+	finalValue = lastLayer->getHiddenValue();
+
+}
+
+void Network::testingForward()
+{
+
+}
+
+void Network::backward()
+{
+	shared_ptr<Layer> lastLayer = nodes.at(nodes.size() - 1)->getLayer();
+	lastLayer->addHiddenGradient(finalGradient);
+	for (int i = nodes.size() - 1; i >= 0; i--)
+	{
+		shared_ptr<LayerNode> node = nodes.at(i);
+		size_t id = node->getId();
+
+		shared_ptr<Layer> layer = node->getLayer();
+
+		layer->gradient();
+
+		size_t preLength = 0;
+		size_t currLength = 0;
+
+		for (shared_ptr<LayerNode> pred : node->getPrevNode())
+		{
+			shared_ptr<Layer> predLayer = pred->getLayer();
+			currLength = predLayer->getHiddenValue()[0]->getRowSize();
+			vector<shared_ptr<Matrix>> tempVec;
+			tempVec.push_back(layer->getVisualGradient()[0]->submatrix(preLength, preLength + currLength, 0, 1));
+			predLayer->addHiddenGradient(tempVec);
+			preLength += currLength;
+		}
+
+		if (node->getInput() != nullptr)
+		{
+			currLength = layer->getVisualGradient()[0]->getRowSize();
+			node->getInput()->setGradient(layer->getVisualGradient()[0]);
+		}
+
+	}
+}
+
+size_t Network::addInput(shared_ptr<Input> input)
+{
+	inputMap.insert(Input_Pair(currentInputId, input));
+	currentInputId++;
+	inputs.push_back(input);
+	return currentInputId - 1;
+}
+
+size_t Network::addInputEdge(size_t inputId, size_t layerId)
+{
+	shared_ptr<LayerNode> outNode = idMap.find(layerId)->second;
+	outNode->setInput(inputMap.find(inputId)->second);
+	return 0;
+}
+
+shared_ptr<Matrix> Network::getGradientForInput(size_t inputId)
+{
+	return inputGradientMap.find(inputId)->second;
+}
+
+vector<shared_ptr<Matrix>> Network::getFinalValue()
+{
+	return this->finalValue;
+}
+
+void Network::setFinalGradient(vector<shared_ptr<Matrix>> finalGradient)
+{
+	this->finalGradient = finalGradient;
+}
+
+void Network::update()
+{
+	for (shared_ptr<LayerNode> node : nodes){
+		node->getLayer()->update();
+	}
+}

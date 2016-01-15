@@ -33,3 +33,13 @@ void LayerNode::clearEdges(){
 	this->nextNodes.clear();
 	this->prevNodes.clear();
 }
+
+void LayerNode::setInput(shared_ptr<Input> input)
+{
+	this->input = input;
+}
+
+shared_ptr<Input> LayerNode::getInput()
+{
+	return this->input;
+}
