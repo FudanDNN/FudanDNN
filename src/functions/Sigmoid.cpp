@@ -6,19 +6,20 @@ inline shared_ptr<Sigmoid> Sigmoid::getInstance()
 	return instance == nullptr ? (instance = shared_ptr<Sigmoid>(new Sigmoid())) : instance;
 }
 
-inline void Sigmoid::setParameters(double lb, double ub, double prec, double ic)
+inline void Sigmoid::setParameters(double s, double lb, double ub, double prec, double ic)
 {
 	if (instance != nullptr)
 		return;
+	scale = 1 / s;
 	lowerbound = lb;
 	upperbound = ub;
 	precision = prec;
-	scale = 1 / prec;
+	mfactor = 1 / prec;
 	incline = ic;
 	int x = lowerbound;
 	while (x < upperbound)
 	{
-		map.push_back(1 / (1 + exp(-x)));
+		map.push_back(1 / (1 + exp(-x / scale)));
 		x += precision;
 	}
 
@@ -31,7 +32,7 @@ inline double Sigmoid::getValue(double x)
 	else if (x >= upperbound)
 		return 1;
 	else
-		return map[(int)((x - lowerbound) * scale)];
+		return map[(int)((x - lowerbound) * mfactor)];
 }
 
 inline double Sigmoid::getDerivate(double x, double y)
