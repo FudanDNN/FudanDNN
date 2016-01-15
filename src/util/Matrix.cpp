@@ -210,7 +210,7 @@ shared_ptr<Matrix> Matrix::mergeRow(shared_ptr<Matrix> m)
 {
 	size_t row = rowSize + m->rowSize;
 	shared_ptr<MatrixPool> instance = MatrixPool::getInstance();
-	shared_ptr<Matrix> result = instance->allocMatrixUnclean();
+	shared_ptr<Matrix> result = instance->allocMatrixUnclean(row, columnSize);
 	for (size_t i = 0; i < rowSize; i++)
 	for (size_t j = 0; j < columnSize; j++)
 	{
