@@ -1,5 +1,3 @@
-#ifndef __FUDANDNN_HARDTANH_H
-#define __FUDANDNN_HARDTANH_H
 #include "util/utils.h"
 #include "NonlinearLayer.h"
 
@@ -17,6 +15,3 @@ public:
 	size_t getSize();
 
 };
-
-
-#endif

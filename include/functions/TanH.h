@@ -21,6 +21,6 @@ private:
 	static double scale;
 	static double incline;
 
-}
+};
 
 #endif
