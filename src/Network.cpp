@@ -106,21 +106,25 @@ void Network::topoSort()
 
 void Network::trainingForward()
 {
+	//after topsort, traverse all the nodes, get the final value for the network
 	for (shared_ptr<LayerNode> node : nodes)
 	{
 		size_t id = node->getId();
 		shared_ptr<Layer> layer = node->getLayer();
 		vector<shared_ptr<Matrix>> visualValue;
+		//get previous node,get its hidden value as the visual value of current layer
 		for (shared_ptr<LayerNode> pred : node->getPrevNode())
 		{
 			if (visualValue.size() == 0){
 				visualValue = pred->getLayer()->getHiddenValue();
 			}
 			else{
-				visualValue[0] = visualValue[0]->mergeRow(pred->getLayer()->getHiddenValue()[0]);
+				for (int i = 0; i < visualValue.size(); i++){
+					visualValue[i] = visualValue[i]->mergeRow(pred->getLayer()->getHiddenValue()[i]);
+				}
 			}
 		}
-
+		//check whether it is connected to the input, if yes,merge the input value 
 		if (node->getInputCell() != nullptr)
 		{
 			shared_ptr<Matrix> input = node->getInputCell()->getInputMat();
@@ -131,11 +135,12 @@ void Network::trainingForward()
 				visualValue[0] = visualValue[0]->mergeRow(input);
 			}
 		}
+		//set visual value for layer and calculate the hidden value
 		layer->setVisualValue(visualValue);
 		layer->calculate();
 
 	}
-
+	//get last layer,set its hidden value for final value
 	shared_ptr<Layer> lastLayer = nodes.at(nodes.size() - 1)->getLayer();
 	finalValue = lastLayer->getHiddenValue();
 
@@ -148,10 +153,13 @@ void Network::testingForward()
 
 void Network::backward()
 {
+	//get finalGradient,set it for the final layer
 	shared_ptr<Layer> lastLayer = nodes.at(nodes.size() - 1)->getLayer();
 	lastLayer->addHiddenGradient(finalGradient);
+	//backpropagate the gradient
 	for (int i = nodes.size() - 1; i >= 0; i--)
 	{
+		//get the layer and do the gradient operation
 		shared_ptr<LayerNode> node = nodes.at(i);
 		size_t id = node->getId();
 
@@ -159,17 +167,27 @@ void Network::backward()
 
 		layer->gradient();
 
+		//set gradient for previous layer,
 		size_t preLength = 0;
 		size_t currLength = 0;
-
+		//split the gradient for previoud layer,use preLength and currLength to store the spliting index
 		for (shared_ptr<LayerNode> pred : node->getPrevNode())
 		{
 			shared_ptr<Layer> predLayer = pred->getLayer();
-			currLength = predLayer->getHiddenValue()[0]->getRowSize();
-			vector<shared_ptr<Matrix>> tempVec;
-			tempVec.push_back(layer->getVisualGradient()[0]->submatrix(preLength, preLength + currLength, 0, 1));
-			predLayer->addHiddenGradient(tempVec);
+			currLength = predLayer->getHiddenValue()[i]->getRowSize();
+			for (int i = 0; i < predLayer->getHiddenSize(); i++){
+				vector<shared_ptr<Matrix>> tempVec;
+				tempVec.push_back(layer->getVisualGradient()[i]->submatrix(
+					preLength, preLength + currLength, 0, layer->getVisualColumn()));
+				predLayer->addHiddenGradient(tempVec);
+			}
 			preLength += currLength;
+		}
+
+		//backpropagate the gradient to input
+		if (node->getInputCell() != nullptr)
+		{
+			node->getInputCell()->setGradientMat(layer->getVisualGradient()[0]);
 		}
 
 

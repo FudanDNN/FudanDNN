@@ -50,6 +50,9 @@ public:
 	size_t getHiddenRow();
 	size_t getHiddenColumn();
 
+	size_t getVisualSize();
+	size_t getHiddenSize();
+
 	void setNetworkName(string networkName);
 
 	// rate for dropout
