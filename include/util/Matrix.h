@@ -35,6 +35,10 @@ public:
 	void subi(shared_ptr<Matrix>);
 	//subtraction
 	shared_ptr<Matrix> sub(shared_ptr<Matrix>);
+	//in-place multiplication
+	void muli(double x);
+	//in-place multiplication
+	shared_ptr<Matrix> mul(double x);
 	//in-place right multiplication (this = this * x)
 	void mulri(shared_ptr<Matrix>);
 	//left multiplicatioin (return this * x)

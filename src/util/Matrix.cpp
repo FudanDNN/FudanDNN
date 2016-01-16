@@ -119,6 +119,18 @@ shared_ptr<Matrix> Matrix::sub(shared_ptr<Matrix> m)
 	return result;
 }
 
+void Matrix::muli(double x)
+{
+	*matrix *= x;
+}
+
+shared_ptr<Matrix> Matrix::mul(double x)
+{
+	shared_ptr<Matrix> result = MatrixPool::getInstance()->allocMatrixUnclean(rowSize, columnSize);
+	*result->matrix = *matrix * x;
+	return result;
+}
+
 void Matrix::mulri(shared_ptr<Matrix> m)
 {
 	*matrix *= *(m->matrix);
