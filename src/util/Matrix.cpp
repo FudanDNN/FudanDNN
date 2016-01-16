@@ -243,22 +243,6 @@ shared_ptr<Matrix> Matrix::mergeRow(shared_ptr<Matrix> m)
 	return result;
 }
 
-int main()
-{
-
-	shared_ptr<MatrixPool> mp = MatrixPool::getInstance();
-	shared_ptr<Matrix> A = mp->allocMatrixUnclean(3, 3);
-	A->initializeRandom(-10, 10);
-	shared_ptr<Matrix> B = mp->allocMatrixUnclean(3, 3);
-	B->initializeRandom(-10, 10); 
-	cout << "A" << endl;
-	A->print();
-	cout << "B" << endl;
-	B->print();
-	system("pause");
-
-}
-
 /*
 shared_ptr<Matrix> Matrix::mul(double a)
 {
