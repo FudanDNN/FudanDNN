@@ -10,10 +10,14 @@ public:
 	Model();
 	size_t addLinearLayerToNetwork(size_t visualUnit, size_t hiddenUnit, size_t init_scheme, size_t solver_type, 
 		double regularizationRate,double weightLearningRate, double biasLearningRate, double momentumRate, double dropoutLayer);
+
+	size_t addConvolutionLayerToNetwork(size_t rowSize, size_t columnSize, size_t krowSize, size_t kcolumnSize, size_t visualSize,
+		size_t hiddenSize, size_t stride, size_t initScheme, size_t solver_type, double regularizationRate,
+		double weightLearningRate, double biasLearningRate, double momentumRate, double dropoutLayer);
+
 	size_t addNonlinearLayerToNetwork(size_t visualUnit, size_t type, double s, double lb, double ub, double prec, double ic);
 
 	size_t addEdgeToNetwork(size_t inID, size_t outID);
-	size_t addInputEdgeToNetwork(size_t inputId, size_t layerId);
 
 	void removeNodeInNetwork(size_t id);
 

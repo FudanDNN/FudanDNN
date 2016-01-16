@@ -1,6 +1,6 @@
 #include "layer\LinearLayer.h"
 
-LinearLayer::LinearLayer(size_t visualUnit, size_t hiddenUnit, size_t initScheme,shared_ptr<Solver> solver)
+LinearLayer::LinearLayer(size_t visualUnit, size_t hiddenUnit, size_t initScheme,double dropoutRate, shared_ptr<Solver> solver)
 {
 	this->visualColumn = 1;
 	this->visualRow = visualUnit;
@@ -11,6 +11,7 @@ LinearLayer::LinearLayer(size_t visualUnit, size_t hiddenUnit, size_t initScheme
 	this->initialization(initScheme);
 	this->visualSize = 1;
 	this->hiddenSize = 1;
+	this->dropoutRate = dropoutRate;
 }
 
 void LinearLayer::init()

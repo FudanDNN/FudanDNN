@@ -11,6 +11,15 @@ size_t Model::addLinearLayerToNetwork(size_t visualUnit, size_t hiddenUnit, size
 		regularizationRate, weightLearningRate, biasLearningRate, momentumRate, dropoutLayer);
 }
 
+size_t Model::addConvolutionLayerToNetwork(size_t rowSize, size_t columnSize, size_t krowSize, size_t kcolumnSize, size_t visualSize,
+	size_t hiddenSize, size_t stride, size_t initScheme, size_t solver_type, double regularizationRate,
+	double weightLearningRate, double biasLearningRate, double momentumRate, double dropoutLayer)
+{
+	return this->network->addConvolutionLayer(rowSize, columnSize, krowSize, kcolumnSize, visualSize,
+		hiddenSize, stride, initScheme, solver_type, regularizationRate,
+		weightLearningRate, biasLearningRate, momentumRate, dropoutLayer);
+}
+
 size_t Model::addNonlinearLayerToNetwork(size_t visualUnit, size_t type, double s, double lb, double ub, double prec, double ic)
 {
 	return this->network->addNonlinearLayer(visualUnit, type, s, lb, ub, prec, ic);
@@ -21,10 +30,6 @@ size_t Model::addEdgeToNetwork(size_t inID, size_t outID)
 	return this->network->addEdge(inID, outID);
 }
 
-size_t Model::addInputEdgeToNetwork(size_t inputId, size_t layerId)
-{
-	return this->network->addInputEdge(inputId, layerId);
-}
 
 void Model::removeNodeInNetwork(size_t id)
 {
@@ -68,7 +73,8 @@ void Model::run()
 {
 	network->topoSort();
 	network->init();
-	for (int i = 0; i < trainingTimes; i++){
+	int totalTimes = this->trainingTimes * inputs[0]->getSampleNum();
+	for (int i = 0; i < totalTimes; i++){
 		shared_ptr<Matrix> output;
 		for (shared_ptr<Input> input : inputs){
 			shared_ptr<Sample> sample = input->getNextSample();

@@ -8,7 +8,7 @@ class LinearLayer : public Layer
 {
 public:
 
-	LinearLayer(size_t visualUnit, size_t hiddenUnit, size_t initScheme, shared_ptr<Solver> solver);
+	LinearLayer(size_t visualUnit, size_t hiddenUnit, size_t initScheme, double dropoutRate, shared_ptr<Solver> solver);
 	LinearLayer() {};
 	string getNetworkName() override;
 	void compute() override;
@@ -25,6 +25,7 @@ protected:
 	void initGradient();
 	bool initialized = false;
 	size_t initScheme;
+	double dropoutRate;
 	shared_ptr<Matrix> weight;
 	shared_ptr<Matrix> weightGradient;
 	shared_ptr<Matrix> bias;

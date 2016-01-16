@@ -7,7 +7,8 @@
 class ConvolutionLayer : public Layer
 {
 public:
-	ConvolutionLayer(size_t rowSize, size_t columnSize, size_t krowSize, size_t kcolumnSize, size_t visualSize, size_t hiddenSize, size_t stride, size_t initScheme, shared_ptr<Solver> solver);
+	ConvolutionLayer(size_t rowSize, size_t columnSize, size_t krowSize, size_t kcolumnSize, size_t visualSize, 
+		size_t hiddenSize, size_t stride, size_t initScheme, double dropoutRate, shared_ptr<Solver> solver);
 	~ConvolutionLayer();
 	string getNetworkName() override;
 	void compute() override;
@@ -28,6 +29,7 @@ private:
 	size_t krowSize = 0;
 	size_t kcolumnSize = 0;
 	size_t stride;
+	double dropoutRate;
 	vector<vector<shared_ptr<Matrix>>> kernel;
 	vector<vector<shared_ptr<Matrix>>> kernelGradient;
 	vector<shared_ptr<Matrix>> bias;

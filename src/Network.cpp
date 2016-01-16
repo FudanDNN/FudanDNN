@@ -6,8 +6,24 @@ size_t Network::addLinearLayer(size_t visualUnit, size_t hiddenUnit, size_t init
 	shared_ptr<LinearLayer> linearLayer;
 	shared_ptr<Solver> solver = solverFactory->createSolver(solver_type, regularizationRate,
 		weightLearningRate, biasLearningRate, momentumRate);
-	linearLayer = shared_ptr<LinearLayer>(new LinearLayer(visualUnit, hiddenUnit, init_scheme,solver));
+	linearLayer = shared_ptr<LinearLayer>(new LinearLayer(visualUnit, hiddenUnit, init_scheme,dropoutRate, solver));
 	shared_ptr<LayerNode> node(new LayerNode(currentId, linearLayer));
+	idMap.insert(Node_Pair(currentId, node));
+	currentId++;
+	nodes.push_back(node);
+	return node->getId();
+}
+
+size_t Network::addConvolutionLayer(size_t rowSize, size_t columnSize, size_t krowSize, size_t kcolumnSize, size_t visualSize,
+	size_t hiddenSize, size_t stride, size_t initScheme, size_t solver_type, double regularizationRate,
+	double weightLearningRate, double biasLearningRate, double momentumRate, double dropoutRate)
+{
+	shared_ptr<ConvolutionLayer> convolutionLayer;
+	shared_ptr<Solver> solver = solverFactory->createSolver(solver_type, regularizationRate,
+		weightLearningRate, biasLearningRate, momentumRate);
+	convolutionLayer = shared_ptr<ConvolutionLayer>(new ConvolutionLayer(rowSize, columnSize, krowSize, kcolumnSize,
+		visualSize, hiddenSize, stride, initScheme, dropoutRate, solver));
+	shared_ptr<LayerNode> node(new LayerNode(currentId, convolutionLayer));
 	idMap.insert(Node_Pair(currentId, node));
 	currentId++;
 	nodes.push_back(node);

@@ -1,7 +1,7 @@
 #include "layer/ConvolutionLayer.h"
 
 ConvolutionLayer::ConvolutionLayer(size_t rowSize, size_t columnSize, size_t krowSize, size_t kcolumnSize, 
-	size_t visualSize, size_t hiddenSize, size_t stride, size_t initScheme, shared_ptr<Solver> solver)
+	size_t visualSize, size_t hiddenSize, size_t stride, size_t initScheme, double dropoutRate, shared_ptr<Solver> solver)
 {
 	this->visualRow = rowSize;
 	this->visualColumn = columnSize;
@@ -15,6 +15,7 @@ ConvolutionLayer::ConvolutionLayer(size_t rowSize, size_t columnSize, size_t kro
 	this->solver = solver;
 	this->initScheme = initScheme;
 	this->initialization(initScheme);
+	this->dropoutRate = dropoutRate;
 }
 
 ConvolutionLayer::~ConvolutionLayer()
