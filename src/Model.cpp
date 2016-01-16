@@ -76,10 +76,9 @@ void Model::run()
 			network->setInputMat(input->getId(), sample->getInput());
 		}
 		network->trainingForward();
-		criteria->setPredictValue(network->getFinalValue()[0]);
 
+		this->criteria->setPredictValue(network->getFinalValue()[0]);
 		this->criteria->setExpectedValue(output);
-
 		this->criteria->gradient();
 
 		vector<shared_ptr<Matrix>> tempVec;

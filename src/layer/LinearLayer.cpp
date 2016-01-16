@@ -9,6 +9,8 @@ LinearLayer::LinearLayer(size_t visualUnit, size_t hiddenUnit, size_t initScheme
 	this->solver = solver;
 	this->initScheme = initScheme;
 	this->initialization(initScheme);
+	this->visualSize = 1;
+	this->hiddenSize = 1;
 }
 
 void LinearLayer::init()
@@ -96,4 +98,8 @@ void LinearLayer::readSelf(string filename)
 }
 string LinearLayer::getNetworkName(){
 	return "LinearLayer";
+}
+
+void LinearLayer::update(){
+	this->solver->update(weight, weightMomentum, weightGradient, bias, biasMomentum, biasGradient, 1);
 }

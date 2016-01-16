@@ -13,6 +13,8 @@ public:
 	void compute() override;
 	void calculate() override;
 	void gradient() override;
+	void update();
+
 	void writeSelf(string) override;
 	void readSelf(string) override;
 	size_t getSize();

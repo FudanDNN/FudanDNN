@@ -77,4 +77,12 @@ void Layer::setDropoutRate(double dropoutRate)
 	this->dropoutRate = dropoutRate;
 };
 
+size_t Layer::getVisualSize(){
+	return this->visualSize;
+}
+
+size_t Layer::getHiddenSize(){
+	return this->hiddenSize;
+}
+
 

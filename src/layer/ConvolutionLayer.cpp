@@ -68,13 +68,11 @@ void ConvolutionLayer::initialization(int init_scheme)
 
 	for (size_t v = 0; v < visualSize; v++)
 	{
-		visualValue.push_back(shared_ptr<Matrix>(new Matrix(visualRow, visualColumn)));
 		visualGradient.push_back(shared_ptr<Matrix>(new Matrix(visualRow, visualColumn)));
 	}
 
 	for (size_t h = 0; h < hiddenSize; h++)
 	{
-		hiddenValue.push_back(shared_ptr<Matrix>(new Matrix(hiddenRow, hiddenColumn)));
 		hiddenGradient.push_back(shared_ptr<Matrix>(new Matrix(hiddenRow, hiddenColumn)));
 	}
 
@@ -160,7 +158,12 @@ void ConvolutionLayer::readSelf(string filename)
 {
 
 }
+
 string ConvolutionLayer::getNetworkName(){
 	return "ConvolutionLayer";
+}
+
+void ConvolutionLayer::update(){
+	this->solver->update(kernel, kernelMomentum, kernelGradient, bias, biasMomentum, biasGradient, this->hiddenSize);
 }
 
