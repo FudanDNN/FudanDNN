@@ -16,6 +16,7 @@ ConvolutionLayer::ConvolutionLayer(size_t rowSize, size_t columnSize, size_t kro
 	this->initScheme = initScheme;
 	this->initialization(initScheme);
 	this->dropoutRate = dropoutRate;
+	this->instance = MatrixPool::getInstance();
 }
 
 ConvolutionLayer::~ConvolutionLayer()
@@ -59,22 +60,22 @@ void ConvolutionLayer::initialization(int init_scheme)
 		kernel[h] = *(new vector<shared_ptr<Matrix>>());
 		for (size_t v = 0; v < hiddenSize; v++)
 		{
-			shared_ptr<Matrix> k(new Matrix(krowSize, kcolumnSize));
+			shared_ptr<Matrix> k = instance->allocMatrixUnclean(krowSize, kcolumnSize);
 			k->initializeRandom(lowerBound, upperBound);
 			kernel[h].push_back(k);
 		}
-		bias.push_back(shared_ptr<Matrix>(new Matrix(hiddenRow, hiddenColumn)));
+		bias.push_back(instance->allocMatrixUnclean(hiddenRow, hiddenColumn));
 		bias[h]->initializeRandom(lowerBound, upperBound);
 	}
 
 	for (size_t v = 0; v < visualSize; v++)
 	{
-		visualGradient.push_back(shared_ptr<Matrix>(new Matrix(visualRow, visualColumn)));
+		visualGradient.push_back(instance->allocMatrixUnclean(visualRow, visualColumn));
 	}
 
 	for (size_t h = 0; h < hiddenSize; h++)
 	{
-		hiddenGradient.push_back(shared_ptr<Matrix>(new Matrix(hiddenRow, hiddenColumn)));
+		hiddenGradient.push_back(instance->allocMatrixUnclean(hiddenRow, hiddenColumn));
 	}
 
 	initGradient();
@@ -90,11 +91,11 @@ void ConvolutionLayer::initGradient()
 		kernelMomentum[h] = *(new vector<shared_ptr<Matrix>>());
 		for (size_t v = 0; v < hiddenSize; v++)
 		{
-			shared_ptr<Matrix> k(new Matrix(krowSize, kcolumnSize));
+			shared_ptr<Matrix> k = instance->allocMatrixUnclean(krowSize, kcolumnSize);
 			k->setValues(0);
 			kernelGradient[h].push_back(k);
 		}
-		biasGradient.push_back(shared_ptr<Matrix>(new Matrix(hiddenRow, hiddenColumn)));
+		biasGradient.push_back(instance->allocMatrixUnclean(hiddenRow, hiddenColumn));
 		bias[h]->setValues(0);
 	}
 
@@ -103,11 +104,11 @@ void ConvolutionLayer::initGradient()
 		kernelMomentum[h] = *(new vector<shared_ptr<Matrix>>());
 		for (size_t v = 0; v < hiddenSize; v++)
 		{
-			shared_ptr<Matrix> k(new Matrix(krowSize, kcolumnSize));
+			shared_ptr<Matrix> k = instance->allocMatrixUnclean(krowSize, kcolumnSize);
 			k->setValues(0);
 			kernelMomentum[h].push_back(k);
 		}
-		biasMomentum.push_back(shared_ptr<Matrix>(new Matrix(hiddenRow, hiddenColumn)));
+		biasMomentum.push_back(instance->allocMatrixUnclean(hiddenRow, hiddenColumn));
 		bias[h]->setValues(0);
 	}
 
@@ -146,7 +147,9 @@ void ConvolutionLayer::gradient()
 		visualGradient[j]->setValues(0);
 		for (size_t i = 0; i < hiddenSize; i++)
 		{
+			visualGradient[j]->addi(hiddenGradient[i]->wideCorr(kernel[i][j], stride));
 		}
+		hiddenValue[j]->setValues(0);
 	}
 }
 

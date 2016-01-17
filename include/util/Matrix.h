@@ -53,6 +53,10 @@ public:
 	shared_ptr<Matrix> narrowConv(shared_ptr<Matrix>, int);
 	//wide convolution
 	shared_ptr<Matrix> wideConv(shared_ptr<Matrix>, int);
+	//narrow correlation
+	shared_ptr<Matrix> narrowCorr(shared_ptr<Matrix>, int);
+	//wide correlation
+	shared_ptr<Matrix> wideCorr(shared_ptr<Matrix>, int);
 	//submatrix [ (top, left), (bottom, right) )
 	shared_ptr<Matrix> submatrix(int top, int bottom, int left, int right);
 	//merge two matrix by row

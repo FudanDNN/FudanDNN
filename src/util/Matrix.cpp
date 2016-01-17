@@ -138,7 +138,7 @@ void Matrix::mulri(shared_ptr<Matrix> m)
 
 shared_ptr<Matrix> Matrix::mull(shared_ptr<Matrix> m)
 {
-	shared_ptr<Matrix> result = MatrixPool::getInstance()->allocMatrixUnclean(rowSize, columnSize);
+	shared_ptr<Matrix> result = MatrixPool::getInstance()->allocMatrixUnclean(m->rowSize, columnSize);
 	*result->matrix = *(m->matrix) * *matrix;
 	return result;
 
@@ -146,7 +146,7 @@ shared_ptr<Matrix> Matrix::mull(shared_ptr<Matrix> m)
 
 shared_ptr<Matrix> Matrix::mulr(shared_ptr<Matrix> m)
 {
-	shared_ptr<Matrix> result = MatrixPool::getInstance()->allocMatrixUnclean(rowSize, columnSize);
+	shared_ptr<Matrix> result = MatrixPool::getInstance()->allocMatrixUnclean(rowSize, m->columnSize);
 	*result->matrix = *matrix * *(m->matrix);
 	return result;
 }
@@ -187,6 +187,52 @@ shared_ptr<Matrix> Matrix::wideConv(shared_ptr<Matrix> kernel, int stride)
 		for (int ki = kernel->rowSize - 1; ki >= 0; ki--, ii++) {
 			int jj = j * stride - kernel->columnSize + 1;
 			for (int kj = kernel->columnSize - 1; kj >= 0; kj--, jj++)
+			{
+				if (!inrange(ii, jj)) continue;
+				val += (*matrix)(ii, jj) * (*kernel->matrix)(ki, kj);
+			}
+		}
+		(*(result->matrix))(i, j) = val;
+	}
+	return result;
+}
+
+shared_ptr<Matrix> Matrix::narrowCorr(shared_ptr<Matrix> kernel, int stride)
+{
+	int rowSize = (this->rowSize - kernel->rowSize) / stride + 1;
+	int columnSize = (this->columnSize - kernel->columnSize) / stride + 1;
+	shared_ptr<Matrix> result = MatrixPool::getInstance()->allocMatrixUnclean(rowSize, columnSize);
+	for (int i = 0; i < rowSize; i++)
+	for (int j = 0; j < columnSize; j++)
+	{
+		int ii = i * stride;
+		double val = 0;
+		for (int ki = 0; ki <  kernel->rowSize; ki++, ii++) {
+			int jj = j * stride;
+			for (int kj = 0; kj < kernel->columnSize; kj++, jj++)
+			{
+				val += (*matrix)(ii, jj) * (*kernel->matrix)(ki, kj);
+			}
+		}
+		(*(result->matrix))(i, j) = val;
+	}
+	return result;
+}
+
+shared_ptr<Matrix> Matrix::wideCorr(shared_ptr<Matrix> kernel, int stride)
+{
+	int rowSize = (this->rowSize + kernel->rowSize) / stride - 1;
+	int columnSize = (this->columnSize + kernel->columnSize) / stride - 1;
+	shared_ptr<Matrix> result = MatrixPool::getInstance()->allocMatrixUnclean(rowSize, columnSize);
+	for (int i = 0; i < rowSize; i++)
+	for (int j = 0; j < columnSize; j++)
+	{
+		int ii = i * stride - kernel->rowSize + 1;
+		int jj = j * stride - kernel->columnSize + 1;
+		double val = 0;
+		for (int ki = 0; ki <  kernel->rowSize; ki++, ii++) {
+			int jj = j * stride - kernel->columnSize + 1;
+			for (int kj = 0; kj <  kernel->columnSize; kj++, jj++)
 			{
 				if (!inrange(ii, jj)) continue;
 				val += (*matrix)(ii, jj) * (*kernel->matrix)(ki, kj);
