@@ -169,6 +169,6 @@ string ConvolutionLayer::getNetworkName(){
 }
 
 void ConvolutionLayer::update(){
-	this->solver->update(kernel, kernelMomentum, kernelGradient, bias, biasMomentum, biasGradient, this->hiddenSize);
+	this->solver->update(kernel, kernelMomentum, kernelGradient, bias, biasMomentum, biasGradient, this->hiddenSize, this->visualSize);
 }
 

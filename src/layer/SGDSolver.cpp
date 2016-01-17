@@ -7,11 +7,11 @@ SGDSolver::SGDSolver(double regularizationRate, double weightLearningRate, doubl
 
 void SGDSolver::update(vector<vector<shared_ptr<Matrix>>> convKernels, vector<vector<shared_ptr<Matrix>>> convKernelMomentum,
 	vector<vector<shared_ptr<Matrix>>> convKernelsGradient, vector<shared_ptr<Matrix>> bias,
-	vector<shared_ptr<Matrix>> biasMomentum, vector<shared_ptr<Matrix>> biasGradient, int num){
+	vector<shared_ptr<Matrix>> biasMomentum, vector<shared_ptr<Matrix>> biasGradient, int hiddenSize, int visualSize){
 
-	for (int i = 0; i < num; i++)
+	for (int i = 0; i < hiddenSize; i++)
 	{
-		for (size_t j = 0; j < num; j++)
+		for (size_t j = 0; j < visualSize; j++)
 		{
 			convKernelMomentum[i][j]->muli(momentumRate);
 			convKernelMomentum[i][j]->addi(convKernelsGradient[i][j]);
@@ -19,10 +19,10 @@ void SGDSolver::update(vector<vector<shared_ptr<Matrix>>> convKernels, vector<ve
 			convKernels[i][j]->addi(convKernelMomentum[i][j]->mul(weightLearningRate));
 			convKernelsGradient[i][j]->setValues(0);
 		}
-		biasMomentum[i][j]->muli(momentumRate);
-		biasMomentum[i][j]->addi(biasGradient[i][j]);
-		biasMomentum[i][j]->subi(bias[i][j]->mul(regularizationRate));
-		bias[i][j]->addi(biasMomentum[i][j]->mul(biasLearningRate));
+		biasMomentum[i]->muli(momentumRate);
+		biasMomentum[i]->addi(biasGradient[i]);
+		biasMomentum[i]->subi(bias[i]->mul(regularizationRate));
+		bias[i]->addi(biasMomentum[i]->mul(biasLearningRate));
 		biasGradient[i]->setValues(0);
 	}
 	
