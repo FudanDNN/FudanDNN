@@ -308,7 +308,7 @@ shared_ptr<Matrix> Matrix::submatrix(int top, int bottom, int left, int right)
 	int column = right - left;
 	shared_ptr<MatrixPool> instance = MatrixPool::getInstance();
 	shared_ptr<Matrix> result = instance->allocMatrixUnclean(row, column);
-	(*(result->matrix)) = matrix->submat(top, bottom - 1, left, right - 1);
+	(*(result->matrix)) = matrix->submat(top, left, bottom - 1, right - 1);
 	return result;
 }
 
