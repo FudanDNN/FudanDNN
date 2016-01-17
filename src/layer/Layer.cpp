@@ -6,12 +6,6 @@
 void Layer::setVisualValue(vector<shared_ptr<Matrix>> visualValue)
 {
 	visualGradient.clear();
-	for (size_t i = 0; i < visualValue.size(); i++)
-	{
-		shared_ptr<Matrix> m(new Matrix(this->visualRow, this->visualColumn));
-		m->setValues(0);
-		visualGradient.push_back(m);
-	}
 	this->visualValue = visualValue;
 }
 
@@ -96,5 +90,6 @@ size_t Layer::getVisualSize(){
 size_t Layer::getHiddenSize(){
 	return this->hiddenSize;
 }
+
 
 

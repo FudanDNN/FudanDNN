@@ -192,8 +192,6 @@ void Network::backward()
 			for (int j = 0; j < predLayer->getHiddenSize(); j++){
 				currLength = predLayer->getHiddenValue()[j]->getRowSize();
 				vector<shared_ptr<Matrix>> tempVec;
-				cout << layer->getVisualGradient()[j]->getRowSize() << " " << layer->getVisualGradient()[j]->getColumnSize() << endl;
-				cout << preLength << " " << currLength << " " << layer->getVisualColumn() << endl;
 				tempVec.push_back(layer->getVisualGradient()[j]->submatrix(
 					preLength, preLength + currLength, 0, layer->getVisualColumn()));
 				predLayer->addHiddenGradient(tempVec);

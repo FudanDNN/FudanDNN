@@ -78,15 +78,30 @@ void LinearLayer::compute()
 void LinearLayer::calculate()
 {
 	hiddenValue.push_back(visualValue[0]->mull(weight)->add(bias));
-	
+	/*cout << "linearLayer:" << this->getVisualRow() << endl;
+	cout << "visualValue" << endl;
+	visualValue[0]->print();
+	cout << "hiddenValue" << endl;
+	hiddenValue[0]->print();
+	cout << "weight" << endl;
+	weight->print();*/
 }
 
 void LinearLayer::gradient()
 {
 	visualGradient.push_back(hiddenGradient[0]->trans()->mulr(this->weight)->trans());
+
+	cout << "linearLayer:" << this->getVisualRow() << endl;
+	cout << "hiddenGradient" << endl;
+	hiddenGradient[0]->print();
+	cout << "visualGradient" << endl;
+	visualGradient[0]->print();
+	cout << "weight" << endl;
+	weight->print();
+
 	weightGradient->addi(visualValue[0]->trans()->mull(hiddenGradient[0]));
 	biasGradient->addi(hiddenGradient[0]);
-	hiddenGradient[0]->setValues(0);
+	hiddenGradient.clear();
 }
 
 void LinearLayer::writeSelf(string filename)

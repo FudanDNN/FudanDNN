@@ -73,7 +73,10 @@ void Model::run()
 {
 	network->topoSort();
 	network->init();
-	int totalTimes = this->trainingTimes * inputs[0]->getSampleNum();
+	int sampleNum = inputs[0]->getSampleNum();
+	int totalTimes = this->trainingTimes * sampleNum;
+	int correctNum = 0;
+	double error = 0;
 	for (int i = 0; i < totalTimes; i++){
 		shared_ptr<Matrix> output;
 		for (shared_ptr<Input> input : inputs){
@@ -86,6 +89,18 @@ void Model::run()
 		this->criteria->setPredictValue(network->getFinalValue()[0]);
 		this->criteria->setExpectedValue(output);
 		this->criteria->gradient();
+
+		if (this->criteria->getPredictType() == this->criteria->getExpectedType()){
+			correctNum++;
+		}
+		double singleError = this->criteria->computeError();
+		error += singleError;
+		if (i % sampleNum == 0){
+			cout << "times:" << i / sampleNum << 
+				"error:" << error << "correctRate:" << ((double)correctNum) / sampleNum << endl;
+			error = 0;
+			correctNum = 0;
+		}
 
 		vector<shared_ptr<Matrix>> tempVec;
 		tempVec.push_back(this->criteria->getPredictGradient());
