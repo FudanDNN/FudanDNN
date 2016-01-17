@@ -65,7 +65,7 @@ void NonlinearLayer::gradient()
 		shared_ptr<Matrix> temp(new Matrix(visualRow, visualColumn));
 		for (size_t i = 0; i < visualRow; i++){
 			for (size_t j = 0; j < visualColumn; j++){
-				temp->setValue(i, j, hiddenGradient[f]->getValue(i, j) * fun->getDerivate(visualValue[f]->getValue(i, j)));
+				temp->setValue(i, j, hiddenGradient[f]->getValue(i, j) * fun->getDerivate(visualValue[f]->getValue(i, j), hiddenValue[f]->getValue(i, j)));
 			}
 		}
 		this->visualGradient.push_back(temp);

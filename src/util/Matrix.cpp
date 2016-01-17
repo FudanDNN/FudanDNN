@@ -288,6 +288,8 @@ shared_ptr<Matrix> Matrix::wideCorr(shared_ptr<Matrix> kernel, int stride)
 	return result;
 }
 
+shared_ptr<Matrix> Matrix::maxPooling(int kRowSize, int kColumnSize, int stride);
+
 void Matrix::trans_i()
 {
 	inplace_trans(*matrix);
