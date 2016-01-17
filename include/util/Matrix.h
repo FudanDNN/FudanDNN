@@ -57,6 +57,10 @@ public:
 	shared_ptr<Matrix> narrowCorr(shared_ptr<Matrix>, int);
 	//wide correlation
 	shared_ptr<Matrix> wideCorr(shared_ptr<Matrix>, int);
+	//narrow correlation as kernel role
+	shared_ptr<Matrix> narrowRCorr(shared_ptr<Matrix>, int);
+	//wide correlation as kernel role
+	shared_ptr<Matrix> wideRCorr(shared_ptr<Matrix>, int);
 	//submatrix [ (top, left), (bottom, right) )
 	shared_ptr<Matrix> submatrix(int top, int bottom, int left, int right);
 	//merge two matrix by row

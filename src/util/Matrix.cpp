@@ -197,6 +197,51 @@ shared_ptr<Matrix> Matrix::wideConv(shared_ptr<Matrix> kernel, int stride)
 	return result;
 }
 
+shared_ptr<Matrix> Matrix::narrowRCorr(shared_ptr<Matrix> kernel, int stride)
+{
+	int rowSize = (this->rowSize - kernel->rowSize) / stride + 1;
+	int columnSize = (this->columnSize - kernel->columnSize) / stride + 1;
+	shared_ptr<Matrix> result = MatrixPool::getInstance()->allocMatrixUnclean(rowSize, columnSize);
+	for (int i = 0; i < rowSize; i++)
+	for (int j = 0; j < columnSize; j++)
+	{
+		int ii = rowSize - i * stride;
+		double val = 0;
+		for (int ki = kernel->rowSize - 1; ki >= 0; ki--, ii--) {
+			int jj = columnSize - j * stride;
+			for (int kj = kernel->columnSize - 1; kj >= 0; kj--, jj--)
+			{
+				val += (*matrix)(ii, jj) * (*kernel->matrix)(ki, kj);
+			}
+		}
+		(*(result->matrix))(i, j) = val;
+	}
+	return result;
+}
+
+shared_ptr<Matrix> Matrix::wideRCorr(shared_ptr<Matrix> kernel, int stride)
+{
+	int rowSize = (this->rowSize + kernel->rowSize) / stride - 1;
+	int columnSize = (this->columnSize + kernel->columnSize) / stride - 1;
+	shared_ptr<Matrix> result = MatrixPool::getInstance()->allocMatrixUnclean(rowSize, columnSize);
+	for (int i = 0; i < rowSize; i++)
+	for (int j = 0; j < columnSize; j++)
+	{
+		int ii = rowSize - (i * stride - kernel->rowSize + 1);
+		double val = 0;
+		for (int ki = kernel->rowSize - 1; ki >= 0; ki--, ii++) {
+			int jj = columnSize - (j * stride - kernel->columnSize + 1);
+			for (int kj = kernel->columnSize - 1; kj >= 0; kj--, jj++)
+			{
+				if (!inrange(ii, jj)) continue;
+				val += (*matrix)(ii, jj) * (*kernel->matrix)(ki, kj);
+			}
+		}
+		(*(result->matrix))(i, j) = val;
+	}
+	return result;
+}
+
 shared_ptr<Matrix> Matrix::narrowCorr(shared_ptr<Matrix> kernel, int stride)
 {
 	int rowSize = (this->rowSize - kernel->rowSize) / stride + 1;
@@ -257,7 +302,7 @@ shared_ptr<Matrix> Matrix::trans()
 
 shared_ptr<Matrix> Matrix::submatrix(int top, int bottom, int left, int right)
 {
-	if (!(inrange(top, left) && inrange(right - 1, bottom - 1)))
+	if (!(inrange(top, left) && inrange(bottom - 1, right - 1)))
 		return nullptr;
 	int row = bottom - top;
 	int column = right - left;
