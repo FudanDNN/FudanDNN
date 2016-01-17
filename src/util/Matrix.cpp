@@ -295,7 +295,7 @@ void Matrix::trans_i()
 
 shared_ptr<Matrix> Matrix::trans()
 {
-	shared_ptr<Matrix> result = MatrixPool::getInstance()->allocMatrixUnclean(rowSize, columnSize);
+	shared_ptr<Matrix> result = MatrixPool::getInstance()->allocMatrixUnclean(columnSize, rowSize);
 	*(result->matrix) = matrix->t();
 	return result;
 }
