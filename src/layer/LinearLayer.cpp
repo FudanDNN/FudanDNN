@@ -5,13 +5,13 @@ LinearLayer::LinearLayer(size_t visualUnit, size_t hiddenUnit, size_t initScheme
 	this->visualColumn = 1;
 	this->visualRow = visualUnit;
 	this->hiddenColumn = 1;
-	this->hiddenRow = hiddenRow;
+	this->hiddenRow = hiddenUnit;
 	this->solver = solver;
 	this->initScheme = initScheme;
-	this->initialization(initScheme);
 	this->visualSize = 1;
 	this->hiddenSize = 1;
 	this->dropoutRate = dropoutRate;
+	this->initialization(initScheme);
 }
 
 void LinearLayer::init()
@@ -72,17 +72,18 @@ void LinearLayer::initGradient()
 
 void LinearLayer::compute()
 {
-	hiddenValue[0] = visualValue[0]->mull(weight)->add(bias);
+	hiddenValue.push_back(visualValue[0]->mull(weight)->add(bias));
 }
 
 void LinearLayer::calculate()
 {
-	hiddenValue[0] = visualValue[0]->mull(weight)->add(bias);
+	hiddenValue.push_back(visualValue[0]->mull(weight)->add(bias));
+	
 }
 
 void LinearLayer::gradient()
 {
-	visualGradient[0] = hiddenGradient[0]->trans()->mulr(this->weight)->trans();
+	visualGradient.push_back(hiddenGradient[0]->trans()->mulr(this->weight)->trans());
 	weightGradient->addi(visualValue[0]->trans()->mull(hiddenGradient[0]));
 	biasGradient->addi(hiddenGradient[0]);
 	hiddenGradient[0]->setValues(0);

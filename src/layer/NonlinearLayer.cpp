@@ -29,26 +29,41 @@ void NonlinearLayer::writeSelf(string)
 
 void NonlinearLayer::compute()
 {
-	for (size_t f = 0; f < visualSize; f++)
-	for (size_t i = 0; i < visualRow; i++)
-	for (size_t j = 0; j < visualColumn; j++)
-		hiddenValue[f]->setValue(i, j, fun->getValue(visualValue[f]->getValue(i, j)));
+	for (size_t f = 0; f < visualSize; f++){
+		shared_ptr<Matrix> temp(new Matrix(visualRow, visualColumn));
+		for (size_t i = 0; i < visualRow; i++){
+			for (size_t j = 0; j < visualColumn; j++){
+				temp->setValue(i, j, fun->getValue(visualValue[f]->getValue(i, j)));
+			}
+		}
+		hiddenValue.push_back(temp);
+	}
 
 }
 
 void NonlinearLayer::calculate()
 {
-	for (size_t f = 0; f < visualSize; f++)
-	for (size_t i = 0; i < visualRow; i++)
-	for (size_t j = 0; j < visualColumn; j++)
-		hiddenValue[f]->setValue(i, j, fun->getValue(visualValue[f]->getValue(i, j)));
+	for (size_t f = 0; f < visualSize; f++){
+		shared_ptr<Matrix> temp(new Matrix(visualRow, visualColumn));
+		for (size_t i = 0; i < visualRow; i++){
+			for (size_t j = 0; j < visualColumn; j++){
+				temp->setValue(i, j, fun->getValue(visualValue[f]->getValue(i, j)));
+			}
+		}
+		hiddenValue.push_back(temp);
+	}
 
 }
 
 void NonlinearLayer::gradient()
 {
-	for (size_t f = 0; f < visualSize; f++)
-	for (size_t i = 0; i < visualRow; i++)
-	for (size_t j = 0; j < visualColumn; j++)
-		visualGradient[f]->setValue(i, j, hiddenGradient[f]->getValue(i, j) * fun->getDerivate(visualValue[f]->getValue(i, j)));
+	for (size_t f = 0; f < visualSize; f++){
+		shared_ptr<Matrix> temp(new Matrix(visualRow, visualColumn));
+		for (size_t i = 0; i < visualRow; i++){
+			for (size_t j = 0; j < visualColumn; j++){
+				temp->setValue(i, j, hiddenGradient[f]->getValue(i, j) * fun->getDerivate(visualValue[f]->getValue(i, j)));
+			}
+		}
+		hiddenValue.push_back(temp);
+	}
 }

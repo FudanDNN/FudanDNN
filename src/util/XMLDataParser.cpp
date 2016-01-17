@@ -1,8 +1,11 @@
-#include "util/XMLDataParser.h"
+#include "util\XMLDataParser.h"
+size_t XMLDataParser::xmlCheck(string fileName){
+	return 0;
+}
 XMLDataParser::XMLDataParser(string fileName){
 	this->fileName = fileName;
-	cout << fileName << endl;
-	doc=(new TiXmlDocument());
+	//cout << fileName << endl;
+	doc = (new TiXmlDocument());
 	if (!doc->LoadFile(fileName.c_str()))
 	{
 		cerr << doc->ErrorDesc() << endl;
@@ -21,7 +24,6 @@ bool XMLDataParser::isEnd(){
 
 
 shared_ptr<Sample> XMLDataParser::getNextSample(){
-	/*
 	if (this->sampleIndex >= sampleNum){
 		this->sampleIndex = 0;
 		TiXmlElement *root = (doc->RootElement());
@@ -30,29 +32,28 @@ shared_ptr<Sample> XMLDataParser::getNextSample(){
 	}
 	//cout << "sampleIndex:" << sampleIndex << endl;
 	TiXmlElement *inputElement = (this->sample->FirstChildElement("input"));
-	TiXmlElement *outputElement = (this->sample->FirstChildElement("output"));
 	string inputStr = inputElement->GetText();
-	string outputStr = outputElement->GetText();
 	shared_ptr<Sample> trainingSample;
 	shared_ptr<Matrix> input(new Matrix(iRowSize, iColumnSize));
 	shared_ptr<Matrix> output(new Matrix(oRowSize, oColumnSize));
-
 	//cout << "input:" << inputStr << endl;
 	for (size_t i = 0; i < iRowSize; i++){
-		vector<string> point = split(inputStr, " ");
+		vector<string> point = split(inputStr, " ", iRowSize*iColumnSize);
 		for (size_t j = 0; j < iColumnSize; j++){
 			double n;
 			n = atof(point[j + i*iColumnSize].c_str());
 			//cout << "input:" << n << endl;
 			// column and row are invert in files 
-			input->setValues(j, i, n);
+			input->setValue(i, j, n);
 		}
 		point.clear();
 	}
-
+	//if condition is training,read output to sample 
+	TiXmlElement *outputElement = (this->sample->FirstChildElement("output"));
+	string outputStr = outputElement->GetText();
 	//cout << "output:" << outputStr << endl;
 	for (size_t i = 0; i < oRowSize; i++){
-		vector<string> point = split(outputStr, " ");
+		vector<string> point = split(outputStr, " ", oRowSize*oColumnSize);
 		for (size_t j = 0; j < oColumnSize; j++){
 			double n;
 			n = atof(point[j + i*oColumnSize].c_str());
@@ -62,27 +63,30 @@ shared_ptr<Sample> XMLDataParser::getNextSample(){
 		}
 		point.clear();
 	}
+	//input->print();
 	trainingSample = shared_ptr<Sample>(new Sample(input, output, type, iRowSize, iColumnSize, oRowSize, oColumnSize));
 	TiXmlElement *releaseSample = sample;
 	sample = (sample->NextSiblingElement());
 	this->sampleIndex++;
-
+	//trainingSample->getInput()->print();
 	return trainingSample;
-	*/
-	return nullptr;
 }
-vector<string> XMLDataParser::split(string str, string pattern)
+
+vector<string> XMLDataParser::split(string str, string pattern, size_t reserveSize)
 {
 	string::size_type pos;
 	vector<string> result;
+	result.reserve(reserveSize);
+	//result.resize(reserveSize);
 	str += pattern;
 	int size = str.size();
 	for (int i = 0; i<size; i++)
 	{
-		pos = str.find(pattern, i);
+		for (pos = i; pos < size && str[pos] != ' '; pos++);
 		if (pos<size)
 		{
 			string s = str.substr(i, pos - i);
+			//result[i] = s;
 			result.push_back(s);
 			i = pos + pattern.size() - 1;
 		}
@@ -97,6 +101,9 @@ string XMLDataParser::getNetworkName(){
 }
 size_t XMLDataParser::getSampleNum(){
 	return this->sampleNum;
+}
+size_t XMLDataParser::getIRowSize(){
+	return this->iRowSize;
 }
 void XMLDataParser::init(){
 	TiXmlElement *root = (doc->RootElement());
@@ -117,11 +124,3 @@ void XMLDataParser::init(){
 	cout << "row:" << iRowSize << endl;
 	cout << "column:" << iColumnSize << endl;*/
 }
-/*int main(){
-	XMLDataParser *parser = new XMLDataParser("dataset/digital.xml");
-	for (int i = 0; i < 5000; i++){
-		cout << i << ":" << endl;
-		cout << parser->getNextSample()->getInput() << endl;
-	}
-	while (1);
-}*/

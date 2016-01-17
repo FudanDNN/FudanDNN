@@ -180,7 +180,6 @@ void Network::backward()
 		size_t id = node->getId();
 
 		shared_ptr<Layer> layer = node->getLayer();
-
 		layer->gradient();
 
 		//set gradient for previous layer,
@@ -190,16 +189,17 @@ void Network::backward()
 		for (shared_ptr<LayerNode> pred : node->getPrevNode())
 		{
 			shared_ptr<Layer> predLayer = pred->getLayer();
-			currLength = predLayer->getHiddenValue()[i]->getRowSize();
-			for (int i = 0; i < predLayer->getHiddenSize(); i++){
+			for (int j = 0; j < predLayer->getHiddenSize(); j++){
+				currLength = predLayer->getHiddenValue()[j]->getRowSize();
 				vector<shared_ptr<Matrix>> tempVec;
-				tempVec.push_back(layer->getVisualGradient()[i]->submatrix(
+				cout << layer->getVisualGradient()[j]->getRowSize() << " " << layer->getVisualGradient()[j]->getColumnSize() << endl;
+				cout << preLength << " " << currLength << " " << layer->getVisualColumn() << endl;
+				tempVec.push_back(layer->getVisualGradient()[j]->submatrix(
 					preLength, preLength + currLength, 0, layer->getVisualColumn()));
 				predLayer->addHiddenGradient(tempVec);
 			}
 			preLength += currLength;
 		}
-
 		//backpropagate the gradient to input
 		if (node->getInputCell() != nullptr)
 		{

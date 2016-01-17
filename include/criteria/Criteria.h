@@ -6,7 +6,6 @@
 class Criteria
 {
 public:
-	Criteria();
 	virtual double computeError() { return 0; };
 	virtual void gradient() {};
 	size_t getVisualUnit();

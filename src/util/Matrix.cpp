@@ -75,7 +75,7 @@ double Matrix::getValue(int i, int j)
 	return (*matrix)(i, j);
 }
 
-void Matrix::setValue(int i, int j, int val)
+void Matrix::setValue(int i, int j, double val)
 {
 	(*matrix)(i, j) = val;
 }

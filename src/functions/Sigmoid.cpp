@@ -17,7 +17,7 @@ void Sigmoid::setParameters(double s, double lb, double ub, double prec, double 
 	precision = prec;
 	mfactor = 1 / prec;
 	incline = ic;
-	int x = lowerbound;
+	double x = lowerbound;
 	while (x < upperbound)
 	{
 		map.push_back(1 / (1 + exp(-x / scale)));

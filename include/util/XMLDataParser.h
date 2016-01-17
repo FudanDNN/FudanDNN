@@ -8,14 +8,16 @@
 
 class XMLDataParser{
 public:
+	static size_t xmlCheck(string fileName);
 	XMLDataParser(string fileName);
 	shared_ptr<Sample> getNextSample();
 	string getType();
 	string getNetworkName();
 	size_t getSampleNum();
+	size_t getIRowSize();
 	bool isEnd();
 	void backToHead();
-	static vector<string> split(string str, string pattern);
+	static vector<string> split(string str, string pattern, size_t reserveSize);
 private:
 	string networkName;
 	string fileName;

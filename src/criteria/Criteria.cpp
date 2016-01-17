@@ -1,8 +1,5 @@
 #include "criteria\Criteria.h"
 
-Criteria::Criteria(){
-
-}
 
 size_t Criteria::getVisualUnit()
 {

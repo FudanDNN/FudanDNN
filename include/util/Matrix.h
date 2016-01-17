@@ -21,7 +21,7 @@ public:
 	int getRowSize();
 	int getColumnSize();
 	double getValue(int i, int j);
-	void setValue(int i, int j, int val);
+	void setValue(int i, int j, double val);
 	void setValues(double value);
 	//inside matrix
 	bool inrange(int i, int j);
