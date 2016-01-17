@@ -9,8 +9,8 @@ class ReLU : public Function
 public:
 	ReLU();
 	ReLU(double);
-	double getValue(double);
-	double getDerivate(double);
+	double getValue(double) override;
+	double getDerivate(double, double) override;
 	void setParameters(double);
 
 private:

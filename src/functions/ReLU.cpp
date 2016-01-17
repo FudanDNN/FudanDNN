@@ -22,7 +22,7 @@ double ReLU::getValue(double x)
 		return 0;
 }
 
-double ReLU::getDerivate(double x)
+double ReLU::getDerivate(double x, double y)
 {
 	if (x > 0)
 		return 1;

@@ -27,7 +27,7 @@ double HardTanH::getValue(double x)
 		return x * slope;
 }
 
-double HardTanH::getDerivate(double x)
+double HardTanH::getDerivate(double x, double y)
 {
 	if (x < lowerbound || x > upperbound)
 		return incline;

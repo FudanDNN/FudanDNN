@@ -9,8 +9,8 @@ class HardTanH : public Function
 public:
 	HardTanH(); 
 	HardTanH(double slp, double ic);
-	double getValue(double);
-	double getDerivate(double);
+	double getValue(double) override;
+	double getDerivate(double, double) override;
 	void setParameters(double, double);
 
 private:
