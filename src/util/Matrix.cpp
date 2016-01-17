@@ -288,7 +288,55 @@ shared_ptr<Matrix> Matrix::wideCorr(shared_ptr<Matrix> kernel, int stride)
 	return result;
 }
 
-shared_ptr<Matrix> Matrix::maxPooling(int kRowSize, int kColumnSize, int stride);
+shared_ptr<Matrix> Matrix::maxSubSampling(int kRowSize, int kColumnSize, int stride)
+{
+	int rowSize = this->rowSize / stride;
+	int columnSize = this->columnSize / stride;
+	shared_ptr<Matrix> result = MatrixPool::getInstance()->allocMatrixUnclean(rowSize, columnSize);
+	for (size_t i = 0; i < rowSize; i++)
+	for (size_t j = 0; j < columnSize; j++)
+	{
+		int ii = i * stride;
+		int jj = j * stride;
+		double max = (*matrix)(i, j);
+		for (size_t ki = 0; ki < kRowSize; ki++, ii++)
+		for (size_t kj = 0; kj < kColumnSize; kj++, jj++)
+		{
+			if (max < (*matrix)(ii, jj))
+				max = (*matrix)(ii, jj);
+		}
+		(*(result->matrix))(i, j) = max;
+	}
+	return result;
+}
+
+shared_ptr<Matrix> Matrix::maxUpSampling(int kRowSize, int kColumnSize, int stride, shared_ptr<Matrix> m)
+{
+	int rowSize = this->rowSize / stride;
+	int columnSize = this->columnSize / stride;
+	shared_ptr<Matrix> result = MatrixPool::getInstance()->allocMatrix(this->rowSize, this->columnSize);
+	for (size_t i = 0; i < rowSize; i++)
+	for (size_t j = 0; j < columnSize; j++)
+	{
+		int ii = i * stride;
+		int jj = j * stride;
+		double max = (*matrix)(i, j);
+		int mi = ii;
+		int mj = jj;
+		for (size_t ki = 0; ki < kRowSize; ki++, ii++)
+		for (size_t kj = 0; kj < kColumnSize; kj++, jj++)
+		{
+			if (max < (*matrix)(ii, jj))
+			{
+				max = (*matrix)(ii, jj);
+				mi = ii;
+				mj = jj;
+			}
+		}
+		(*(result->matrix))(mi, mj) = (*(m->matrix))(i, j);
+	}
+	return result;
+}
 
 void Matrix::trans_i()
 {

@@ -61,8 +61,10 @@ public:
 	shared_ptr<Matrix> narrowRCorr(shared_ptr<Matrix>, int);
 	//wide correlation as kernel role
 	shared_ptr<Matrix> wideRCorr(shared_ptr<Matrix>, int);
-	//max-pooing with specific kernel size
-	shared_ptr<Matrix> maxPooling(int kRowSize, int kColumnSize, int stride);
+	//max-pooing(subsampling) with specific kernel size
+	shared_ptr<Matrix> maxSubSampling(int kRowSize, int kColumnSize, int stride);
+	//max-pooing(upsampling) with specific kernel size
+	shared_ptr<Matrix> maxUpSampling(int kRowSize, int kColumnSize, int stride, shared_ptr<Matrix> m);
 	//submatrix [ (top, left), (bottom, right) )
 	shared_ptr<Matrix> submatrix(int top, int bottom, int left, int right);
 	//merge two matrix by row
