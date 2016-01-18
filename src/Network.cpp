@@ -43,7 +43,12 @@ size_t Network::addMaxPoolingLayer(size_t rowSize, size_t columnSize, size_t kro
 }
 
 size_t Network::addConcatLayer(size_t visualRow, size_t visualColumn, size_t visualSize){
-
+	shared_ptr<ConcatLayer> concatLayer(new ConcatLayer(visualRow, visualColumn, visualSize));
+	shared_ptr<LayerNode> node(new LayerNode(currentId, concatLayer));
+	idMap.insert(Node_Pair(currentId, node));
+	currentId++;
+	nodes.push_back(node);
+	return node->getId();
 }
 
 size_t Network::addNonlinearLayer(size_t visualUnit, size_t type, double s, double lb, double ub, double prec, double ic)
@@ -144,27 +149,27 @@ void Network::trainingForward()
 		size_t id = node->getId();
 		shared_ptr<Layer> layer = node->getLayer();
 		vector<shared_ptr<Matrix>> visualValue;
+		//get the row length as a index for merge the previous hidden value;
+		size_t rowLength = layer->getVisualRow();
+		size_t curLength = 0;
 		//get previous node,get its hidden value as the visual value of current layer
 		for (shared_ptr<LayerNode> pred : node->getPrevNode())
 		{
-			if (visualValue.size() == 0){
-				visualValue = pred->getLayer()->getHiddenValue();
+			shared_ptr<Layer> predLayer = pred->getLayer();
+			for (int i = 0; i < visualValue.size(); i++){
+				visualValue[i]->setSubmatrix(curLength, 0, predLayer->getHiddenValue()[i]);
+				curLength += predLayer->getHiddenRow();
 			}
-			else{
-				for (int i = 0; i < visualValue.size(); i++){
-					visualValue[i] = visualValue[i]->mergeRow(pred->getLayer()->getHiddenValue()[i]);
-				}
+			if (curLength == rowLength){
+				break;
 			}
 		}
 		//check whether it is connected to the input, if yes,merge the input value 
 		if (node->getInputCell() != nullptr)
 		{
 			shared_ptr<Matrix> input = node->getInputCell()->getInputMat();
-			if (visualValue.size() == 0){
-				visualValue.push_back(input);
-			}
-			else{
-				visualValue[0] = visualValue[0]->mergeRow(input);
+			for (int i = 0; i < visualValue.size(); i++){
+				visualValue[i]->setSubmatrix(curLength, 0, input);
 			}
 		}
 		//set visual value for layer and calculate the hidden value

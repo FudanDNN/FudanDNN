@@ -20,6 +20,16 @@ size_t Model::addConvolutionLayerToNetwork(size_t rowSize, size_t columnSize, si
 		weightLearningRate, biasLearningRate, momentumRate, dropoutLayer);
 }
 
+size_t Model::addMaxPoolingLayerToNetwork(size_t rowSize, size_t columnSize, size_t krowSize, size_t kcolumnSize, size_t visualSize,
+	size_t hiddenSize, size_t stride, double dropoutRate){
+	return this->network->addMaxPoolingLayer(rowSize, columnSize, krowSize, kcolumnSize, visualSize,
+		hiddenSize, stride, dropoutRate);
+}
+
+size_t Model::addConcatLayerToNetwork(size_t visualRow, size_t visualColumn, size_t visualSize){
+	return this->network->addConcatLayer(visualRow, visualColumn, visualSize);
+}
+
 size_t Model::addNonlinearLayerToNetwork(size_t visualUnit, size_t type, double s, double lb, double ub, double prec, double ic)
 {
 	return this->network->addNonlinearLayer(visualUnit, type, s, lb, ub, prec, ic);

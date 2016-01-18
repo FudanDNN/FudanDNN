@@ -13,26 +13,19 @@ void Softmax::gradient()
 	{
 		predictGradient->setValue(i, 0, this->getExpectedValue()->getValue(i, 0) - this->predVec->getValue(i, 0));
 	}
-	/*
-	qDebug() << "gradient" << endl;
-	predictGradient->print();
-	qDebug() << "predictValue" << endl;
-	predVec->print();
-	qDebug() << "expectedValue" << endl;
-	expectedValue->print();*/
 }
 
 double Softmax::computeError()
 {
-	//qDebug() << "predictValue" << endl;
-	//predictValue->print();
-	predVec = predictValue->add(-predictValue->max());
-	predVec = predVec->map(exp);
+	/*predVec = predictValue->add(-predictValue->max());
+	predVec->map(exp, predVec);
 	double sum = predVec->sum();
-	predVec->multiple_inplace(1 / sum);
-	//qDebug() << "predictVec" << endl;
-	//predVec->print();
-	return predVec->map(log)->multiple_inplace(expectedValue)->sum()*(-1);
+	predVec->muli(1 / sum);
+
+	predVec->map(log, predVec);
+	predVec->mulewi(expectedValue);
+	return predVec->sum()*(-1);*/
+	return 0;
 }
 
 string Softmax::getType()
@@ -42,9 +35,10 @@ string Softmax::getType()
 
 shared_ptr<Matrix> Softmax::getAnswer()
 {
-	predVec = predictValue->add(-predictValue->max());
-	predVec = predVec->map(exp);
+	/*predVec = predictValue->add(-predictValue->max());
+	predVec->map(exp, predVec);
 	double sum = predVec->sum();
-	predVec->multiple_inplace(1 / sum);
-	return predVec;
+	predVec->muli(1 / sum);
+	return predVec;*/
+	return nullptr;
 }
