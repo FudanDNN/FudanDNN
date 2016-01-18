@@ -68,12 +68,9 @@ void ConvolutionLayer::init(int init_scheme)
 		kernelMomentum[h] = *(new vector<shared_ptr<Matrix>>());
 		for (size_t v = 0; v < hiddenSize; v++)
 		{
-			shared_ptr<Matrix> k = instance->allocMatrixUnclean(krowSize, kcolumnSize);
-			k->setValues(0);
-			kernelGradient[h].push_back(k);
+			kernelGradient[h].push_back(instance->allocMatrix(krowSize, kcolumnSize));
 		}
-		biasGradient.push_back(instance->allocMatrixUnclean(hiddenRow, hiddenColumn));
-		bias[h]->setValues(0);
+		biasGradient.push_back(instance->allocMatrix(hiddenRow, hiddenColumn));
 	}
 
 	for (size_t h = 0; h < hiddenSize; h++)
@@ -81,12 +78,9 @@ void ConvolutionLayer::init(int init_scheme)
 		kernelMomentum[h] = *(new vector<shared_ptr<Matrix>>());
 		for (size_t v = 0; v < hiddenSize; v++)
 		{
-			shared_ptr<Matrix> k = instance->allocMatrixUnclean(krowSize, kcolumnSize);
-			k->setValues(0);
-			kernelMomentum[h].push_back(k);
+			kernelMomentum[h].push_back(instance->allocMatrixUnclean(krowSize, kcolumnSize));
 		}
-		biasMomentum.push_back(instance->allocMatrixUnclean(hiddenRow, hiddenColumn));
-		bias[h]->setValues(0);
+		biasMomentum.push_back(instance->allocMatrix(hiddenRow, hiddenColumn));
 	}
 
 }
