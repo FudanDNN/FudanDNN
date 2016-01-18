@@ -2,16 +2,15 @@
 #include <iostream>
 
 shared_ptr<MatrixPool> MatrixPool::instance;
-MatrixPool::MatrixPool() 
-{
+MatrixPool::MatrixPool() {
 }
 
-inline shared_ptr<MatrixPool> MatrixPool::getInstance()
+inline shared_ptr<MatrixPool> MatrixPool::getInstance() 
 {
 	return instance == nullptr ? (instance = shared_ptr<MatrixPool>(new MatrixPool())) : instance;
 }
 
-inline shared_ptr<Matrix> MatrixPool::allocMatrix(size_t rowSize, size_t columnSize)
+inline shared_ptr<Matrix> MatrixPool::allocMatrix(size_t rowSize, size_t columnSize) 
 {
 	for (int i = pool.size() - 1; i >= 0; i--){
 		if (pool[i].use_count() == 1 && pool[i]->getRowSize() == rowSize && pool[i]->getColumnSize() == columnSize)

@@ -18,12 +18,9 @@ public:
 	void writeSelf(string) override;
 	void readSelf(string) override;
 	size_t getSize();
-	void init() override;
-	void initialization(int initScheme);
+	void init(int initScheme);
 
 private:
-	void initGradient();
-	bool initialized = false;
 	size_t initScheme;
 	size_t krowSize = 0;
 	size_t kcolumnSize = 0;

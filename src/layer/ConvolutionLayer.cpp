@@ -14,9 +14,9 @@ ConvolutionLayer::ConvolutionLayer(size_t rowSize, size_t columnSize, size_t kro
 	this->stride = stride;
 	this->solver = solver;
 	this->initScheme = initScheme;
-	this->initialization(initScheme);
 	this->dropoutRate = dropoutRate;
 	this->instance = MatrixPool::getInstance();
+	init(initScheme);
 }
 
 ConvolutionLayer::~ConvolutionLayer()
@@ -24,16 +24,10 @@ ConvolutionLayer::~ConvolutionLayer()
 
 }
 
-void ConvolutionLayer::init()
+void ConvolutionLayer::init(int init_scheme)
 {
-	this->initialization(initScheme);
-}
+	Layer::init();
 
-void ConvolutionLayer::initialization(int init_scheme)
-{
-	if (initialized){
-		return;
-	}
 	double lowerBound = 0;
 	double upperBound = 0;
 
@@ -68,23 +62,6 @@ void ConvolutionLayer::initialization(int init_scheme)
 		bias[h]->initializeRandom(lowerBound, upperBound);
 	}
 
-	for (size_t v = 0; v < visualSize; v++)
-	{
-		visualGradient.push_back(instance->allocMatrixUnclean(visualRow, visualColumn));
-	}
-
-	for (size_t h = 0; h < hiddenSize; h++)
-	{
-		hiddenGradient.push_back(instance->allocMatrixUnclean(hiddenRow, hiddenColumn));
-	}
-
-	initGradient();
-	initialized = true;
-
-}
-
-void ConvolutionLayer::initGradient()
-{
 	for (size_t h = 0; h < hiddenSize; h++)
 	{
 		kernelGradient[h] = *(new vector<shared_ptr<Matrix>>());
@@ -150,7 +127,11 @@ void ConvolutionLayer::gradient()
 			visualGradient[j]->addi(hiddenGradient[i]->wideCorr(kernel[i][j], stride));
 			kernelGradient[i][j]->addi(visualValue[j]->narrowRCorr(hiddenGradient[i], stride));
 		}
-		hiddenValue[j]->setValues(0);
+		visualValue[j]->setValues(0);
+	}
+	for (size_t i = 0; i < hiddenSize; i++)
+	{
+		hiddenValue[i]->setValues(0);
 	}
 }
 
