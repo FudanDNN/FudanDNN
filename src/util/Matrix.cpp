@@ -611,7 +611,7 @@ void Matrix::submatrix(int top, int bottom, int left, int right, shared_ptr<Matr
 
 void Matrix::setSubmatrix(int top, int left, shared_ptr<Matrix> m)
 {
-	if (!(inrange(top, left) && inrange(top + m->rowSize - 1, left + m->columnSize)))
+	if (!(inrange(top, left) && inrange(top + m->rowSize - 1, left + m->columnSize - 1)))
 		return;
 	for (size_t i = 0; i < m->rowSize; i++)
 	for (size_t j = 0; j < m->columnSize; j++)
