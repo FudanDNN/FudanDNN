@@ -31,45 +31,78 @@ public:
 	void addi(shared_ptr<Matrix>);
 	//addition
 	shared_ptr<Matrix> add(shared_ptr<Matrix>);
+	//addition
+	void add(shared_ptr<Matrix>, shared_ptr<Matrix> dst);
 	//in-place subtraction
 	void subi(shared_ptr<Matrix>);
 	//subtraction
 	shared_ptr<Matrix> sub(shared_ptr<Matrix>);
+	//subtraction
+	void sub(shared_ptr<Matrix>, shared_ptr<Matrix> dst);
 	//in-place multiplication
 	void muli(double x);
-	//in-place multiplication
+	//multiplication
 	shared_ptr<Matrix> mul(double x);
+	//multiplication
+	void mul(double x, shared_ptr<Matrix> dst);
 	//in-place right multiplication (this = this * x)
 	void mulri(shared_ptr<Matrix>);
 	//left multiplicatioin (return this * x)
 	shared_ptr<Matrix> mull(shared_ptr<Matrix>);
+	//left multiplicatioin (return this * x)
+	void mull(shared_ptr<Matrix>, shared_ptr<Matrix> dst);
 	//right multiplicatioin (return x * this)
 	shared_ptr<Matrix> mulr(shared_ptr<Matrix>);
+	//right multiplicatioin (return x * this)
+	void mulr(shared_ptr<Matrix>, shared_ptr<Matrix> dst);
 	//in-place transposition (this = this')
 	void trans_i();
 	//transposition ( return this')
 	shared_ptr<Matrix> trans();
+	//transposition ( return this')
+	void trans(shared_ptr<Matrix>);
 	//narrow convolution
 	shared_ptr<Matrix> narrowConv(shared_ptr<Matrix>, int);
+	//narrow convolution
+	void narrowConv(shared_ptr<Matrix>, int, shared_ptr<Matrix> dst);
 	//wide convolution
 	shared_ptr<Matrix> wideConv(shared_ptr<Matrix>, int);
+	//wide convolution
+	void wideConv(shared_ptr<Matrix>, int, shared_ptr<Matrix> dst);
 	//narrow correlation
 	shared_ptr<Matrix> narrowCorr(shared_ptr<Matrix>, int);
+	//narrow correlation
+	void narrowCorr(shared_ptr<Matrix>, int, shared_ptr<Matrix> dst);
 	//wide correlation
 	shared_ptr<Matrix> wideCorr(shared_ptr<Matrix>, int);
+	//wide correlation
+	void wideCorr(shared_ptr<Matrix>, int, shared_ptr<Matrix> dst);
 	//narrow correlation as kernel role
 	shared_ptr<Matrix> narrowRCorr(shared_ptr<Matrix>, int);
+	//narrow correlation as kernel role
+	void narrowRCorr(shared_ptr<Matrix>, int, shared_ptr<Matrix> dst);
 	//wide correlation as kernel role
 	shared_ptr<Matrix> wideRCorr(shared_ptr<Matrix>, int);
+	//wide correlation as kernel role
+	void wideRCorr(shared_ptr<Matrix>, int, shared_ptr<Matrix> dst);
 	//max-pooing(subsampling) with specific kernel size
 	shared_ptr<Matrix> maxSubSampling(int kRowSize, int kColumnSize, int stride);
+	//max-pooing(subsampling) with specific kernel size
+	void maxSubSampling(int kRowSize, int kColumnSize, int stride, shared_ptr<Matrix> dst);
 	//max-pooing(upsampling) with specific kernel size
 	shared_ptr<Matrix> maxUpSampling(int kRowSize, int kColumnSize, int stride, shared_ptr<Matrix> m);
+	//max-pooing(upsampling) with specific kernel size
+	void maxUpSampling(int kRowSize, int kColumnSize, int stride, shared_ptr<Matrix> m, shared_ptr<Matrix> dst);
 	//submatrix [ (top, left), (bottom, right) )
 	shared_ptr<Matrix> submatrix(int top, int bottom, int left, int right);
+	//submatrix [ (top, left), (bottom, right) )
+	void submatrix(int top, int bottom, int left, int right, shared_ptr<Matrix> dst);
 	//merge two matrix by row
 	shared_ptr<Matrix> mergeRow(shared_ptr<Matrix>);
+	//merge two matrix by row
+	void mergeRow(shared_ptr<Matrix>, shared_ptr<Matrix> dst);
 	shared_ptr<Matrix> clone();
+	void clone(shared_ptr<Matrix> dst);
 	void print();
 
 protected:
