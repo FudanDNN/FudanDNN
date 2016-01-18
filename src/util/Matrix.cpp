@@ -590,6 +590,15 @@ void Matrix::setSubmatrix(int top, int left, shared_ptr<Matrix> m)
 		(*matrix)(top + i, left + j) = m->getValue(i, j);
 }
 
+void Matrix::reshape(int rowSize, int columnSize)
+{
+	if (rowSize * columnSize != size)
+		return;
+	this->rowSize = rowSize;
+	this->columnSize = columnSize;
+	(*matrix).reshape(rowSize, columnSize);
+}
+
 shared_ptr<Matrix> Matrix::mergeRow(shared_ptr<Matrix> m)
 {
 	size_t row = rowSize + m->rowSize;

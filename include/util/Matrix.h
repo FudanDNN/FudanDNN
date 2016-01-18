@@ -99,6 +99,8 @@ public:
 	void submatrix(int top, int bottom, int left, int right, shared_ptr<Matrix> dst);
 	//set submatrix [ (top, left), (top + m.row, left + m.column) )
 	void setSubmatrix(int top, int left, shared_ptr<Matrix> m);
+	//resize matrix
+	void reshape(int rowSize, int columnSize);
 	//merge two matrix by row
 	shared_ptr<Matrix> mergeRow(shared_ptr<Matrix>);
 	//merge two matrix by row
