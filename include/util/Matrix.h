@@ -25,6 +25,14 @@ public:
 	void setValues(double value);
 	//inside matrix
 	bool inrange(int i, int j);
+	//max of matrix
+	double max();
+	//sum of matrix
+	double sum();
+	//k-norm 
+	double norm(double k);
+	//normalize matrix with k-norm
+	void normalize_i(double k);
 	//element-wise multiplication
 	void mulewi(shared_ptr<Matrix>);
 	//in-place addition

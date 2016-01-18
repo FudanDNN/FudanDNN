@@ -94,6 +94,27 @@ bool Matrix::inrange(int i, int j)
 	return (i >= 0) && (i < rowSize) && (j >= 0) && (j < columnSize);
 }
 
+double Matrix::max()
+{
+	return (*matrix).max();
+}
+
+double Matrix::sum()
+{
+	return arma::accu(*matrix);
+}
+
+double Matrix::norm(double k)
+{
+	return arma::norm(arma::vectorise(*matrix), k);
+}
+
+void Matrix::normalize_i(double k)
+{
+	double x = norm(k);
+	muli(1 / x);
+}
+
 void Matrix::mulewi(shared_ptr<Matrix> m)
 {
 	*matrix %= *(m->matrix);
@@ -642,6 +663,7 @@ void Matrix::clone(shared_ptr<Matrix> dst)
 
 void Matrix::map(double f(double), shared_ptr<Matrix> dst)
 {
+	dst = clone();
 	(*(dst->matrix)).transform(f);
 }
 
