@@ -1,7 +1,7 @@
 #include "layer/MaxPoolingLayer.h"
 
 MaxPoolingLayer::MaxPoolingLayer(size_t rowSize, size_t columnSize, size_t krowSize, size_t kcolumnSize,
-	size_t visualSize, size_t hiddenSize, size_t stride, size_t initScheme, double dropoutRate, shared_ptr<Solver> solver)
+	size_t visualSize, size_t hiddenSize, size_t stride, size_t initScheme, double dropoutRate)
 {
 	this->visualRow = rowSize;
 	this->visualColumn = columnSize;
@@ -12,7 +12,6 @@ MaxPoolingLayer::MaxPoolingLayer(size_t rowSize, size_t columnSize, size_t krowS
 	this->visualSize = visualSize;
 	this->hiddenSize = hiddenSize;
 	this->stride = stride;
-	this->solver = solver;
 	this->dropoutRate = dropoutRate;
 	this->instance = MatrixPool::getInstance();
 	this->init();
@@ -75,7 +74,4 @@ string MaxPoolingLayer::getNetworkName()
 	return "MaxPoolingLayer";
 }
 
-void MaxPoolingLayer::update()
-{
-}
 

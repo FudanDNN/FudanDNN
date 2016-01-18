@@ -25,4 +25,5 @@ const enum INPUT
 const enum CRITERIA
 {
 	MSE,
+	SOFTMAX,
 };

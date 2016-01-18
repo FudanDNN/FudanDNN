@@ -66,6 +66,8 @@ void Model::setCriteria(size_t type, size_t unit)
 	{
 	case MSE:
 		this->criteria = shared_ptr<Mse>(new Mse(unit));
+	case SOFTMAX:
+		this->criteria = shared_ptr<Softmax>(new Softmax(unit));
 	}
 }
 

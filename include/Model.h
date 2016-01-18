@@ -3,6 +3,7 @@
 #include "Network.h"
 #include "criteria\Criteria.h"
 #include "criteria\Mse.h"
+#include "criteria\Softmax.h"
 #include "util\XMLInput.h"
 
 class Model{

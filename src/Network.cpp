@@ -30,6 +30,15 @@ size_t Network::addConvolutionLayer(size_t rowSize, size_t columnSize, size_t kr
 	return node->getId();
 }
 
+size_t Network::addMaxPoolingLayer(size_t rowSize, size_t columnSize, size_t krowSize, size_t kcolumnSize, size_t visualSize,
+	size_t hiddenSize, size_t stride, size_t initScheme, double dropoutRate){
+
+}
+
+size_t Network::addConcatLayer(size_t visualRow, size_t visualColumn, size_t visualSize){
+
+}
+
 size_t Network::addNonlinearLayer(size_t visualUnit, size_t type, double s, double lb, double ub, double prec, double ic)
 {
 	shared_ptr<Function> function = this->functionFactory->createFunction(type, s, lb, ub, prec, ic);
