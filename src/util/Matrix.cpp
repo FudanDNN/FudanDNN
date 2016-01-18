@@ -2,16 +2,15 @@
 #include <iostream>
 
 shared_ptr<MatrixPool> MatrixPool::instance;
-MatrixPool::MatrixPool() 
-{
+MatrixPool::MatrixPool() {
 }
 
-inline shared_ptr<MatrixPool> MatrixPool::getInstance()
+inline shared_ptr<MatrixPool> MatrixPool::getInstance() 
 {
 	return instance == nullptr ? (instance = shared_ptr<MatrixPool>(new MatrixPool())) : instance;
 }
 
-inline shared_ptr<Matrix> MatrixPool::allocMatrix(size_t rowSize, size_t columnSize)
+inline shared_ptr<Matrix> MatrixPool::allocMatrix(size_t rowSize, size_t columnSize) 
 {
 	for (int i = pool.size() - 1; i >= 0; i--){
 		if (pool[i].use_count() == 1 && pool[i]->getRowSize() == rowSize && pool[i]->getColumnSize() == columnSize)
@@ -99,9 +98,10 @@ void Matrix::mulewi(shared_ptr<Matrix> m)
 	*matrix %= *(m->matrix);
 }
 
-void Matrix::addi(shared_ptr<Matrix> m)
+shared_ptr<Matrix> Matrix::addi(shared_ptr<Matrix> m)
 {
 	*matrix += *(m->matrix);
+	return shared_ptr<Matrix>(this);
 }
 
 shared_ptr<Matrix> Matrix::add(shared_ptr<Matrix> m)
@@ -117,9 +117,10 @@ void Matrix::add(shared_ptr<Matrix> m, shared_ptr<Matrix> dst)
 }
 
 
-void Matrix::subi(shared_ptr<Matrix> m)
+shared_ptr<Matrix> Matrix::subi(shared_ptr<Matrix> m)
 {
 	*matrix -= *(m->matrix);
+	return shared_ptr<Matrix>(this);
 }
 
 shared_ptr<Matrix> Matrix::sub(shared_ptr<Matrix> m)
@@ -134,9 +135,10 @@ void Matrix::sub(shared_ptr<Matrix> m, shared_ptr<Matrix> dst)
 	*dst->matrix = *matrix - *(m->matrix);
 }
 
-void Matrix::muli(double x)
+shared_ptr<Matrix> Matrix::muli(double x)
 {
 	*matrix *= x;
+	return shared_ptr<Matrix>(this);
 }
 
 shared_ptr<Matrix> Matrix::mul(double x)
@@ -151,9 +153,10 @@ void Matrix::mul(double x, shared_ptr<Matrix> dst)
 	*dst->matrix = *matrix * x;
 }
 
-void Matrix::mulri(shared_ptr<Matrix> m)
+shared_ptr<Matrix> Matrix::mulri(shared_ptr<Matrix> m)
 {
 	*matrix *= *(m->matrix);
+	return shared_ptr<Matrix>(this);
 }
 
 shared_ptr<Matrix> Matrix::mull(shared_ptr<Matrix> m)
@@ -539,9 +542,11 @@ void Matrix::maxUpSampling(int kRowSize, int kColumnSize, int stride, shared_ptr
 	}
 }
 
-void Matrix::trans_i()
+
+shared_ptr<Matrix> Matrix::trans_i()
 {
 	inplace_trans(*matrix);
+	return shared_ptr<Matrix>(this);
 }
 
 shared_ptr<Matrix> Matrix::trans()

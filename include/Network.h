@@ -24,7 +24,7 @@ public:
 		functionFactory = shared_ptr<FunctionFactory>(new FunctionFactory());
 	};
 
-	size_t addLinearLayer(size_t visualUnit, size_t hiddenUnit, size_t init_scheme, size_t solver_type,double regularizationRate, 
+	size_t addLinearLayer(size_t visualUnit, size_t hiddenUnit, size_t num, size_t init_scheme, size_t solver_type,double regularizationRate, 
 		double weightLearningRate, double biasLearningRate, double momentumRate,double dropoutLayer);
 	size_t addConvolutionLayer(size_t rowSize, size_t columnSize, size_t krowSize, size_t kcolumnSize, size_t visualSize, 
 		size_t hiddenSize, size_t stride, size_t initScheme, size_t solver_type, double regularizationRate,

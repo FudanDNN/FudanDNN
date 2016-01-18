@@ -1,6 +1,6 @@
 #include "layer\LinearLayer.h"
 
-LinearLayer::LinearLayer(size_t visualUnit, size_t hiddenUnit, size_t initScheme,double dropoutRate, shared_ptr<Solver> solver)
+LinearLayer::LinearLayer(size_t visualUnit, size_t hiddenUnit, size_t initScheme,double dropoutRate, shared_ptr<Solver> solver, size_t num)
 {
 	this->visualColumn = 1;
 	this->visualRow = visualUnit;
@@ -8,22 +8,16 @@ LinearLayer::LinearLayer(size_t visualUnit, size_t hiddenUnit, size_t initScheme
 	this->hiddenRow = hiddenUnit;
 	this->solver = solver;
 	this->initScheme = initScheme;
-	this->visualSize = 1;
-	this->hiddenSize = 1;
+	this->visualSize = num;
+	this->hiddenSize = num;
 	this->dropoutRate = dropoutRate;
-	this->initialization(initScheme);
+	instance = MatrixPool::getInstance();
+	this->init(initScheme);
 }
 
-void LinearLayer::init()
-{
-	this->initialization(initScheme);
-}
 
-void LinearLayer::initialization(int init_scheme)
+void LinearLayer::init(int init_scheme)
 {
-	if (initialized){
-		return;
-	}
 	Layer::init();
 	double lowerBound = 0;
 	double upperBound = 0;
@@ -46,39 +40,39 @@ void LinearLayer::initialization(int init_scheme)
 		;
 	}
 
-	weight = shared_ptr<Matrix>(new Matrix(hiddenRow, visualRow));
-	bias = shared_ptr<Matrix>(new Matrix(hiddenRow, 1));
+	for (int i = 0; i < visualSize; i++){
+		shared_ptr<Matrix> w = instance->allocMatrixUnclean(hiddenRow, visualColumn);
+		w->initializeRandom(lowerBound, upperBound);
+		weight.push_back(w);
 
-	weight->initializeRandom(lowerBound, upperBound);
-	bias->initializeRandom(lowerBound, upperBound);
+		bias.push_back(instance->allocMatrixUnclean(hiddenRow, 1));
+		bias[i]->initializeRandom(lowerBound, upperBound);
 
-	initGradient();
-	initialized = true;
-}
+		weightGradient.push_back(instance->allocMatrix(hiddenRow, visualRow));
+		biasGradient.push_back(instance->allocMatrix(hiddenRow, 1));
 
-void LinearLayer::initGradient()
-{
-	weightGradient= shared_ptr<Matrix>(new Matrix(hiddenRow, visualRow));
-	biasGradient = shared_ptr<Matrix>(new Matrix(hiddenRow, 1));
+		weightMomentum.push_back(instance->allocMatrix(hiddenRow, visualRow));
+		biasMomentum.push_back(instance->allocMatrix(hiddenRow, 1));
+	}
 
-	weightGradient->setValues(0);
-	biasGradient->setValues(0);
-
-	weightMomentum = shared_ptr<Matrix>(new Matrix(hiddenRow, visualRow));
-	biasMomentum = shared_ptr<Matrix>(new Matrix(hiddenRow, 1));
-
-	weightMomentum->setValues(0);
-	biasMomentum->setValues(0);
 }
 
 void LinearLayer::compute()
 {
-	hiddenValue.push_back(visualValue[0]->mull(weight)->add(bias));
+	for (int i = 0; i < hiddenSize; i++){
+		hiddenValue[i]->setValues(0);
+		hiddenValue[i]->addi(visualValue[i]->mull(weight[i])->add(bias[i]));
+		hiddenGradient[i]->setValues(0);
+	}
 }
 
 void LinearLayer::calculate()
 {
-	hiddenValue.push_back(visualValue[0]->mull(weight)->add(bias));
+	for (int i = 0; i < hiddenSize; i++){
+		hiddenValue[i]->setValues(0);
+		hiddenValue[i]->addi(visualValue[i]->mull(weight[i])->add(bias[i]));
+		hiddenGradient[i]->setValues(0);
+	}
 	/*cout << "linearLayer:" << this->getVisualRow() << endl;
 	cout << "visualValue" << endl;
 	visualValue[0]->print();
@@ -90,19 +84,23 @@ void LinearLayer::calculate()
 
 void LinearLayer::gradient()
 {
-	visualGradient.push_back(hiddenGradient[0]->trans()->mulr(this->weight)->trans());
+	for (int i = 0; i < visualSize; i++){
+		visualGradient[i]->setValues(0);
+		visualGradient[i]->addi(hiddenGradient[i]->trans()->mulr(this->weight[i])->trans());
 
-	cout << "linearLayer:" << this->getVisualRow() << endl;
+		weightGradient[i]->addi(visualValue[i]->trans()->mull(hiddenGradient[i]));
+		biasGradient[i]->addi(hiddenGradient[i]);
+
+		visualValue[i]->setValues(0);
+	}
+
+	/*cout << "linearLayer:" << this->getVisualRow() << endl;
 	cout << "hiddenGradient" << endl;
 	hiddenGradient[0]->print();
 	cout << "visualGradient" << endl;
 	visualGradient[0]->print();
 	cout << "weight" << endl;
-	weight->print();
-
-	weightGradient->addi(visualValue[0]->trans()->mull(hiddenGradient[0]));
-	biasGradient->addi(hiddenGradient[0]);
-	hiddenGradient.clear();
+	weight[0]->print();*/
 }
 
 void LinearLayer::writeSelf(string filename)

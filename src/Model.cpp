@@ -4,10 +4,10 @@ Model::Model()
 	this->network = shared_ptr<Network>(new Network());
 }
 
-size_t Model::addLinearLayerToNetwork(size_t visualUnit, size_t hiddenUnit, size_t init_scheme, size_t solver_type,
+size_t Model::addLinearLayerToNetwork(size_t visualUnit, size_t hiddenUnit, size_t num, size_t init_scheme, size_t solver_type,
 	double regularizationRate, double weightLearningRate, double biasLearningRate, double momentumRate, double dropoutLayer)
 {
-	return this->network->addLinearLayer(visualUnit, hiddenUnit, init_scheme, solver_type,
+	return this->network->addLinearLayer(visualUnit, hiddenUnit, num, init_scheme, solver_type,
 		regularizationRate, weightLearningRate, biasLearningRate, momentumRate, dropoutLayer);
 }
 

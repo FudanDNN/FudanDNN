@@ -1,12 +1,12 @@
 #include "Network.h"
 
-size_t Network::addLinearLayer(size_t visualUnit, size_t hiddenUnit, size_t init_scheme, size_t solver_type,
+size_t Network::addLinearLayer(size_t visualUnit, size_t hiddenUnit, size_t num, size_t init_scheme, size_t solver_type,
 	double regularizationRate, double weightLearningRate, double biasLearningRate, double momentumRate,double dropoutRate)
 {
 	shared_ptr<LinearLayer> linearLayer;
 	shared_ptr<Solver> solver = solverFactory->createSolver(solver_type, regularizationRate,
 		weightLearningRate, biasLearningRate, momentumRate);
-	linearLayer = shared_ptr<LinearLayer>(new LinearLayer(visualUnit, hiddenUnit, init_scheme,dropoutRate, solver));
+	linearLayer = shared_ptr<LinearLayer>(new LinearLayer(visualUnit, hiddenUnit, init_scheme,dropoutRate, solver, num));
 	shared_ptr<LayerNode> node(new LayerNode(currentId, linearLayer));
 	idMap.insert(Node_Pair(currentId, node));
 	currentId++;

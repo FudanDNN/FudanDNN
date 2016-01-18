@@ -7,6 +7,8 @@ NonlinearLayer::NonlinearLayer(shared_ptr<Function> function, size_t type, size_
 	this->visualRow = this->hiddenRow = rowSize;
 	this->visualColumn = this->hiddenColumn = columnSize;
 	this->visualSize = this->hiddenSize = featureMap;
+	instance = MatrixPool::getInstance();
+	Layer::init();
 }
 NonlinearLayer::NonlinearLayer(shared_ptr<Function> function, size_t type, size_t rowSize):
 NonlinearLayer(function, type,rowSize,1,1)
@@ -19,6 +21,7 @@ string NonlinearLayer::getNetworkName()
 	case SIGMOID:
 		return "sigmoid";
 	}
+	return "nonlinear";
 }
 
 void NonlinearLayer::readSelf(string)
@@ -30,13 +33,12 @@ void NonlinearLayer::writeSelf(string)
 void NonlinearLayer::compute()
 {
 	for (size_t f = 0; f < visualSize; f++){
-		shared_ptr<Matrix> temp(new Matrix(visualRow, visualColumn));
 		for (size_t i = 0; i < visualRow; i++){
 			for (size_t j = 0; j < visualColumn; j++){
-				temp->setValue(i, j, fun->getValue(visualValue[f]->getValue(i, j)));
+				hiddenValue[f]->setValue(i, j, fun->getValue(visualValue[f]->getValue(i, j)));
 			}
 		}
-		hiddenValue.push_back(temp);
+		hiddenGradient[f]->setValues(0);
 	}
 
 }
@@ -44,13 +46,12 @@ void NonlinearLayer::compute()
 void NonlinearLayer::calculate()
 {
 	for (size_t f = 0; f < visualSize; f++){
-		shared_ptr<Matrix> temp(new Matrix(visualRow, visualColumn));
 		for (size_t i = 0; i < visualRow; i++){
 			for (size_t j = 0; j < visualColumn; j++){
-				temp->setValue(i, j, fun->getValue(visualValue[f]->getValue(i, j)));
+				hiddenValue[f]->setValue(i, j, fun->getValue(visualValue[f]->getValue(i, j)));
 			}
 		}
-		hiddenValue.push_back(temp);
+		hiddenGradient[f]->setValues(0);
 	}
 	/*cout << "nonlinearLayer:" << this->getVisualRow() << endl;
 	cout << "visualValue" << endl;
@@ -62,19 +63,19 @@ void NonlinearLayer::calculate()
 void NonlinearLayer::gradient()
 {
 	for (size_t f = 0; f < visualSize; f++){
-		shared_ptr<Matrix> temp(new Matrix(visualRow, visualColumn));
 		for (size_t i = 0; i < visualRow; i++){
 			for (size_t j = 0; j < visualColumn; j++){
-				temp->setValue(i, j, hiddenGradient[f]->getValue(i, j) * fun->getDerivate(visualValue[f]->getValue(i, j), hiddenValue[f]->getValue(i, j)));
+				this->visualGradient[f]->setValue(i, j, 
+					hiddenGradient[f]->getValue(i, j) * fun->getDerivate(visualValue[f]->getValue(i, j), 
+					hiddenValue[f]->getValue(i, j)));
 			}
 		}
-		this->visualGradient.push_back(temp);
+		visualValue[f]->setValues(0);
 	}
-	hiddenGradient.clear();
 
-	cout << "nonlinearLayer:" << this->getVisualRow() << endl;
+	/*cout << "nonlinearLayer:" << this->getVisualRow() << endl;
 	cout << "hiddenGradient" << endl;
 	hiddenGradient[0]->print();
 	cout << "visualGradient" << endl;
-	visualGradient[0]->print();
+	visualGradient[0]->print();*/
 }

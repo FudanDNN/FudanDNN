@@ -5,18 +5,16 @@
 //update error
 void Layer::setVisualValue(vector<shared_ptr<Matrix>> visualValue)
 {
-	this->visualValue = visualValue;
+	for (int i = 0; i < visualSize; i++){
+		this->visualValue[i]->addi(visualValue[i]);
+	}
 }
 
 //add hidden layer gradient
 void Layer::addHiddenGradient(vector<shared_ptr<Matrix>> hiddenGradient)
 {
 	for (int i = 0; i < hiddenSize; i++){
-		for (int row = 0; row < this->hiddenRow; row++){
-			for (int column = 0; column < this->hiddenColumn; column++){
-				this->hiddenGradient[i]->add(hiddenGradient[i]);
-			}
-		}
+		this->hiddenGradient[i]->addi(hiddenGradient[i]);
 	}
 }
 
@@ -87,12 +85,14 @@ size_t Layer::getHiddenSize(){
 void Layer::init(){
 	for (size_t v = 0; v < visualSize; v++)
 	{
+		visualValue.push_back(instance->allocMatrixUnclean(visualRow, visualColumn));
 		visualGradient.push_back(instance->allocMatrixUnclean(visualRow, visualColumn));
 	}
 
 	for (size_t v = 0; v < hiddenSize; v++)
 	{
-		hiddenGradient.push_back(instance->allocMatrixUnclean(visualRow, visualColumn));
+		hiddenValue.push_back(instance->allocMatrixUnclean(hiddenRow, hiddenColumn));
+		hiddenGradient.push_back(instance->allocMatrixUnclean(hiddenRow, hiddenColumn));
 	}
 }
 
