@@ -97,6 +97,8 @@ public:
 	shared_ptr<Matrix> submatrix(int top, int bottom, int left, int right);
 	//submatrix [ (top, left), (bottom, right) )
 	void submatrix(int top, int bottom, int left, int right, shared_ptr<Matrix> dst);
+	//set submatrix [ (top, left), (top + m.row, left + m.column) )
+	void setSubmatrix(int top, int left, shared_ptr<Matrix> m);
 	//merge two matrix by row
 	shared_ptr<Matrix> mergeRow(shared_ptr<Matrix>);
 	//merge two matrix by row

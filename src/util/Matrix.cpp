@@ -575,6 +575,15 @@ void Matrix::submatrix(int top, int bottom, int left, int right, shared_ptr<Matr
 	(*(dst->matrix)) = matrix->submat(top, left, bottom - 1, right - 1);
 }
 
+void Matrix::setSubmatrix(int top, int left, shared_ptr<Matrix> m)
+{
+	if (!(inrange(top, left) && inrange(top + m->rowSize - 1, left + m->columnSize)))
+		return;
+	for (size_t i = 0; i < m->rowSize; i++)
+	for (size_t j = 0; j < m->columnSize; j++)
+		(*matrix)(top + i, left + j) = m->getValue(i, j);
+}
+
 shared_ptr<Matrix> Matrix::mergeRow(shared_ptr<Matrix> m)
 {
 	size_t row = rowSize + m->rowSize;
