@@ -26,6 +26,7 @@ inline shared_ptr<Matrix> MatrixPool::allocMatrix(size_t rowSize, size_t columnS
 
 inline shared_ptr<Matrix> MatrixPool::allocMatrixUnclean(size_t rowSize, size_t columnSize)
 {
+	//cout << rowSize << " " << columnSize << endl;
 	for (int i = pool.size() - 1; i >= 0; i--){
 		if (pool[i].use_count() == 1 && pool[i]->getRowSize() == rowSize && pool[i]->getColumnSize() == columnSize)
 		{
@@ -39,6 +40,7 @@ inline shared_ptr<Matrix> MatrixPool::allocMatrixUnclean(size_t rowSize, size_t 
 
 Matrix::Matrix(int rowSize, int columnSize)
 {
+	cout << rowSize << columnSize << endl;
 	this->rowSize = rowSize;
 	this->columnSize = columnSize;
 	this->size = rowSize * columnSize;

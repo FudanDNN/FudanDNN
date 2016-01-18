@@ -11,6 +11,5 @@ shared_ptr<Solver> SolverFactory::createSolver(int type, double regularizationRa
 	default:
 		break;
 	}
-	cout << solver << endl;
 	return solver;
 }
