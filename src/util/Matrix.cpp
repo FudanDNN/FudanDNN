@@ -120,6 +120,13 @@ void Matrix::mulewi(shared_ptr<Matrix> m)
 	*matrix %= *(m->matrix);
 }
 
+shared_ptr<Matrix> Matrix::add(double x)
+{
+	shared_ptr<Matrix> result = clone();
+	*result->matrix += x;
+	return result;
+}
+
 shared_ptr<Matrix> Matrix::addi(shared_ptr<Matrix> m)
 {
 	*matrix += *(m->matrix);
@@ -138,6 +145,12 @@ void Matrix::add(shared_ptr<Matrix> m, shared_ptr<Matrix> dst)
 	*dst->matrix = *matrix + *(m->matrix);
 }
 
+shared_ptr<Matrix> Matrix::sub(double x)
+{
+	shared_ptr<Matrix> result = clone();
+	*result->matrix -= x;
+	return result;
+}
 
 shared_ptr<Matrix> Matrix::subi(shared_ptr<Matrix> m)
 {
@@ -665,6 +678,13 @@ void Matrix::map(double f(double), shared_ptr<Matrix> dst)
 {
 	dst = clone();
 	(*(dst->matrix)).transform(f);
+}
+
+shared_ptr<Matrix> Matrix::map(double f(double))
+{
+	shared_ptr<Matrix> result = clone();
+	(*(result->matrix)).transform(f);
+	return result;
 }
 
 void Matrix::print()

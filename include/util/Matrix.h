@@ -35,12 +35,16 @@ public:
 	void normalize_i(double k);
 	//element-wise multiplication
 	void mulewi(shared_ptr<Matrix>);
+	//add a value
+	shared_ptr<Matrix> add(double);
 	//in-place addition
 	shared_ptr<Matrix> addi(shared_ptr<Matrix>);
-	//addition
+	//add a matrix
 	shared_ptr<Matrix> add(shared_ptr<Matrix>);
-	//addition
+	//add a matrix
 	void add(shared_ptr<Matrix>, shared_ptr<Matrix> dst);
+	//subtract a value
+	shared_ptr<Matrix> sub(double);
 	//in-place subtraction
 	shared_ptr<Matrix> subi(shared_ptr<Matrix>);
 	//subtraction
@@ -118,6 +122,7 @@ public:
 	shared_ptr<Matrix> clone();
 	void clone(shared_ptr<Matrix> dst);
 	void map(double(double), shared_ptr<Matrix>);
+	shared_ptr<Matrix> map(double(double));
 	void print();
 
 protected:
