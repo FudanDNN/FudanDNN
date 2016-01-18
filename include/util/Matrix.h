@@ -9,7 +9,7 @@
 using namespace std;
 using namespace arma;
 
-class Matrix
+class Matrix : public enable_shared_from_this<Matrix>
 {
 public:
 	Matrix(int rowSize, int columnSize);

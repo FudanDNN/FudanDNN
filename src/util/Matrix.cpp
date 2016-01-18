@@ -26,7 +26,6 @@ inline shared_ptr<Matrix> MatrixPool::allocMatrix(size_t rowSize, size_t columnS
 
 inline shared_ptr<Matrix> MatrixPool::allocMatrixUnclean(size_t rowSize, size_t columnSize)
 {
-	//cout << rowSize << " " << columnSize << endl;
 	for (int i = pool.size() - 1; i >= 0; i--){
 		if (pool[i].use_count() == 1 && pool[i]->getRowSize() == rowSize && pool[i]->getColumnSize() == columnSize)
 		{
@@ -40,7 +39,6 @@ inline shared_ptr<Matrix> MatrixPool::allocMatrixUnclean(size_t rowSize, size_t 
 
 Matrix::Matrix(int rowSize, int columnSize)
 {
-	cout << rowSize << columnSize << endl;
 	this->rowSize = rowSize;
 	this->columnSize = columnSize;
 	this->size = rowSize * columnSize;
@@ -103,7 +101,7 @@ void Matrix::mulewi(shared_ptr<Matrix> m)
 shared_ptr<Matrix> Matrix::addi(shared_ptr<Matrix> m)
 {
 	*matrix += *(m->matrix);
-	return shared_ptr<Matrix>(this);
+	return shared_from_this();
 }
 
 shared_ptr<Matrix> Matrix::add(shared_ptr<Matrix> m)
@@ -122,7 +120,7 @@ void Matrix::add(shared_ptr<Matrix> m, shared_ptr<Matrix> dst)
 shared_ptr<Matrix> Matrix::subi(shared_ptr<Matrix> m)
 {
 	*matrix -= *(m->matrix);
-	return shared_ptr<Matrix>(this);
+	return shared_from_this();
 }
 
 shared_ptr<Matrix> Matrix::sub(shared_ptr<Matrix> m)
@@ -140,7 +138,7 @@ void Matrix::sub(shared_ptr<Matrix> m, shared_ptr<Matrix> dst)
 shared_ptr<Matrix> Matrix::muli(double x)
 {
 	*matrix *= x;
-	return shared_ptr<Matrix>(this);
+	return shared_from_this();
 }
 
 shared_ptr<Matrix> Matrix::mul(double x)
@@ -158,7 +156,7 @@ void Matrix::mul(double x, shared_ptr<Matrix> dst)
 shared_ptr<Matrix> Matrix::mulri(shared_ptr<Matrix> m)
 {
 	*matrix *= *(m->matrix);
-	return shared_ptr<Matrix>(this);
+	return shared_from_this();
 }
 
 shared_ptr<Matrix> Matrix::mull(shared_ptr<Matrix> m)
@@ -548,7 +546,7 @@ void Matrix::maxUpSampling(int kRowSize, int kColumnSize, int stride, shared_ptr
 shared_ptr<Matrix> Matrix::trans_i()
 {
 	inplace_trans(*matrix);
-	return shared_ptr<Matrix>(this);
+	return shared_from_this();
 }
 
 shared_ptr<Matrix> Matrix::trans()

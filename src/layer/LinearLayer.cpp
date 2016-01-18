@@ -41,7 +41,7 @@ void LinearLayer::init(int init_scheme)
 	}
 
 	for (int i = 0; i < visualSize; i++){
-		shared_ptr<Matrix> w = instance->allocMatrixUnclean(hiddenRow, visualColumn);
+		shared_ptr<Matrix> w = instance->allocMatrixUnclean(hiddenRow, visualRow);
 		w->initializeRandom(lowerBound, upperBound);
 		weight.push_back(w);
 

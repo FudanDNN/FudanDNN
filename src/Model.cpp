@@ -72,7 +72,6 @@ void Model::setCriteria(size_t type, size_t unit)
 void Model::run()
 {
 	network->topoSort();
-	network->init();
 	int sampleNum = inputs[0]->getSampleNum();
 	int totalTimes = this->trainingTimes * sampleNum;
 	int correctNum = 0;
