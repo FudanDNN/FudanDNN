@@ -27,7 +27,6 @@ ConvolutionLayer::~ConvolutionLayer()
 void ConvolutionLayer::init(int init_scheme)
 {
 	Layer::init();
-
 	double lowerBound = 0;
 	double upperBound = 0;
 
