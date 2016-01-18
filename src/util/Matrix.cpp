@@ -280,10 +280,10 @@ shared_ptr<Matrix> Matrix::narrowRCorr(shared_ptr<Matrix> kernel, int stride)
 	for (int i = 0; i < rowSize; i++)
 	for (int j = 0; j < columnSize; j++)
 	{
-		int ii = rowSize - i * stride;
+		int ii = this->rowSize - 1 - i * stride;
 		double val = 0;
 		for (int ki = kernel->rowSize - 1; ki >= 0; ki--, ii--) {
-			int jj = columnSize - j * stride;
+			int jj = this->columnSize - 1 - j * stride;
 			for (int kj = kernel->columnSize - 1; kj >= 0; kj--, jj--)
 			{
 				val += (*matrix)(ii, jj) * (*kernel->matrix)(ki, kj);
@@ -301,10 +301,10 @@ void Matrix::narrowRCorr(shared_ptr<Matrix> kernel, int stride, shared_ptr<Matri
 	for (int i = 0; i < rowSize; i++)
 	for (int j = 0; j < columnSize; j++)
 	{
-		int ii = rowSize - i * stride;
+		int ii = this->rowSize - 1 - i * stride;
 		double val = 0;
 		for (int ki = kernel->rowSize - 1; ki >= 0; ki--, ii--) {
-			int jj = columnSize - j * stride;
+			int jj = this->columnSize - 1 - j * stride;
 			for (int kj = kernel->columnSize - 1; kj >= 0; kj--, jj--)
 			{
 				val += (*matrix)(ii, jj) * (*kernel->matrix)(ki, kj);
@@ -322,10 +322,10 @@ shared_ptr<Matrix> Matrix::wideRCorr(shared_ptr<Matrix> kernel, int stride)
 	for (int i = 0; i < rowSize; i++)
 	for (int j = 0; j < columnSize; j++)
 	{
-		int ii = rowSize - (i * stride - kernel->rowSize + 1);
+		int ii = this->rowSize - 1 - (i * stride - kernel->rowSize + 1);
 		double val = 0;
 		for (int ki = kernel->rowSize - 1; ki >= 0; ki--, ii++) {
-			int jj = columnSize - (j * stride - kernel->columnSize + 1);
+			int jj = this->columnSize - 1 - (j * stride - kernel->columnSize + 1);
 			for (int kj = kernel->columnSize - 1; kj >= 0; kj--, jj++)
 			{
 				if (!inrange(ii, jj)) continue;
@@ -344,10 +344,10 @@ void Matrix::wideRCorr(shared_ptr<Matrix> kernel, int stride, shared_ptr<Matrix>
 	for (int i = 0; i < rowSize; i++)
 	for (int j = 0; j < columnSize; j++)
 	{
-		int ii = rowSize - (i * stride - kernel->rowSize + 1);
+		int ii = this->rowSize - 1 - (i * stride - kernel->rowSize + 1);
 		double val = 0;
 		for (int ki = kernel->rowSize - 1; ki >= 0; ki--, ii++) {
-			int jj = columnSize - (j * stride - kernel->columnSize + 1);
+			int jj = this->columnSize - 1 - (j * stride - kernel->columnSize + 1);
 			for (int kj = kernel->columnSize - 1; kj >= 0; kj--, jj++)
 			{
 				if (!inrange(ii, jj)) continue;
@@ -456,13 +456,15 @@ shared_ptr<Matrix> Matrix::maxSubSampling(int kRowSize, int kColumnSize, int str
 	for (size_t j = 0; j < columnSize; j++)
 	{
 		int ii = i * stride;
-		int jj = j * stride;
 		double max = (*matrix)(i, j);
 		for (size_t ki = 0; ki < kRowSize; ki++, ii++)
-		for (size_t kj = 0; kj < kColumnSize; kj++, jj++)
 		{
-			if (max < (*matrix)(ii, jj))
-				max = (*matrix)(ii, jj);
+			int jj = j * stride;
+			for (size_t kj = 0; kj < kColumnSize; kj++, jj++)
+			{
+				if (max < (*matrix)(ii, jj))
+					max = (*matrix)(ii, jj);
+			}
 		}
 		(*(result->matrix))(i, j) = max;
 	}
@@ -477,13 +479,15 @@ void Matrix::maxSubSampling(int kRowSize, int kColumnSize, int stride, shared_pt
 	for (size_t j = 0; j < columnSize; j++)
 	{
 		int ii = i * stride;
-		int jj = j * stride;
 		double max = (*matrix)(i, j);
 		for (size_t ki = 0; ki < kRowSize; ki++, ii++)
-		for (size_t kj = 0; kj < kColumnSize; kj++, jj++)
 		{
-			if (max < (*matrix)(ii, jj))
-				max = (*matrix)(ii, jj);
+			int jj = j * stride;
+			for (size_t kj = 0; kj < kColumnSize; kj++, jj++)
+			{
+				if (max < (*matrix)(ii, jj))
+					max = (*matrix)(ii, jj);
+			}
 		}
 		(*(dst->matrix))(i, j) = max;
 	}
@@ -499,17 +503,20 @@ shared_ptr<Matrix> Matrix::maxUpSampling(int kRowSize, int kColumnSize, int stri
 	{
 		int ii = i * stride;
 		int jj = j * stride;
-		double max = (*matrix)(i, j);
 		int mi = ii;
 		int mj = jj;
+		double max = (*matrix)(i, j);
 		for (size_t ki = 0; ki < kRowSize; ki++, ii++)
-		for (size_t kj = 0; kj < kColumnSize; kj++, jj++)
 		{
-			if (max < (*matrix)(ii, jj))
+			int jj = j * stride;
+			for (size_t kj = 0; kj < kColumnSize; kj++, jj++)
 			{
-				max = (*matrix)(ii, jj);
-				mi = ii;
-				mj = jj;
+				if (max < (*matrix)(ii, jj))
+				{
+					max = (*matrix)(ii, jj);
+					mi = ii;
+					mj = jj;
+				}
 			}
 		}
 		(*(result->matrix))(mi, mj) = (*(m->matrix))(i, j);
