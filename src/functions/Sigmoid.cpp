@@ -30,17 +30,17 @@ double Sigmoid::getValue(double x)
 {
 	
 	if (x <= lowerbound)
-		return 0;
+		return 0.0001;
 	else if (x >= upperbound)
-		return 1;
+		return 0.9999;
 	else
 		return map[(int)((x - lowerbound) * mfactor)];
 }
 
 double Sigmoid::getDerivate(double x, double y)
 {
-	/*if (x <= lowerbound || x >= upperbound)
+	if (x <= lowerbound || x >= upperbound)
 		return incline;
-	else*/
+	else
 		return y * (1 - y);
 }
