@@ -28,8 +28,8 @@ void Mse::gradient()
 	{
 		predictGradient->setValue(i, 0, this->getExpectedValue()->getValue(i, 0) - this->getPredictValue()->getValue(i, 0));
 	}
-	cout << "PredictGradient:" << endl;
-	this->predictGradient->print();
+	//cout << "PredictGradient:" << endl;
+	//this->predictGradient->print();
 }
 string Mse::getType()
 {

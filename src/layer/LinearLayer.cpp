@@ -24,6 +24,7 @@ void LinearLayer::initialization(int init_scheme)
 	if (initialized){
 		return;
 	}
+	Layer::init();
 	double lowerBound = 0;
 	double upperBound = 0;
 

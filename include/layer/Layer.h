@@ -58,7 +58,7 @@ public:
 	// rate for dropout
 	double getDropoutRate();
 	void setDropoutRate(double dropoutRate);
-	virtual void init(){};
+	virtual void init();
 
 
 protected:

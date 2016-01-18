@@ -2,7 +2,7 @@
 
 SGDSolver::SGDSolver(double regularizationRate, double weightLearningRate, double biasLearningRate, double momentumRate)
 :Solver(regularizationRate,weightLearningRate, biasLearningRate, momentumRate){
-
+	cout << regularizationRate << endl;
 }
 
 void SGDSolver::update(vector<vector<shared_ptr<Matrix>>> convKernels, vector<vector<shared_ptr<Matrix>>> convKernelMomentum,
@@ -40,7 +40,7 @@ void SGDSolver::update(shared_ptr<Matrix> weight, shared_ptr<Matrix> weightMomen
 	biasMomentum->addi(biasGradient);
 	biasMomentum->subi(bias->mul(regularizationRate));
 	bias->addi(biasMomentum->mul(biasLearningRate));
-
+	//cout << momentumRate << " " << weightLearningRate << " " << biasLearningRate << endl;
 	weightGradient->setValues(0);
 	biasGradient->setValues(0);
 

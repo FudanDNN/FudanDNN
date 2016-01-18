@@ -32,5 +32,6 @@ protected:
 	shared_ptr<Matrix> biasGradient;
 	shared_ptr<Matrix> weightMomentum;
 	shared_ptr<Matrix> biasMomentum;
+
 };
 #endif
