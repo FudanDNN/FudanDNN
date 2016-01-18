@@ -1,6 +1,7 @@
 #include "util/Matrix.h"
 #include <iostream>
 
+shared_ptr<MatrixPool> MatrixPool::instance;
 MatrixPool::MatrixPool() 
 {
 }
@@ -10,9 +11,11 @@ inline shared_ptr<MatrixPool> MatrixPool::getInstance()
 	return instance == nullptr ? (instance = shared_ptr<MatrixPool>(new MatrixPool())) : instance;
 }
 
-inline shared_ptr<Matrix> MatrixPool::allocMatrix(size_t rowSize, size_t columnSize){
+inline shared_ptr<Matrix> MatrixPool::allocMatrix(size_t rowSize, size_t columnSize)
+{
 	for (int i = pool.size() - 1; i >= 0; i--){
-		if (pool[i].use_count() == 1 && pool[i]->getRowSize() == rowSize && pool[i]->getColumnSize() == columnSize){
+		if (pool[i].use_count() == 1 && pool[i]->getRowSize() == rowSize && pool[i]->getColumnSize() == columnSize)
+		{
 			pool[i]->setValues(0);
 			return pool[i];
 		}
@@ -21,10 +24,12 @@ inline shared_ptr<Matrix> MatrixPool::allocMatrix(size_t rowSize, size_t columnS
 	pool.push_back(newMatrix);
 	return newMatrix;
 }
-inline shared_ptr<Matrix> MatrixPool::allocMatrixUnclean(size_t rowSize, size_t columnSize){
+
+inline shared_ptr<Matrix> MatrixPool::allocMatrixUnclean(size_t rowSize, size_t columnSize)
+{
 	for (int i = pool.size() - 1; i >= 0; i--){
-		if (pool[i].use_count() == 1 && pool[i]->getRowSize() == rowSize && pool[i]->getColumnSize() == columnSize){
-			//cout << "in" << endl;
+		if (pool[i].use_count() == 1 && pool[i]->getRowSize() == rowSize && pool[i]->getColumnSize() == columnSize)
+		{
 			return pool[i];
 		}
 	}
@@ -372,7 +377,7 @@ shared_ptr<Matrix> Matrix::narrowCorr(shared_ptr<Matrix> kernel, int stride)
 	return result;
 }
 
-void Matrix::narrowRCorr(shared_ptr<Matrix> kernel, int stride, shared_ptr<Matrix> dst)
+void Matrix::narrowCorr(shared_ptr<Matrix> kernel, int stride, shared_ptr<Matrix> dst)
 {
 	int rowSize = (this->rowSize - kernel->rowSize) / stride + 1;
 	int columnSize = (this->columnSize - kernel->columnSize) / stride + 1;
@@ -595,6 +600,11 @@ shared_ptr<Matrix> Matrix::clone()
 void Matrix::clone(shared_ptr<Matrix> dst)
 {
 	*(dst->matrix) = matrix->submat(0, rowSize - 1, 0, columnSize - 1);
+}
+
+void Matrix::map(double f(double), shared_ptr<Matrix> dst)
+{
+	(*(dst->matrix)).transform(f);
 }
 
 void Matrix::print()

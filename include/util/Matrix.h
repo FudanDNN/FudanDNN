@@ -103,6 +103,7 @@ public:
 	void mergeRow(shared_ptr<Matrix>, shared_ptr<Matrix> dst);
 	shared_ptr<Matrix> clone();
 	void clone(shared_ptr<Matrix> dst);
+	void map(double(double), shared_ptr<Matrix>);
 	void print();
 
 protected:

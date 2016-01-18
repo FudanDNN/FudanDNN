@@ -28,7 +28,6 @@ private:
 	size_t kcolumnSize = 0;
 	size_t stride;
 	double dropoutRate;
-	shared_ptr<MatrixPool> instance;
 
 
 };
