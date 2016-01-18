@@ -20,6 +20,10 @@ MaxPoolingLayer::MaxPoolingLayer(size_t rowSize, size_t columnSize, size_t krowS
 
 MaxPoolingLayer::~MaxPoolingLayer()
 {
+}
+
+void MaxPoolingLayer::init()
+{
 	for (size_t v = 0; v < visualSize; v++)
 	{
 		visualGradient.push_back(instance->allocMatrixUnclean(visualRow, visualColumn));

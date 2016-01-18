@@ -35,7 +35,6 @@ private:
 	vector<shared_ptr<Matrix>> biasGradient;
 	vector<vector<shared_ptr<Matrix>>> kernelMomentum;
 	vector<shared_ptr<Matrix>> biasMomentum;
-	shared_ptr<MatrixPool> instance;
 
 
 };

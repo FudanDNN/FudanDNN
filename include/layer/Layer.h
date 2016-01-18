@@ -75,6 +75,7 @@ protected:
 	size_t hiddenColumn;
 	string networkname;
 	double dropoutRate = 0.5;
+	shared_ptr<MatrixPool> instance;
 
 };
 
