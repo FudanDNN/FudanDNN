@@ -41,9 +41,8 @@ void LinearLayer::init(int init_scheme)
 	}
 
 	for (int i = 0; i < visualSize; i++){
-		shared_ptr<Matrix> w = instance->allocMatrixUnclean(hiddenRow, visualRow);
-		w->initializeRandom(lowerBound, upperBound);
-		weight.push_back(w);
+		weight.push_back(instance->allocMatrixUnclean(hiddenRow, visualRow));
+		weight[i]->initializeRandom(lowerBound, upperBound);
 
 		bias.push_back(instance->allocMatrixUnclean(hiddenRow, 1));
 		bias[i]->initializeRandom(lowerBound, upperBound);
@@ -77,9 +76,7 @@ void LinearLayer::calculate()
 	cout << "visualValue" << endl;
 	visualValue[0]->print();
 	cout << "hiddenValue" << endl;
-	hiddenValue[0]->print();
-	cout << "weight" << endl;
-	weight->print();*/
+	hiddenValue[0]->print();*/
 }
 
 void LinearLayer::gradient()
@@ -98,9 +95,7 @@ void LinearLayer::gradient()
 	cout << "hiddenGradient" << endl;
 	hiddenGradient[0]->print();
 	cout << "visualGradient" << endl;
-	visualGradient[0]->print();
-	cout << "weight" << endl;
-	weight[0]->print();*/
+	visualGradient[0]->print();*/
 }
 
 void LinearLayer::writeSelf(string filename)

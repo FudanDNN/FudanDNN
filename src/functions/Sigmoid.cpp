@@ -28,21 +28,19 @@ void Sigmoid::setParameters(double s, double lb, double ub, double prec, double 
 
 double Sigmoid::getValue(double x)
 {
-	/*
+	
 	if (x <= lowerbound)
 		return 0;
 	else if (x >= upperbound)
 		return 1;
 	else
 		return map[(int)((x - lowerbound) * mfactor)];
-	*/		
-	return 1 / (1 + exp(-x / scale));
 }
 
 double Sigmoid::getDerivate(double x, double y)
 {
-	if (x <= lowerbound || x >= upperbound)
+	/*if (x <= lowerbound || x >= upperbound)
 		return incline;
-	else
-		return y * (1 - y) * 4;
+	else*/
+		return y * (1 - y);
 }
