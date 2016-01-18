@@ -17,15 +17,14 @@ void Softmax::gradient()
 
 double Softmax::computeError()
 {
-	/*predVec = predictValue->add(-predictValue->max());
+	predVec = predictValue->add(-predictValue->max());
 	predVec->map(exp, predVec);
 	double sum = predVec->sum();
 	predVec->muli(1 / sum);
 
 	predVec->map(log, predVec);
 	predVec->mulewi(expectedValue);
-	return predVec->sum()*(-1);*/
-	return 0;
+	return predVec->sum()*(-1);
 }
 
 string Softmax::getType()
@@ -35,10 +34,9 @@ string Softmax::getType()
 
 shared_ptr<Matrix> Softmax::getAnswer()
 {
-	/*predVec = predictValue->add(-predictValue->max());
+	predVec = predictValue->add(-predictValue->max());
 	predVec->map(exp, predVec);
 	double sum = predVec->sum();
 	predVec->muli(1 / sum);
-	return predVec;*/
-	return nullptr;
+	return predVec;
 }

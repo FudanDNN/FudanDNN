@@ -1,12 +1,12 @@
 #include "Network.h"
 
 size_t Network::addLinearLayer(size_t visualUnit, size_t hiddenUnit, size_t num, size_t init_scheme, size_t solver_type,
-	double regularizationRate, double weightLearningRate, double biasLearningRate, double momentumRate,double dropoutRate)
+	double regularizationRate, double weightLearningRate, double biasLearningRate, double momentumRate, double dropoutRate)
 {
 	shared_ptr<LinearLayer> linearLayer;
 	shared_ptr<Solver> solver = solverFactory->createSolver(solver_type, regularizationRate,
 		weightLearningRate, biasLearningRate, momentumRate);
-	linearLayer = shared_ptr<LinearLayer>(new LinearLayer(visualUnit, hiddenUnit, init_scheme,dropoutRate, solver, num));
+	linearLayer = shared_ptr<LinearLayer>(new LinearLayer(visualUnit, hiddenUnit, init_scheme, dropoutRate, solver, num));
 	shared_ptr<LayerNode> node(new LayerNode(currentId, linearLayer));
 	idMap.insert(Node_Pair(currentId, node));
 	currentId++;
@@ -148,7 +148,8 @@ void Network::trainingForward()
 	{
 		size_t id = node->getId();
 		shared_ptr<Layer> layer = node->getLayer();
-		vector<shared_ptr<Matrix>> visualValue;
+		vector<shared_ptr<Matrix>> visualValue = layer->getVisualValue();
+		size_t visualSize = layer->getVisualSize();
 		//get the row length as a index for merge the previous hidden value;
 		size_t rowLength = layer->getVisualRow();
 		size_t curLength = 0;
@@ -156,7 +157,7 @@ void Network::trainingForward()
 		for (shared_ptr<LayerNode> pred : node->getPrevNode())
 		{
 			shared_ptr<Layer> predLayer = pred->getLayer();
-			for (int i = 0; i < visualValue.size(); i++){
+			for (int i = 0; i < visualSize; i++){
 				visualValue[i]->setSubmatrix(curLength, 0, predLayer->getHiddenValue()[i]);
 				curLength += predLayer->getHiddenRow();
 			}
@@ -168,12 +169,10 @@ void Network::trainingForward()
 		if (node->getInputCell() != nullptr)
 		{
 			shared_ptr<Matrix> input = node->getInputCell()->getInputMat();
-			for (int i = 0; i < visualValue.size(); i++){
+			for (int i = 0; i < visualSize; i++){
 				visualValue[i]->setSubmatrix(curLength, 0, input);
 			}
 		}
-		//set visual value for layer and calculate the hidden value
-		layer->setVisualValue(visualValue);
 		layer->calculate();
 
 	}

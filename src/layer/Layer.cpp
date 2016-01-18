@@ -85,13 +85,13 @@ size_t Layer::getHiddenSize(){
 void Layer::init(){
 	for (size_t v = 0; v < visualSize; v++)
 	{
-		visualValue.push_back(instance->allocMatrixUnclean(visualRow, visualColumn));
+		visualValue.push_back(instance->allocMatrix(visualRow, visualColumn));
 		visualGradient.push_back(instance->allocMatrixUnclean(visualRow, visualColumn));
 	}
 
 	for (size_t v = 0; v < hiddenSize; v++)
 	{
-		hiddenValue.push_back(instance->allocMatrixUnclean(hiddenRow, hiddenColumn));
+		hiddenValue.push_back(instance->allocMatrix(hiddenRow, hiddenColumn));
 		hiddenGradient.push_back(instance->allocMatrixUnclean(hiddenRow, hiddenColumn));
 	}
 }
