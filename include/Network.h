@@ -6,6 +6,8 @@
 #include "layer\LinearLayer.h"
 #include "layer\LayerNode.h"
 #include "layer\ConvolutionLayer.h"
+#include "layer\ConcatLayer.h"
+#include "layer\MaxPoolingLayer.h"
 #include "util\Input.h"
 #include "layer\NonlinearLayer.h"
 #include "functions\FunctionFactory.h"
@@ -30,7 +32,7 @@ public:
 		size_t hiddenSize, size_t stride, size_t initScheme, size_t solver_type, double regularizationRate,
 		double weightLearningRate, double biasLearningRate, double momentumRate, double dropoutLayer);
 	size_t addMaxPoolingLayer(size_t rowSize, size_t columnSize, size_t krowSize, size_t kcolumnSize, size_t visualSize,
-		size_t hiddenSize, size_t stride, size_t initScheme, double dropoutRate);
+		size_t hiddenSize, size_t stride, double dropoutRate);
 	size_t addConcatLayer(size_t visualRow, size_t visualColumn, size_t visualSize);
 	size_t addNonlinearLayer(size_t visualUnit, size_t type, double s, double lb, double ub, double prec, double ic);
 	size_t addEdge(size_t inID, size_t outID);

@@ -8,7 +8,7 @@ class MaxPoolingLayer : public Layer
 {
 public:
 	MaxPoolingLayer(size_t rowSize, size_t columnSize, size_t krowSize, size_t kcolumnSize, size_t visualSize,
-		size_t hiddenSize, size_t stride, size_t initScheme, double dropoutRate);
+		size_t hiddenSize, size_t stride, double dropoutRate);
 	~MaxPoolingLayer();
 	string getNetworkName() override;
 	void compute() override;

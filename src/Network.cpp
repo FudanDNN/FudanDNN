@@ -31,8 +31,15 @@ size_t Network::addConvolutionLayer(size_t rowSize, size_t columnSize, size_t kr
 }
 
 size_t Network::addMaxPoolingLayer(size_t rowSize, size_t columnSize, size_t krowSize, size_t kcolumnSize, size_t visualSize,
-	size_t hiddenSize, size_t stride, size_t initScheme, double dropoutRate){
-
+	size_t hiddenSize, size_t stride, double dropoutRate){
+	shared_ptr<MaxPoolingLayer> maxPooling;
+	maxPooling = shared_ptr<MaxPoolingLayer>(new MaxPoolingLayer(rowSize, columnSize, krowSize, kcolumnSize, visualSize,
+		hiddenSize, stride, dropoutRate));
+	shared_ptr<LayerNode> node(new LayerNode(currentId, maxPooling));
+	idMap.insert(Node_Pair(currentId, node));
+	currentId++;
+	nodes.push_back(node);
+	return node->getId();
 }
 
 size_t Network::addConcatLayer(size_t visualRow, size_t visualColumn, size_t visualSize){
