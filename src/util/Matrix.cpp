@@ -20,6 +20,7 @@ inline shared_ptr<Matrix> MatrixPool::allocMatrix(size_t rowSize, size_t columnS
 		}
 	}
 	shared_ptr<Matrix> newMatrix(new Matrix(rowSize, columnSize));
+	newMatrix->setValues(0);
 	pool.push_back(newMatrix);
 	return newMatrix;
 }
