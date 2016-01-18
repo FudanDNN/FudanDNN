@@ -28,25 +28,25 @@ public:
 	//element-wise multiplication
 	void mulewi(shared_ptr<Matrix>);
 	//in-place addition
-	void addi(shared_ptr<Matrix>);
+	shared_ptr<Matrix> addi(shared_ptr<Matrix>);
 	//addition
 	shared_ptr<Matrix> add(shared_ptr<Matrix>);
 	//addition
 	void add(shared_ptr<Matrix>, shared_ptr<Matrix> dst);
 	//in-place subtraction
-	void subi(shared_ptr<Matrix>);
+	shared_ptr<Matrix> subi(shared_ptr<Matrix>);
 	//subtraction
 	shared_ptr<Matrix> sub(shared_ptr<Matrix>);
 	//subtraction
 	void sub(shared_ptr<Matrix>, shared_ptr<Matrix> dst);
 	//in-place multiplication
-	void muli(double x);
+	shared_ptr<Matrix> muli(double x);
 	//multiplication
 	shared_ptr<Matrix> mul(double x);
 	//multiplication
 	void mul(double x, shared_ptr<Matrix> dst);
 	//in-place right multiplication (this = this * x)
-	void mulri(shared_ptr<Matrix>);
+	shared_ptr<Matrix> mulri(shared_ptr<Matrix>);
 	//left multiplicatioin (return this * x)
 	shared_ptr<Matrix> mull(shared_ptr<Matrix>);
 	//left multiplicatioin (return this * x)
@@ -56,7 +56,7 @@ public:
 	//right multiplicatioin (return x * this)
 	void mulr(shared_ptr<Matrix>, shared_ptr<Matrix> dst);
 	//in-place transposition (this = this')
-	void trans_i();
+	shared_ptr<Matrix> trans_i();
 	//transposition ( return this')
 	shared_ptr<Matrix> trans();
 	//transposition ( return this')

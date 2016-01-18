@@ -123,10 +123,6 @@ void ConvolutionLayer::gradient()
 		}
 		visualValue[j]->setValues(0);
 	}
-	for (size_t i = 0; i < hiddenSize; i++)
-	{
-		hiddenValue[i]->setValues(0);
-	}
 }
 
 void ConvolutionLayer::writeSelf(string filename)
