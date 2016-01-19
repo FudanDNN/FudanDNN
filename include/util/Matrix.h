@@ -67,6 +67,8 @@ public:
 	shared_ptr<Matrix> mulr(shared_ptr<Matrix>);
 	//right multiplicatioin (return x * this)
 	void mulr(shared_ptr<Matrix>, shared_ptr<Matrix> dst);
+	//rotate matrix 180
+	shared_ptr<Matrix> rot180();
 	//in-place transposition (this = this')
 	shared_ptr<Matrix> trans_i();
 	//transposition ( return this')

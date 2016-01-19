@@ -123,6 +123,8 @@ void ConvolutionLayer::gradient()
 		{
 			visualGradient[j]->addi(hiddenGradient[i]->wideCorr(kernel[i][j], stride));
 			kernelGradient[i][j]->addi(visualValue[j]->narrowRConv(hiddenGradient[i], stride));
+			//visualGradient[j]->addi(hiddenGradient[i]->wideConv(kernel[i][j]->rot180(), stride));
+			//kernelGradient[i][j]->addi(visualValue[j]->rot180()->narrowCorr(hiddenGradient[i], stride));
 		}
 		visualValue[j]->setValues(0);
 	}

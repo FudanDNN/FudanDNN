@@ -218,6 +218,17 @@ void Matrix::mulr(shared_ptr<Matrix> m, shared_ptr<Matrix> dst)
 	*dst->matrix = *matrix * *(m->matrix);
 }
 
+shared_ptr<Matrix> Matrix::rot180()
+{
+	shared_ptr<Matrix> result = MatrixPool::getInstance()->allocMatrixUnclean(rowSize, columnSize);
+	for (size_t i = 0; i < rowSize; i++)
+	for (size_t j = 0; j < columnSize; j++)
+	{
+		(*(result->matrix))(i, j) = (*matrix)(rowSize - 1 - i, columnSize - 1 - j);
+	}
+	return result;
+}
+
 shared_ptr<Matrix> Matrix::narrowConv(shared_ptr<Matrix> kernel, int stride)
 {
 	int rowSize = (this->rowSize - kernel->rowSize) / stride + 1;
@@ -441,7 +452,6 @@ shared_ptr<Matrix> Matrix::wideCorr(shared_ptr<Matrix> kernel, int stride)
 	for (int j = 0; j < columnSize; j++)
 	{
 		int ii = i * stride - kernel->rowSize + 1;
-		int jj = j * stride - kernel->columnSize + 1;
 		double val = 0;
 		for (int ki = 0; ki <  kernel->rowSize; ki++, ii++) {
 			int jj = j * stride - kernel->columnSize + 1;
@@ -464,7 +474,6 @@ void Matrix::wideCorr(shared_ptr<Matrix> kernel, int stride, shared_ptr<Matrix> 
 	for (int j = 0; j < columnSize; j++)
 	{
 		int ii = i * stride - kernel->rowSize + 1;
-		int jj = j * stride - kernel->columnSize + 1;
 		double val = 0;
 		for (int ki = 0; ki < kernel->rowSize; ki++, ii++) {
 			int jj = j * stride - kernel->columnSize + 1;
@@ -530,9 +539,9 @@ shared_ptr<Matrix> Matrix::wideRCorr(shared_ptr<Matrix> kernel, int stride)
 	{
 		int ii = this->rowSize - 1 - (i * stride - kernel->rowSize + 1);
 		double val = 0;
-		for (int ki = 0; ki < kernel->rowSize; ki++, ii++) {
+		for (int ki = 0; ki < kernel->rowSize; ki++, ii--) {
 			int jj = this->columnSize - 1 - (j * stride - kernel->columnSize + 1);
-			for (int kj = 0; kj < kernel->columnSize; kj++, jj++)
+			for (int kj = 0; kj < kernel->columnSize; kj++, jj--)
 			{
 				if (!inrange(ii, jj)) continue;
 				val += (*matrix)(ii, jj) * (*kernel->matrix)(ki, kj);
@@ -545,6 +554,7 @@ shared_ptr<Matrix> Matrix::wideRCorr(shared_ptr<Matrix> kernel, int stride)
 
 void Matrix::wideRCorr(shared_ptr<Matrix> kernel, int stride, shared_ptr<Matrix> dst)
 {
+
 	int rowSize = (this->rowSize + kernel->rowSize) / stride - 1;
 	int columnSize = (this->columnSize + kernel->columnSize) / stride - 1;
 	for (int i = 0; i < rowSize; i++)
@@ -552,9 +562,9 @@ void Matrix::wideRCorr(shared_ptr<Matrix> kernel, int stride, shared_ptr<Matrix>
 	{
 		int ii = this->rowSize - 1 - (i * stride - kernel->rowSize + 1);
 		double val = 0;
-		for (int ki = 0; ki < kernel->rowSize; ki++, ii++) {
+		for (int ki = 0; ki < kernel->rowSize; ki++, ii--) {
 			int jj = this->columnSize - 1 - (j * stride - kernel->columnSize + 1);
-			for (int kj = 0; kj < kernel->columnSize; kj++, jj++)
+			for (int kj = 0; kj < kernel->columnSize; kj++, jj--)
 			{
 				if (!inrange(ii, jj)) continue;
 				val += (*matrix)(ii, jj) * (*kernel->matrix)(ki, kj);
