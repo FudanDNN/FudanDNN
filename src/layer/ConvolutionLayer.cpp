@@ -124,6 +124,10 @@ void ConvolutionLayer::gradient()
 		}
 		visualValue[j]->setValues(0);
 	}
+	for (size_t i = 0; i < hiddenSize; i++)
+	{
+		biasGradient[i]->addi(hiddenGradient[i]);
+	}
 }
 
 void ConvolutionLayer::writeSelf(string filename)

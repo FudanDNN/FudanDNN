@@ -30,7 +30,8 @@ void MaxPoolingLayer::compute()
 {
 	for (size_t i = 0; i < hiddenSize; i++)
 	{
-		hiddenValue[i] = visualValue[i]->maxSubSampling(krowSize, kcolumnSize, stride);
+		visualValue[i]->maxSubSampling(krowSize, kcolumnSize, stride, hiddenValue[i]);
+		hiddenGradient[i]->setValues(0);
 	}
 }
 
@@ -38,7 +39,8 @@ void MaxPoolingLayer::calculate()
 {
 	for (size_t i = 0; i < hiddenSize; i++)
 	{
-		hiddenValue[i] = visualValue[i]->maxSubSampling(krowSize, kcolumnSize, stride);
+		visualValue[i]->maxSubSampling(krowSize, kcolumnSize, stride, hiddenValue[i]);
+		hiddenGradient[i]->setValues(0);
 	}
 }
 
@@ -46,7 +48,8 @@ void MaxPoolingLayer::gradient()
 {
 	for (size_t i = 0; i < visualSize; i++)
 	{
-		visualGradient[i] = visualValue[i]->maxUpSampling(krowSize, kcolumnSize, stride, hiddenGradient[i]);
+		visualValue[i]->maxUpSampling(krowSize, kcolumnSize, stride, hiddenGradient[i], visualGradient[i]);
+		visualValue[i]->setValues(0);
 	}
 }
 

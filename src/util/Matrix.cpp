@@ -542,7 +542,7 @@ shared_ptr<Matrix> Matrix::maxUpSampling(int kRowSize, int kColumnSize, int stri
 		double max = (*matrix)(ii, jj);
 		for (size_t ki = 0; ki < kRowSize; ki++, ii++)
 		{
-			int jj = j * stride;
+			jj = j * stride;
 			for (size_t kj = 0; kj < kColumnSize; kj++, jj++)
 			{
 				if (max < (*matrix)(ii, jj))
