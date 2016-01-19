@@ -95,6 +95,7 @@ void ConvolutionLayer::compute()
 		{
 			hiddenValue[i]->addi(visualValue[j]->narrowConv(kernel[i][j], stride));
 		}
+		hiddenValue[i]->addi(bias[i]);
 		hiddenGradient[i]->setValues(0);
 	}
 }
@@ -108,6 +109,7 @@ void ConvolutionLayer::calculate()
 		{
 			hiddenValue[i]->addi(visualValue[j]->narrowConv(kernel[i][j], stride));
 		}
+		hiddenValue[i]->addi(bias[i]);
 		hiddenGradient[i]->setValues(0);
 	}
 }

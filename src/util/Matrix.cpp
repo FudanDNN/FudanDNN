@@ -488,9 +488,9 @@ shared_ptr<Matrix> Matrix::narrowRCorr(shared_ptr<Matrix> kernel, int stride)
 	{
 		int ii = this->rowSize - 1 - i * stride;
 		double val = 0;
-		for (int ki = 0; ki < kernel->rowSize; ki--, ii--) {
+		for (int ki = 0; ki < kernel->rowSize; ki++, ii--) {
 			int jj = this->columnSize - 1 - j * stride;
-			for (int kj = 0; kj < kernel->columnSize; kj--, jj--)
+			for (int kj = 0; kj < kernel->columnSize; kj++, jj--)
 			{
 				val += (*matrix)(ii, jj) * (*kernel->matrix)(ki, kj);
 			}
@@ -509,9 +509,9 @@ void Matrix::narrowRCorr(shared_ptr<Matrix> kernel, int stride, shared_ptr<Matri
 	{
 		int ii = this->rowSize - 1 - i * stride;
 		double val = 0;
-		for (int ki = 0; ki < kernel->rowSize; ki--, ii--) {
+		for (int ki = 0; ki < kernel->rowSize; ki++, ii--) {
 			int jj = this->columnSize - 1 - j * stride;
-			for (int kj = 0; kj < kernel->columnSize; kj--, jj--)
+			for (int kj = 0; kj < kernel->columnSize; kj++, jj--)
 			{
 				val += (*matrix)(ii, jj) * (*kernel->matrix)(ki, kj);
 			}
@@ -530,9 +530,9 @@ shared_ptr<Matrix> Matrix::wideRCorr(shared_ptr<Matrix> kernel, int stride)
 	{
 		int ii = this->rowSize - 1 - (i * stride - kernel->rowSize + 1);
 		double val = 0;
-		for (int ki = 0; ki < kernel->rowSize; ki--, ii++) {
+		for (int ki = 0; ki < kernel->rowSize; ki++, ii++) {
 			int jj = this->columnSize - 1 - (j * stride - kernel->columnSize + 1);
-			for (int kj = 0; kj < kernel->columnSize; kj--, jj++)
+			for (int kj = 0; kj < kernel->columnSize; kj++, jj++)
 			{
 				if (!inrange(ii, jj)) continue;
 				val += (*matrix)(ii, jj) * (*kernel->matrix)(ki, kj);
@@ -552,9 +552,9 @@ void Matrix::wideRCorr(shared_ptr<Matrix> kernel, int stride, shared_ptr<Matrix>
 	{
 		int ii = this->rowSize - 1 - (i * stride - kernel->rowSize + 1);
 		double val = 0;
-		for (int ki = 0; ki < kernel->rowSize; ki--, ii++) {
+		for (int ki = 0; ki < kernel->rowSize; ki++, ii++) {
 			int jj = this->columnSize - 1 - (j * stride - kernel->columnSize + 1);
-			for (int kj = 0; kj < kernel->columnSize; kj--, jj++)
+			for (int kj = 0; kj < kernel->columnSize; kj++, jj++)
 			{
 				if (!inrange(ii, jj)) continue;
 				val += (*matrix)(ii, jj) * (*kernel->matrix)(ki, kj);
