@@ -50,35 +50,37 @@ void ConvolutionLayer::init(int init_scheme)
 
 	for (size_t h = 0; h < hiddenSize; h++)
 	{
-		kernel[h] = *(new vector<shared_ptr<Matrix>>());
+		vector<shared_ptr<Matrix>> temp;
 		for (size_t v = 0; v < hiddenSize; v++)
 		{
 			shared_ptr<Matrix> k = instance->allocMatrixUnclean(krowSize, kcolumnSize);
 			k->initializeRandom(lowerBound, upperBound);
-			kernel[h].push_back(k);
+			temp.push_back(k);
 		}
+		kernel.push_back(temp);
 		bias.push_back(instance->allocMatrixUnclean(hiddenRow, hiddenColumn));
 		bias[h]->initializeRandom(lowerBound, upperBound);
 	}
 
 	for (size_t h = 0; h < hiddenSize; h++)
 	{
-		kernelGradient[h] = *(new vector<shared_ptr<Matrix>>());
-		kernelMomentum[h] = *(new vector<shared_ptr<Matrix>>());
+		vector<shared_ptr<Matrix>> temp;
 		for (size_t v = 0; v < hiddenSize; v++)
 		{
-			kernelGradient[h].push_back(instance->allocMatrix(krowSize, kcolumnSize));
+			temp.push_back(instance->allocMatrix(krowSize, kcolumnSize));
 		}
+		kernelGradient.push_back(temp);
 		biasGradient.push_back(instance->allocMatrix(hiddenRow, hiddenColumn));
 	}
 
 	for (size_t h = 0; h < hiddenSize; h++)
 	{
-		kernelMomentum[h] = *(new vector<shared_ptr<Matrix>>());
+		vector<shared_ptr<Matrix>> temp;
 		for (size_t v = 0; v < hiddenSize; v++)
 		{
-			kernelMomentum[h].push_back(instance->allocMatrixUnclean(krowSize, kcolumnSize));
+			temp.push_back(instance->allocMatrix(krowSize, kcolumnSize));
 		}
+		kernelMomentum.push_back(temp);
 		biasMomentum.push_back(instance->allocMatrix(hiddenRow, hiddenColumn));
 	}
 
