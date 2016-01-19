@@ -21,7 +21,7 @@ double Softmax::computeError()
 	predVec->mapi(exp);
 	predVec->normalize_i(1);
 
-	shared_ptr<Matrix> vec = predVec->map([](double x) { return x <= 0.00001 ? -10000 : log(x); });
+	shared_ptr<Matrix> vec = predVec->map([](double x) { return log(x <= 1e-5 ? 1e-5 : x); });
 	vec->mulewi(expectedValue);
 	return vec->sum()*(-1);
 }
