@@ -159,8 +159,8 @@ void Network::trainingForward()
 			shared_ptr<Layer> predLayer = pred->getLayer();
 			for (int i = 0; i < visualSize; i++){
 				visualValue[i]->setSubmatrix(curLength, 0, predLayer->getHiddenValue()[i]);
-				curLength += predLayer->getHiddenRow();
 			}
+			curLength += predLayer->getHiddenRow();
 			if (curLength == rowLength){
 				break;
 			}
