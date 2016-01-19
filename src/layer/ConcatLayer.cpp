@@ -16,6 +16,7 @@ string ConcatLayer::getNetworkName(){
 }
 
 void ConcatLayer::compute(){
+
 	hiddenValue[0]->setValues(0);
 	size_t square = this->visualRow*this->visualColumn;
 	shared_ptr<Matrix> temp(new Matrix(0, 1));
@@ -24,7 +25,6 @@ void ConcatLayer::compute(){
 	}
 	hiddenValue[0]->addi(temp);
 	hiddenGradient[0]->setValues(0);
-
 }
 
 void ConcatLayer::calculate(){

@@ -112,6 +112,15 @@ void ConvolutionLayer::calculate()
 		hiddenValue[i]->addi(bias[i]);
 		hiddenGradient[i]->setValues(0);
 	}
+
+	/*cout << "visualValue" << endl;
+	for (int i = 0; i < visualSize; i++){
+		visualValue[i]->print();
+	}
+	cout << "hiddenValue" << endl;
+	for (int i = 0; i < hiddenSize; i++){
+		hiddenValue[i]->print();
+	}*/
 }
 
 void ConvolutionLayer::gradient()
@@ -130,6 +139,16 @@ void ConvolutionLayer::gradient()
 	{
 		biasGradient[i]->addi(hiddenGradient[i]);
 	}
+
+	/*cout << "CNN" << endl;
+	cout << "hiddenGradient" << endl;
+	for (int i = 0; i < hiddenSize; i++){
+		hiddenGradient[i]->print();
+	}
+	cout << "visualGradient" << endl;
+	for (int i = 0; i < visualSize; i++){
+		visualGradient[i]->print();
+	}*/
 }
 
 void ConvolutionLayer::writeSelf(string filename)

@@ -51,6 +51,16 @@ void MaxPoolingLayer::gradient()
 		visualValue[i]->maxUpSampling(krowSize, kcolumnSize, stride, hiddenGradient[i], visualGradient[i]);
 		visualValue[i]->setValues(0);
 	}
+
+	/*cout << "maxpooling" << endl;
+	cout << "hiddenGradient" << endl;
+	for (int i = 0; i < hiddenSize; i++){
+		hiddenGradient[i]->print();
+	}
+	cout << "visualGradient" << endl;
+	for (int i = 0; i < visualSize; i++){
+		visualGradient[i]->print();
+	}*/
 }
 
 void MaxPoolingLayer::writeSelf(string filename)
