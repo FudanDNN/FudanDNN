@@ -30,9 +30,9 @@ double Sigmoid::getValue(double x)
 {
 	
 	if (x <= lowerbound)
-		return 0.0001;
+		return 0.0000;
 	else if (x >= upperbound)
-		return 0.9999;
+		return 1.000;
 	else
 		return map[(int)((x - lowerbound) * mfactor)];
 }

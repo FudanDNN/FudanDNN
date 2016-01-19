@@ -6,7 +6,7 @@ ConvolutionLayer::ConvolutionLayer(size_t rowSize, size_t columnSize, size_t kro
 	this->visualRow = rowSize;
 	this->visualColumn = columnSize;
 	this->krowSize = krowSize;
-	this->kcolumnSize = columnSize;
+	this->kcolumnSize = kcolumnSize;
 	this->hiddenRow = rowSize - krowSize + 1;;
 	this->hiddenColumn = columnSize - kcolumnSize + 1;
 	this->visualSize = visualSize;
@@ -51,7 +51,7 @@ void ConvolutionLayer::init(int init_scheme)
 	for (size_t h = 0; h < hiddenSize; h++)
 	{
 		vector<shared_ptr<Matrix>> temp;
-		for (size_t v = 0; v < hiddenSize; v++)
+		for (size_t v = 0; v < visualSize; v++)
 		{
 			shared_ptr<Matrix> k = instance->allocMatrixUnclean(krowSize, kcolumnSize);
 			k->initializeRandom(lowerBound, upperBound);
@@ -65,7 +65,7 @@ void ConvolutionLayer::init(int init_scheme)
 	for (size_t h = 0; h < hiddenSize; h++)
 	{
 		vector<shared_ptr<Matrix>> temp;
-		for (size_t v = 0; v < hiddenSize; v++)
+		for (size_t v = 0; v < visualSize; v++)
 		{
 			temp.push_back(instance->allocMatrix(krowSize, kcolumnSize));
 		}
@@ -76,7 +76,7 @@ void ConvolutionLayer::init(int init_scheme)
 	for (size_t h = 0; h < hiddenSize; h++)
 	{
 		vector<shared_ptr<Matrix>> temp;
-		for (size_t v = 0; v < hiddenSize; v++)
+		for (size_t v = 0; v < visualSize; v++)
 		{
 			temp.push_back(instance->allocMatrix(krowSize, kcolumnSize));
 		}

@@ -643,7 +643,7 @@ void Matrix::reshape_i(int rowSize, int columnSize)
 shared_ptr<Matrix> Matrix::reshape(int rowSize, int columnSize)
 {
 	shared_ptr<Matrix> result = this->clone();
-	result->reshape(rowSize, columnSize);
+	result->reshape_i(rowSize, columnSize);
 	return result;
 }
 
@@ -665,25 +665,32 @@ shared_ptr<Matrix> Matrix::clone()
 {
 	shared_ptr<MatrixPool> instance = MatrixPool::getInstance();
 	shared_ptr<Matrix> result = instance->allocMatrixUnclean(rowSize, columnSize);
-	*(result->matrix) = matrix->submat(0, rowSize - 1, 0, columnSize - 1);
+	*(result->matrix) = matrix->submat(0, 0, rowSize - 1, columnSize - 1);
 	return result;
 }
 
 void Matrix::clone(shared_ptr<Matrix> dst)
 {
-	*(dst->matrix) = matrix->submat(0, rowSize - 1, 0, columnSize - 1);
+	*(dst->matrix) = matrix->submat(0, 0, rowSize - 1, columnSize - 1);
+	dst->rowSize = rowSize;
+	dst->columnSize = columnSize;
+}
+
+void Matrix::mapi(double f(double))
+{
+	(*matrix).transform(f);
 }
 
 void Matrix::map(double f(double), shared_ptr<Matrix> dst)
 {
-	dst = clone();
-	(*(dst->matrix)).transform(f);
+	clone(dst);
+	dst->mapi(f);
 }
 
 shared_ptr<Matrix> Matrix::map(double f(double))
 {
-	shared_ptr<Matrix> result = clone();
-	(*(result->matrix)).transform(f);
+	shared_ptr<Matrix> result = MatrixPool::getInstance()->allocMatrixUnclean(rowSize, columnSize);
+	map(f, result);
 	return result;
 }
 

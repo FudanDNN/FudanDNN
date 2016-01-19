@@ -208,15 +208,15 @@ void Network::backward()
 		//split the gradient for previoud layer,use preLength and currLength to store the spliting index
 		for (shared_ptr<LayerNode> pred : node->getPrevNode())
 		{
+			vector<shared_ptr<Matrix>> tempVec;
 			shared_ptr<Layer> predLayer = pred->getLayer();
 			for (int j = 0; j < predLayer->getHiddenSize(); j++){
 				currLength = predLayer->getHiddenValue()[j]->getRowSize();
-				vector<shared_ptr<Matrix>> tempVec;
 				tempVec.push_back(layer->getVisualGradient()[j]->submatrix(
 					preLength, preLength + currLength, 0, layer->getVisualColumn()));
-				predLayer->addHiddenGradient(tempVec);
 			}
 			preLength += currLength;
+			predLayer->addHiddenGradient(tempVec);
 		}
 		//backpropagate the gradient to input
 		if (node->getInputCell() != nullptr)

@@ -53,11 +53,6 @@ void NonlinearLayer::calculate()
 		}
 		hiddenGradient[f]->setValues(0);
 	}
-	/*cout << "nonlinearLayer:" << this->getVisualRow() << endl;
-	cout << "visualValue" << endl;
-	visualValue[0]->print();
-	cout << "hiddenValue" << endl;
-	hiddenValue[0]->print();*/
 }
 
 void NonlinearLayer::gradient()
@@ -73,9 +68,4 @@ void NonlinearLayer::gradient()
 		visualValue[f]->setValues(0);
 	}
 
-	/*cout << "nonlinearLayer:" << this->getVisualRow() << endl;
-	cout << "hiddenGradient" << endl;
-	hiddenGradient[0]->print();
-	cout << "visualGradient" << endl;
-	visualGradient[0]->print();*/
 }

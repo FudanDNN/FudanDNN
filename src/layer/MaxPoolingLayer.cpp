@@ -6,9 +6,9 @@ MaxPoolingLayer::MaxPoolingLayer(size_t rowSize, size_t columnSize, size_t krowS
 	this->visualRow = rowSize;
 	this->visualColumn = columnSize;
 	this->krowSize = krowSize;
-	this->kcolumnSize = columnSize;
-	this->hiddenRow = rowSize - krowSize + 1;;
-	this->hiddenColumn = columnSize - kcolumnSize + 1;
+	this->kcolumnSize = kcolumnSize;
+	this->hiddenRow = (rowSize - krowSize) / stride + 1;;
+	this->hiddenColumn = (columnSize - kcolumnSize) / stride + 1;
 	this->visualSize = visualSize;
 	this->hiddenSize = hiddenSize;
 	this->stride = stride;
@@ -23,16 +23,7 @@ MaxPoolingLayer::~MaxPoolingLayer()
 
 void MaxPoolingLayer::init()
 {
-	for (size_t v = 0; v < visualSize; v++)
-	{
-		visualGradient.push_back(instance->allocMatrixUnclean(visualRow, visualColumn));
-	}
-
-	for (size_t h = 0; h < hiddenSize; h++)
-	{
-		hiddenGradient.push_back(instance->allocMatrixUnclean(hiddenRow, hiddenColumn));
-	}
-	initialized = true;
+	Layer::init();
 }
 
 void MaxPoolingLayer::compute()

@@ -121,6 +121,7 @@ public:
 	void mergeRow(shared_ptr<Matrix>, shared_ptr<Matrix> dst);
 	shared_ptr<Matrix> clone();
 	void clone(shared_ptr<Matrix> dst);
+	void mapi(double(double));
 	void map(double(double), shared_ptr<Matrix>);
 	shared_ptr<Matrix> map(double(double));
 	void print();

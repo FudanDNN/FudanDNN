@@ -101,13 +101,15 @@ void Model::run()
 
 		this->criteria->setPredictValue(network->getFinalValue()[0]);
 		this->criteria->setExpectedValue(output);
+
+		double singleError = this->criteria->computeError();
+		error += singleError;
+
 		this->criteria->gradient();
 
 		if (this->criteria->getPredictType() == this->criteria->getExpectedType()){
 			correctNum++;
 		}
-		double singleError = this->criteria->computeError();
-		error += singleError;
 		if (i % sampleNum == 0){
 			cout << "times:" << i / sampleNum << 
 				"error:" << error << "correctRate:" << ((double)correctNum) / sampleNum << endl;
