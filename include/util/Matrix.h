@@ -81,6 +81,14 @@ public:
 	shared_ptr<Matrix> wideConv(shared_ptr<Matrix>, int);
 	//wide convolution
 	void wideConv(shared_ptr<Matrix>, int, shared_ptr<Matrix> dst);
+	//narrow convolution as a kernel 
+	shared_ptr<Matrix> narrowRConv(shared_ptr<Matrix>, int);
+	//narrow convolution as a kernel
+	void narrowRConv(shared_ptr<Matrix>, int, shared_ptr<Matrix> dst);
+	//wide convolution as a kernel
+	shared_ptr<Matrix> wideRConv(shared_ptr<Matrix>, int);
+	//wide convolution as a kernel
+	void wideRConv(shared_ptr<Matrix>, int, shared_ptr<Matrix> dst);
 	//narrow correlation
 	shared_ptr<Matrix> narrowCorr(shared_ptr<Matrix>, int);
 	//narrow correlation
@@ -89,13 +97,13 @@ public:
 	shared_ptr<Matrix> wideCorr(shared_ptr<Matrix>, int);
 	//wide correlation
 	void wideCorr(shared_ptr<Matrix>, int, shared_ptr<Matrix> dst);
-	//narrow correlation as kernel role
+	//narrow correlation as a kernel
 	shared_ptr<Matrix> narrowRCorr(shared_ptr<Matrix>, int);
-	//narrow correlation as kernel role
+	//narrow correlation as a kernel
 	void narrowRCorr(shared_ptr<Matrix>, int, shared_ptr<Matrix> dst);
-	//wide correlation as kernel role
+	//wide correlation as a kernel
 	shared_ptr<Matrix> wideRCorr(shared_ptr<Matrix>, int);
-	//wide correlation as kernel role
+	//wide correlation as a kernel
 	void wideRCorr(shared_ptr<Matrix>, int, shared_ptr<Matrix> dst);
 	//max-pooing(subsampling) with specific kernel size
 	shared_ptr<Matrix> maxSubSampling(int kRowSize, int kColumnSize, int stride);
