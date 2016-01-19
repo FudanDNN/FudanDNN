@@ -13,6 +13,13 @@ void Softmax::gradient()
 	{
 		predictGradient->setValue(i, 0, this->getExpectedValue()->getValue(i, 0) - this->predVec->getValue(i, 0));
 	}
+
+	cout << "gradient" << endl;
+	predictGradient->print();
+	cout << "predictValue" << endl;
+	predVec->print();
+	cout << "expectedValue" << endl;
+	expectedValue->print();
 }
 
 double Softmax::computeError()
