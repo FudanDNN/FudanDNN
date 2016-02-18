@@ -39,6 +39,8 @@ public:
 	shared_ptr<Matrix> add(double);
 	//in-place addition
 	shared_ptr<Matrix> addi(shared_ptr<Matrix>);
+    //in-place add a value
+    shared_ptr<Matrix> addi(double);
 	//add a matrix
 	shared_ptr<Matrix> add(shared_ptr<Matrix>);
 	//add a matrix

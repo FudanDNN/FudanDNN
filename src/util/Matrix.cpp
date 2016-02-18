@@ -132,6 +132,10 @@ shared_ptr<Matrix> Matrix::addi(shared_ptr<Matrix> m)
 	*matrix += *(m->matrix);
 	return shared_from_this();
 }
+shared_ptr<Matrix> Matrix::addi(double x){
+    *matrix += x;
+    return shared_from_this();
+}
 
 shared_ptr<Matrix> Matrix::add(shared_ptr<Matrix> m)
 {
