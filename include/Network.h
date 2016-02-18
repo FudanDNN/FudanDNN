@@ -27,11 +27,14 @@ public:
 	};
 
 	size_t addLinearLayer(size_t visualUnit, size_t hiddenUnit, size_t num, size_t init_scheme, size_t solver_type,double regularizationRate, 
-		double weightLearningRate, double biasLearningRate, double momentumRate,double dropoutLayer);
-	size_t addConvolutionLayer(size_t rowSize, size_t columnSize, size_t krowSize, size_t kcolumnSize, size_t visualSize, 
+		double weightLearningRate, double biasLearningRate, double momentumRate,double dropoutRate);
+    size_t addLinearLayer(size_t visualUnit, size_t hiddenUnit, size_t num, size_t init_scheme, shared_ptr<Solver> solver, double dropoutRate);
+    size_t addConvolutionLayer(size_t rowSize, size_t columnSize, size_t krowSize, size_t kcolumnSize, size_t visualSize, 
 		size_t hiddenSize, size_t stride, size_t initScheme, size_t solver_type, double regularizationRate,
-		double weightLearningRate, double biasLearningRate, double momentumRate, double dropoutLayer);
-	size_t addMaxPoolingLayer(size_t rowSize, size_t columnSize, size_t krowSize, size_t kcolumnSize, size_t visualSize,
+		double weightLearningRate, double biasLearningRate, double momentumRate, double dropoutRate);
+    size_t addConvolutionLayer(size_t rowSize, size_t columnSize, size_t krowSize, size_t kcolumnSize, size_t visualSize,
+        size_t hiddenSize, size_t stride, size_t initScheme, shared_ptr<Solver>solver, double dropoutRate);
+    size_t addMaxPoolingLayer(size_t rowSize, size_t columnSize, size_t krowSize, size_t kcolumnSize, size_t visualSize,
 		size_t hiddenSize, size_t stride, double dropoutRate);
 	size_t addConcatLayer(size_t visualRow, size_t visualColumn, size_t visualSize);
 	size_t addNonlinearLayer(size_t visualUnit, size_t type, double s, double lb, double ub, double prec, double ic);

@@ -1,7 +1,8 @@
 const enum SOLVER
 {
 	SGD,
-    ADAGRAD
+    ADAGRAD,
+    RMSPROP
 };
 const enum NONLINEAR
 {

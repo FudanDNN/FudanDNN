@@ -10,6 +10,11 @@ size_t Model::addLinearLayerToNetwork(size_t visualUnit, size_t hiddenUnit, size
 	return this->network->addLinearLayer(visualUnit, hiddenUnit, num, init_scheme, solver_type,
 		regularizationRate, weightLearningRate, biasLearningRate, momentumRate, dropoutLayer);
 }
+size_t Model::addLinearLayerToNetwork(size_t visualUnit, size_t hiddenUnit, size_t num, size_t init_scheme, 
+    shared_ptr<Solver> solver, double dropoutLayer)
+{
+    return this->network->addLinearLayer(visualUnit, hiddenUnit, num, init_scheme, solver, dropoutLayer);
+}
 
 size_t Model::addConvolutionLayerToNetwork(size_t rowSize, size_t columnSize, size_t krowSize, size_t kcolumnSize, size_t visualSize,
 	size_t hiddenSize, size_t stride, size_t initScheme, size_t solver_type, double regularizationRate,
@@ -18,6 +23,12 @@ size_t Model::addConvolutionLayerToNetwork(size_t rowSize, size_t columnSize, si
 	return this->network->addConvolutionLayer(rowSize, columnSize, krowSize, kcolumnSize, visualSize,
 		hiddenSize, stride, initScheme, solver_type, regularizationRate,
 		weightLearningRate, biasLearningRate, momentumRate, dropoutLayer);
+}
+size_t Model::addConvolutionLayerToNetwork(size_t rowSize, size_t columnSize, size_t krowSize, size_t kcolumnSize, size_t visualSize,
+    size_t hiddenSize, size_t stride, size_t initScheme, shared_ptr<Solver> solver, double dropoutLayer)
+{
+    return this->network->addConvolutionLayer(rowSize, columnSize, krowSize, kcolumnSize, visualSize,
+        hiddenSize, stride, initScheme, solver, dropoutLayer);
 }
 
 size_t Model::addMaxPoolingLayerToNetwork(size_t rowSize, size_t columnSize, size_t krowSize, size_t kcolumnSize, size_t visualSize,

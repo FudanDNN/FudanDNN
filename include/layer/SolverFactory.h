@@ -8,6 +8,8 @@ class SolverFactory{
 public:
 	shared_ptr<Solver> createSolver(int type, double regularizationRate, 
 		double weightLearningRate, double biasLearningRate, double momentumRate);
+    shared_ptr<Solver> createSolver(int type, double regularizationRate,
+        double weightLearningRate, double biasLearningRate, double momentumRate, double floatStableEpsilon );
 };
 
 #endif

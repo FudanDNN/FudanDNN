@@ -13,6 +13,15 @@ size_t Network::addLinearLayer(size_t visualUnit, size_t hiddenUnit, size_t num,
 	nodes.push_back(node);
 	return node->getId();
 }
+size_t Network::addLinearLayer(size_t visualUnit, size_t hiddenUnit, size_t num, size_t init_scheme, shared_ptr<Solver> solver, double dropoutRate){
+    shared_ptr<LinearLayer> linearLayer;
+    linearLayer = shared_ptr<LinearLayer>(new LinearLayer(visualUnit, hiddenUnit, init_scheme, dropoutRate, solver, num));
+    shared_ptr<LayerNode> node(new LayerNode(currentId, linearLayer));
+    idMap.insert(Node_Pair(currentId, node));
+    currentId++;
+    nodes.push_back(node);
+    return node->getId();
+}
 
 size_t Network::addConvolutionLayer(size_t rowSize, size_t columnSize, size_t krowSize, size_t kcolumnSize, size_t visualSize,
 	size_t hiddenSize, size_t stride, size_t initScheme, size_t solver_type, double regularizationRate,
@@ -28,6 +37,18 @@ size_t Network::addConvolutionLayer(size_t rowSize, size_t columnSize, size_t kr
 	currentId++;
 	nodes.push_back(node);
 	return node->getId();
+}
+
+size_t Network::addConvolutionLayer(size_t rowSize, size_t columnSize, size_t krowSize, size_t kcolumnSize, size_t visualSize,
+    size_t hiddenSize, size_t stride, size_t initScheme, shared_ptr<Solver>solver, double dropoutRate){
+    shared_ptr<ConvolutionLayer> convolutionLayer;
+    convolutionLayer = shared_ptr<ConvolutionLayer>(new ConvolutionLayer(rowSize, columnSize, krowSize, kcolumnSize,
+        visualSize, hiddenSize, stride, initScheme, dropoutRate, solver));
+    shared_ptr<LayerNode> node(new LayerNode(currentId, convolutionLayer));
+    idMap.insert(Node_Pair(currentId, node));
+    currentId++;
+    nodes.push_back(node);
+    return node->getId();
 }
 
 size_t Network::addMaxPoolingLayer(size_t rowSize, size_t columnSize, size_t krowSize, size_t kcolumnSize, size_t visualSize,
