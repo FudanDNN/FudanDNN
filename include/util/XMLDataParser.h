@@ -17,6 +17,7 @@ public:
 	size_t getIRowSize();
 	bool isEnd();
 	void backToHead();
+	vector<shared_ptr<Sample>> getAllSamples();
 	static vector<string> split(string str, string pattern, size_t reserveSize);
 private:
 	string networkName;

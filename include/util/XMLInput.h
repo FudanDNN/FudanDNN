@@ -11,6 +11,8 @@ public:
 	size_t getSampleNum();
 	bool isEnd();
 protected:
+	size_t index;
 	shared_ptr<XMLDataParser> parser;
+	vector<shared_ptr<Sample>> samples;
 };
 #endif

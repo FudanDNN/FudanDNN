@@ -2,6 +2,7 @@
 size_t XMLDataParser::xmlCheck(string fileName){
 	return 0;
 }
+
 XMLDataParser::XMLDataParser(string fileName){
 	this->fileName = fileName;
 	//cout << fileName << endl;
@@ -12,16 +13,66 @@ XMLDataParser::XMLDataParser(string fileName){
 	}
 	init();
 }
+
 void XMLDataParser::backToHead(){
 	this->sampleIndex = 0;
 	TiXmlElement *root = doc->RootElement();
 	TiXmlElement *samples = root->FirstChildElement("samples");
 	this->sample = (samples->FirstChildElement("sample"));
 }
+
 bool XMLDataParser::isEnd(){
 	return sampleIndex >= sampleNum;
 }
 
+vector<shared_ptr<Sample>> XMLDataParser::getAllSamples(){
+	vector<shared_ptr<Sample>> vec;
+	TiXmlElement *root = (doc->RootElement());
+	TiXmlElement *samples = (root->FirstChildElement("samples"));
+	TiXmlElement *temp = (samples->FirstChildElement("sample"));
+	int num = this->sampleNum;
+	while (num > 0){
+		num--;
+		TiXmlElement *inputElement = (temp->FirstChildElement("input"));
+		string inputStr = inputElement->GetText();
+		shared_ptr<Sample> trainingSample;
+		shared_ptr<Matrix> input(new Matrix(iRowSize, iColumnSize));
+		shared_ptr<Matrix> output(new Matrix(oRowSize, oColumnSize));
+		//cout << "input:" << inputStr << endl;
+		for (size_t i = 0; i < iRowSize; i++){
+			vector<string> point = split(inputStr, " ", iRowSize*iColumnSize);
+			for (size_t j = 0; j < iColumnSize; j++){
+				double n;
+				n = atof(point[j + i*iColumnSize].c_str());
+				//cout << "input:" << n << endl;
+				// column and row are invert in files 
+				input->setValue(i, j, n);
+			}
+			point.clear();
+		}
+		//if condition is training,read output to sample 
+		TiXmlElement *outputElement = (this->sample->FirstChildElement("output"));
+		string outputStr = outputElement->GetText();
+		//cout << "output:" << outputStr << endl;
+		for (size_t i = 0; i < oRowSize; i++){
+			vector<string> point = split(outputStr, " ", oRowSize*oColumnSize);
+			for (size_t j = 0; j < oColumnSize; j++){
+				double n;
+				n = atof(point[j + i*oColumnSize].c_str());
+				//cout << "output:" << n << endl;
+				// column and row are invert in files 
+				output->setValue(i, j, n);
+			}
+			point.clear();
+		}
+		//input->print();
+		trainingSample = shared_ptr<Sample>(new Sample(input, output, type, iRowSize, iColumnSize, oRowSize, oColumnSize));
+		TiXmlElement *releaseSample = sample;
+		temp = (temp->NextSiblingElement());
+		vec.push_back(trainingSample);
+	}
+	return vec;
+}
 
 shared_ptr<Sample> XMLDataParser::getNextSample(){
 	if (this->sampleIndex >= sampleNum){

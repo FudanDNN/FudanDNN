@@ -121,8 +121,8 @@ void Model::run()
 		if (this->criteria->getPredictType() == this->criteria->getExpectedType()){
 			correctNum++;
 		}
-		if (i % sampleNum == 0){
-			cout << "times:" << i / sampleNum << 
+		if ( ( i+1 ) % sampleNum == 0){
+			cout << "times:" << ( i + 1 ) / sampleNum <<
 				"error:" << error << "correctRate:" << ((double)correctNum) / sampleNum << endl;
 			error = 0;
 			correctNum = 0;
