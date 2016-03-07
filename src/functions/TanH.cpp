@@ -17,7 +17,7 @@ void TanH::setParameters(double s, double lb, double ub, double prec, double ic)
 	precision = prec;
 	mfactor = 1 / prec;
 	incline = ic;
-	int x = lowerbound;
+	double x = lowerbound;
 	while (x < upperbound)
 	{
 		map.push_back(2 / (1 + exp(-2 * x / s)) - 1);
