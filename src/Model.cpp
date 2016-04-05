@@ -1,4 +1,5 @@
 #include "Model.h"
+#include "../workingthread.h"
 Model::Model()
 {
 	this->network = shared_ptr<Network>(new Network());
@@ -94,7 +95,7 @@ void Model::setCriteria(size_t type, size_t unit)
 	}
 }
 
-void Model::run()
+void Model::run(WorkingThread *wt)
 {
 	network->topoSort();
 	int sampleNum = inputs[0]->getSampleNum();
@@ -122,8 +123,10 @@ void Model::run()
 			correctNum++;
 		}
 		if ( ( i+1 ) % sampleNum == 0){
-			cout << "times:" << ( i + 1 ) / sampleNum <<
+            ostringstream osbuf;
+            osbuf << "times:" << ( i + 1 ) / sampleNum <<
 				"error:" << error << "correctRate:" << ((double)correctNum) / sampleNum << endl;
+            wt->emitMessage(osbuf.str());
 			error = 0;
 			correctNum = 0;
 		}

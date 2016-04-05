@@ -10,9 +10,7 @@ shared_ptr<Solver> SolverFactory::createSolver(int type, double regularizationRa
 		solver = shared_ptr<Solver>(new SGDSolver(regularizationRate,
 			weightLearningRate, biasLearningRate, momentumRate));
 		break;
-    case SOLVER::ADAGRAD:
-        solver = shared_ptr<Solver>(new AdagradSolver(regularizationRate, weightLearningRate, biasLearningRate, momentumRate)) ;
-        break;
+    
 	default:
 		break;
 	}
@@ -24,6 +22,9 @@ shared_ptr<Solver> SolverFactory::createSolver(int type, double regularizationRa
     switch (type){
     case SOLVER::RMSPROP:
         solver = shared_ptr<Solver>(new RMSPropSolver(regularizationRate, weightLearningRate, biasLearningRate, momentumRate, floatStableEpsilon));
+        break;
+	case SOLVER::ADAGRAD:
+        solver = shared_ptr<Solver>(new AdagradSolver(regularizationRate, weightLearningRate, biasLearningRate, floatStableEpsilon)) ;
         break;
     default:
         break;

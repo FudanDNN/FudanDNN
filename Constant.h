@@ -33,5 +33,5 @@ namespace fudandnn{
         SOFTMAX,
     };
 }
-using namespace fudandnn;
+
 #endif
